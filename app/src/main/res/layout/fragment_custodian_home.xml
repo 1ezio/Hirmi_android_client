@@ -8,13 +8,86 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
+            android:id="@+id/txtDrawingNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Home"
-            android:textColor="#000000"
-            android:textSize="24sp"/>
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="50dp"
+            android:text="Drawing No: "
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:text="Weight(in MT):"
+            android:layout_below="@+id/txtDrawingNo"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtBriefDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:text="Brief Description:"
+            android:layout_below="@+id/txtWeight"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtxtDrawingNo"
+            android:layout_width="220dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="35dp"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/edtxtWeight"
+            android:layout_width="220dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtxtDrawingNo"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/edtxtBriefDesc"
+            android:layout_width="340dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="92dp"
+            android:layout_below="@+id/txtBriefDescription"
+            android:layout_marginTop="2dp"
+            android:textSize="14sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:id="@+id/btnInspectionCall"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:text="Inspection Call"/>
+
+
+
+
+
 
     </RelativeLayout>
 
