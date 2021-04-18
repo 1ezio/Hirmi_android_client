@@ -2,4 +2,7 @@
     <string name="app_name">Hirmi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_ispector_layout">Ispector_layout</string>
+    <string name="tab_text_1">STATUS</string>
+    <string name="tab_text_2">HISTORY</string>
 </resources>
