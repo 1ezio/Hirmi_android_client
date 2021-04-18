@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/tv_all_thing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:text="STATUS"
+        android:textSize="30dp" />
+
+    <EditText
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_am_to_app"
+        android:layout_below="@+id/tv_all_thing"
+        android:hint="Amount to be approved"
+        android:layout_margin="45dp"
+        />
+
+    <Button
+        android:id="@+id/btn_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="88dp"
+        android:text="Accept"
+        />
+    <Button
+
+        android:id="@+id/btn_reject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+       android:layout_alignParentBottom="true"
+        android:layout_margin="88dp"
+        android:text="Reject"/>
+
+
+
+</RelativeLayout>
