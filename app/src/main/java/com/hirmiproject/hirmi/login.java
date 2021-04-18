@@ -11,10 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 public class login extends AppCompatActivity {
     Button custodianlayout;
     Button inspectorlayout;
+    Button adminlaylout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+
+        adminlaylout = findViewById(R.id.button);
+        adminlaylout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
 
         custodianlayout = findViewById(R.id.btn_custo);
         custodianlayout.setOnClickListener(new View.OnClickListener() {
