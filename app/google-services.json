@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "803621817497",
+    "project_id": "hirmi-393b4",
+    "storage_bucket": "hirmi-393b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803621817497:android:cee13b5c399d00be99bc08",
+        "android_client_info": {
+          "package_name": "com.hirmiproject.hirmi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803621817497-pjn9j8cjndb50euugv2d1662a5d5mlr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqjcdFfkI8gZqoRRPnRYcv0A2SKk-wIQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803621817497-pjn9j8cjndb50euugv2d1662a5d5mlr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

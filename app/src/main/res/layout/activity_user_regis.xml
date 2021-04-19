@@ -12,6 +12,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enter Name : "
@@ -20,6 +21,7 @@
         android:layout_marginTop="10dp"/>
 
     <EditText
+        android:id="@+id/name_id"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Type.."
@@ -42,6 +44,7 @@
             android:layout_marginTop="10dp"/>
 
         <EditText
+            android:id="@+id/reg_id"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="Type.."
@@ -65,6 +68,7 @@
             android:layout_marginTop="10dp"/>
 
         <EditText
+            android:id="@+id/mob_id"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="Type.."
@@ -91,6 +95,7 @@
             android:layout_marginTop="10dp"/>
 
         <EditText
+            android:id="@+id/e_id"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="Type.."
@@ -111,6 +116,16 @@
         android:layout_height="65dp" />
 </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/r_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:text="register"/>
+    </LinearLayout>
 
 
 </LinearLayout>

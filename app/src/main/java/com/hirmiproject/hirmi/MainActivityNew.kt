@@ -40,6 +40,7 @@ class MainActivityNew : AppCompatActivity() {
         val adapter = ViewPageAdapterCustodian(supportFragmentManager)
         adapter.addFragment(HomeFragment(), "Home")
         adapter.addFragment(HistoryFragment(), "History")
+        
         adapter.addFragment(SettingsFragment(), "Settings")
 
         viewPager.adapter = adapter
