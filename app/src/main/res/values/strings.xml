@@ -5,4 +5,5 @@
     <string name="title_activity_ispector_layout">Ispector_layout</string>
     <string name="tab_text_1">STATUS</string>
     <string name="tab_text_2">HISTORY</string>
+    <string name="tab_text_3">DRAWINGS</string>
 </resources>

@@ -13,7 +13,8 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="50dp"
         android:text="STATUS"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        />
 
     <EditText
         android:layout_centerHorizontal="true"
@@ -24,26 +25,33 @@
         android:hint="Amount to be approved"
         android:layout_margin="45dp"
         />
-
-    <Button
-        android:id="@+id/btn_accept"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="88dp"
-        android:text="Accept"
-        />
-    <Button
+        android:orientation="horizontal">
 
-        android:id="@+id/btn_reject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-       android:layout_alignParentBottom="true"
-        android:layout_margin="88dp"
-        android:text="Reject"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:padding="15dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_weight="0.5"
+            android:text="Reject"
+            android:background="@color/colorPrimaryDark"
+            />
 
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="0dp"
+            android:padding="15dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Accept"
+            android:background="@color/colorPrimaryDark"
+            />
+    </LinearLayout>
 
 
 </RelativeLayout>
