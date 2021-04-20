@@ -1,17 +1,16 @@
 package com.hirmiproject.hirmi.fragmentsCustodian
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.DialogFragment
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
+import com.hirmiproject.hirmi.ui.main.dialog_fragment
 
 
 class SettingsFragment : Fragment() {
@@ -46,6 +45,11 @@ class SettingsFragment : Fragment() {
                 lv.onItemClickListener=AdapterView.OnItemClickListener{parent, view, position, id ->
                 // This is your listview's selected item
                 val item = parent.getItemAtPosition(position).toString()
+                    val transaction = activity!!.supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.f_id, dialog_fragment())
+
+                    transaction.commit()
+
 
 
             }
