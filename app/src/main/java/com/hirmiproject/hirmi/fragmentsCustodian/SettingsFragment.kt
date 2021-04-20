@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
 import com.hirmiproject.hirmi.ui.main.dialog_fragment
+import java.lang.Exception
 import java.util.zip.Inflater
 
 
@@ -61,15 +62,39 @@ class SettingsFragment : Fragment() {
                 }*/
                 lv.setOnItemClickListener { parent, view, position, id ->
                     val element = arrayAdapter.getItem(position) // The item that was clicked
-
                     val dialogView = inflater.inflate(R.layout.custodian_dialog_box,null)
-
                     val dialog = AlertDialog.Builder(activity as Context).setView(dialogView)
-                    dialogView.findViewById<TextView>(R.id.drawing_id).text = element.toString()
-                    /*dialog.setPositiveButton("Inspection Call"){text , listener ->
-                        //To Be Implemented
-                    }*/
 
+                    var inspectorId = dialogView.findViewById<TextView>(R.id.inspector_id)
+                    var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
+                    var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
+                    var quantityId = dialogView.findViewById<TextView>(R.id.quantity_id)
+                    var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
+
+                    var descContainer : String
+                    var inspectionQuatity : Int?
+                    var inspectionStringQuatity : String
+
+                    drawingId.text = element.toString()
+                    dialog.setPositiveButton("Inspection Call"){text , listener ->
+
+                        descContainer = descriptionId.text.toString()
+
+                        try{
+                            inspectionQuatity = quantityForInsId.text.toString().toInt()
+                        }catch(e: Exception){
+                            Toast.makeText(activity as Context, "Enter Inspection Quantity" , Toast.LENGTH_LONG).show()
+                        }
+
+                        // inspectionQuatity - contains Inspection Quantity
+                        // descContainer  ->  conatins All the Description
+                        // Code Here :
+
+
+
+                    }
+                    dialog.setNegativeButton("Cancel"){text , listener ->}
+                    dialog.setCancelable(true)
                     dialog.create()
                     dialog.show()
 
@@ -86,9 +111,7 @@ class SettingsFragment : Fragment() {
         items.addListenerForSingleValueEvent(valueEventListener)
 
 
-
         // Inflate the layout for this fragment
-
         return view
 
 

@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
 
-            android:id="@+id/message_box_header"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Drawing No. "
-
-            android:textAlignment="center"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/drawing_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Fetching Data.."
-            android:textSize="20sp" />
-    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/message_box_header"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Drawing No. "
+
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/drawing_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fetching Data.."
+                android:textAlignment="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <TextView
 
 
@@ -47,8 +50,8 @@
                 android:id="@+id/inspector_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:text="Fetching Data.."
+                android:textAlignment="center"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -56,6 +59,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
 
 
@@ -75,9 +79,11 @@
                 android:textSize="20sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
 
 
@@ -97,9 +103,11 @@
                 android:textSize="20sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
 
 
@@ -119,41 +127,43 @@
                 android:textSize="20sp" />
 
 
-
         </LinearLayout>
-        <LinearLayout
+
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
 
 
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="Status : "
-                android:visibility="invisible"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/status_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
                 android:hint="Type.."
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="140dp"
-        android:layout_height="wrap_content"
-        android:text="Inspection call"/>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="140dp"
+                android:text="Inspection call" />
+        </LinearLayout>-->
 
     </LinearLayout>
 
