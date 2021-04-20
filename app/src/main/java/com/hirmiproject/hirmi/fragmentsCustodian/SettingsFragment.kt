@@ -1,11 +1,15 @@
 package com.hirmiproject.hirmi.fragmentsCustodian
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.hirmiproject.hirmi.MainActivityNew
@@ -31,6 +35,9 @@ class SettingsFragment : Fragment() {
         val items:DatabaseReference = database.getReference("item")
         val arrayList = ArrayList<String>()
         var arrayAdapter: ArrayAdapter<*>
+
+        arrayAdapter = context?.let { ArrayAdapter(it,android.R.layout.simple_list_item_1, arrayList) }!!
+
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -42,17 +49,24 @@ class SettingsFragment : Fragment() {
 
 
                 }
-                lv.onItemClickListener=AdapterView.OnItemClickListener{parent, view, position, id ->
-                // This is your listview's selected item
-                val item = parent.getItemAtPosition(position).toString()
-                    val transaction = activity!!.supportFragmentManager.beginTransaction()
+                /*lv.onItemClickListener=AdapterView.OnItemClickListener { parent, view, position, id ->
+                    // This is your listview's selected item
+                    val item = parent.getItemAtPosition(position).toString()
+                    *//*val transaction = activity!!.supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.f_id, dialog_fragment())
 
-                    transaction.commit()
+                    transaction.commit()*//*
+                        dialog_fragment().setupDialog(dia)
 
+                }*/
+                lv.setOnItemClickListener { parent, view, position, id ->
+                    val element = arrayAdapter.getItem(position) // The item that was clicked
+                    val dialog = AlertDialog.Builder(activity as Context).setView(R.layout.custodian_dialog_box)
+                    dialog.create()
+                    dialog.show()
 
+                }
 
-            }
 
             }
 
@@ -78,4 +92,5 @@ class SettingsFragment : Fragment() {
     }
 
 }
+
 
