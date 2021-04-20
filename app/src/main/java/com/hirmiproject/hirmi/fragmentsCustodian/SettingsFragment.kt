@@ -1,20 +1,20 @@
 package com.hirmiproject.hirmi.fragmentsCustodian
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
 import com.hirmiproject.hirmi.ui.main.dialog_fragment
+import java.util.zip.Inflater
 
 
 class SettingsFragment : Fragment() {
@@ -61,7 +61,15 @@ class SettingsFragment : Fragment() {
                 }*/
                 lv.setOnItemClickListener { parent, view, position, id ->
                     val element = arrayAdapter.getItem(position) // The item that was clicked
-                    val dialog = AlertDialog.Builder(activity as Context).setView(R.layout.custodian_dialog_box)
+
+                    val dialogView = inflater.inflate(R.layout.custodian_dialog_box,null)
+
+                    val dialog = AlertDialog.Builder(activity as Context).setView(dialogView)
+                    dialogView.findViewById<TextView>(R.id.drawing_id).text = element.toString()
+                    /*dialog.setPositiveButton("Inspection Call"){text , listener ->
+                        //To Be Implemented
+                    }*/
+
                     dialog.create()
                     dialog.show()
 
