@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:elevation="12dp"
-
             android:padding="12dp"
             app:cardCornerRadius="20dp">
 
@@ -80,6 +79,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/tv_admin_name"
                         android:text="ADMIN NAME"
                         android:textColor="#ffff"
                         android:textStyle="bold"
@@ -104,7 +104,8 @@
             android:layout_height="match_parent"
             android:elevation="12dp"
             android:padding="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            android:id="@+id/cv_add_new_roles">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -141,7 +142,8 @@
             android:layout_marginLeft="10dp"
             android:elevation="12dp"
             android:padding="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            android:id="@+id/cv_add_drawings">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -179,14 +181,16 @@
         android:layout_height="150dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="10dp"
+        >
 
         <androidx.cardview.widget.CardView
             android:layout_width="165dp"
             android:layout_height="match_parent"
             android:elevation="12dp"
             android:padding="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            android:id="@+id/cv_monthly_report">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -223,7 +227,8 @@
             android:layout_marginLeft="10dp"
             android:elevation="12dp"
             android:padding="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="12dp"
+            android:id="@+id/cv_employees">
 
             <RelativeLayout
                 android:layout_width="match_parent"
