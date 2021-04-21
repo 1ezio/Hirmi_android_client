@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User_regis"></activity>
+        <activity android:name=".AdminMainScreenActivity"></activity>
+        <activity android:name=".User_regis" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Ispector_layout"
