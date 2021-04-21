@@ -1,17 +1,18 @@
 package com.hirmiproject.hirmi.fragmentsCustodian
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
-import com.hirmiproject.hirmi.ui.main.dialog_fragment
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HistoryFragment : Fragment() {
 
@@ -34,16 +35,22 @@ class HistoryFragment : Fragment() {
         var arrayAdapter: ArrayAdapter<*>
 
 
+        //DATE
+        val c = Calendar.getInstance().time
+
+        val df = SimpleDateFormat("MMM-yyyy", Locale.getDefault())
+        val formattedDate = df.format(c).toString()
+
 
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
                     var drawings =ds.child("date").toString()
                     var status = ds.child("status").toString()
-                    if (drawings.contains("Apr-2021",ignoreCase = true)){
-                        arrayList.add("Drawing No. : "+ds.child("drawing_no").value.toString()+"      Status : "+ ds.child("status").value.toString())
+                    if (drawings.contains(formattedDate, ignoreCase = true)){
+                        arrayList.add("Drawing No. : " + ds.child("drawing_no").value.toString() + "      Status : " + ds.child("status").value.toString())
 
-                        arrayAdapter = context?.let { ArrayAdapter(it,android.R.layout.simple_list_item_1, arrayList) }!!
+                        arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter
 
 

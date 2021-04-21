@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //DATE
                 Date c = Calendar.getInstance().getTime();
-                System.out.println("Current time => " + c);
 
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
                 String formattedDate = df.format(c);
