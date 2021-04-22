@@ -31,26 +31,26 @@ public class inspector_dialog {
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
-        final DatabaseReference items = database.getReference("item");
-        items.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference i_items = database.getReference("item");
+        i_items.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (final DataSnapshot ds : snapshot.getChildren()) {
-                    final String drawing = ds.getKey();
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (final DataSnapshot s : datasnapshot.getChildren()) {
+                    final String drawing = s.getKey();
                     if (msg.equals(drawing)){
                         drawing_no.setText(drawing);
-                        inspector_name.setText(ds.child("inspector_name").getValue().toString());
-                        quantity.setText(ds.child("quantity").getValue().toString());
+                        inspector_name.setText(s.child("inspector_name").getValue().toString());
+                        quantity.setText(s.child("quantity").getValue().toString());
                         accept.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                items.child(drawing).child("status").setValue("ACCEPTED");
+                                i_items.child(drawing).child("status").setValue("ACCEPTED");
                             }
                         });
                         reject.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                items.child(drawing).child("status").setValue("REJECTED");
+                                i_items.child(drawing).child("status").setValue("REJECTED");
 
                             }
                         });

@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
+import com.hirmiproject.hirmi.ui.main.Fragment3
+import com.hirmiproject.hirmi.ui.main.Fragment3.MyListAdaper
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,7 +50,7 @@ class HistoryFragment : Fragment() {
                     var drawings =ds.child("date").toString()
                     var status = ds.child("status").toString()
                     if (drawings.contains(formattedDate, ignoreCase = true)){
-                        arrayList.add("Drawing No. : " + ds.child("drawing_no").value.toString() + "      Status : " + ds.child("status").value.toString())
+                        arrayList.add("Drawing No. : " + ds.child("drawing_no").value.toString() + "                          Status : " + ds.child("status").value.toString()+"                             Date : " + ds.child("date").value.toString())
 
                         arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter

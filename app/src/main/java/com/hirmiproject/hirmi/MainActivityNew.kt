@@ -38,28 +38,18 @@ class MainActivityNew : AppCompatActivity() {
 
     private fun setUpTabs(){
         val adapter = ViewPageAdapterCustodian(supportFragmentManager)
-        adapter.addFragment(HomeFragment(), "Home")
+        adapter.addFragment(SettingsFragment(), "Settings")
         adapter.addFragment(HistoryFragment(), "History")
         
-        adapter.addFragment(SettingsFragment(), "Settings")
+
 
         viewPager.adapter = adapter
         tabsCustodian.setupWithViewPager(viewPager)
 
-        tabsCustodian.getTabAt(0)?.setIcon(R.drawable.ic_baseline_home_24)
+
         tabsCustodian.getTabAt(1)?.setIcon(R.drawable.ic_baseline_history_24)
-        tabsCustodian.getTabAt(2)?.setIcon(R.drawable.ic_baseline_settings_24)
+        tabsCustodian.getTabAt(0)?.setIcon(R.drawable.ic_baseline_settings_24)
     }
 
-    override fun onBackPressed() {
-
-        println(MainActivityNew.getFragment())
-
-        if(MainActivityNew.getFragment() == null || MainActivityNew.getFragment()!="Fragment_1")
-            tabsCustodian.getTabAt(0)?.select()
-        else
-            super.onBackPressed()
-
-    }
 
 }

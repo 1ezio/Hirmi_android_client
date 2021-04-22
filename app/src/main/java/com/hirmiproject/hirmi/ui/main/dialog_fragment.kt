@@ -14,6 +14,12 @@ class dialog_fragment : DialogFragment() {
             savedInstanceState: Bundle?): View? {
         getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.round_corner);
         val view: View = inflater.inflate(R.layout.custodian_dialog_box, container, false)
+
+
+
+
+
+
         return view
     }
 

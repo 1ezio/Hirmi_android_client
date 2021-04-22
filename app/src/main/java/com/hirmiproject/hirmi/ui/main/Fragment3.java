@@ -75,7 +75,7 @@ public class Fragment3 extends Fragment {
         });
         return view;
     }
-    private class MyListAdaper extends ArrayAdapter<String> {
+    public class MyListAdaper extends ArrayAdapter<String> {
         private int layout;
         private List<String> mObjects;
         private MyListAdaper(Context context, int resource, List<String> objects) {

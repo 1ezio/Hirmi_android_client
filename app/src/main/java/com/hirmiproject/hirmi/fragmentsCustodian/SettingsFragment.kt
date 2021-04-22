@@ -72,23 +72,32 @@ class SettingsFragment : Fragment() {
                     var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
 
                     var descContainer : String
-                    var inspectionQuatity : Int?
+                    var inspectionQuatity : String
                     var inspectionStringQuatity : String
+                    var d = dataSnapshot.child(element.toString())
+                        val name=d.child("inspector_name").getValue().toString()
+                        inspectorId.setText(name)
+
+
+                        val q=d.child("quantity").getValue().toString()
+                        quantityId.setText(q)
+
+
+
 
                     drawingId.text = element.toString()
                     dialog.setPositiveButton("Inspection Call"){text , listener ->
 
                         descContainer = descriptionId.text.toString()
-
+                        items.child(element as String).child("basic_desc").setValue(descContainer)
                         try{
-                            inspectionQuatity = quantityForInsId.text.toString().toInt()
+                            inspectionQuatity = quantityForInsId.text.toString()
+                            items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
                         }catch(e: Exception){
                             Toast.makeText(activity as Context, "Enter Inspection Quantity" , Toast.LENGTH_LONG).show()
                         }
 
-                        // inspectionQuatity - contains Inspection Quantity
-                        // descContainer  ->  conatins All the Description
-                        // Code Here :
+                        //INSPECTION CALL HERE
 
 
 
