@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -71,16 +72,41 @@ public class MainActivity extends AppCompatActivity {
                 Date c = Calendar.getInstance().getTime();
 
                 SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                String formattedDate = df.format(c);
+                final String formattedDate = df.format(c);
 
                 //FIREBASE
-                FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
-                DatabaseReference work = database.getReference("item");
-                work.child(draw.getText().toString()).child("drawing_no").setValue(draw.getText().toString());
-                work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
-                work.child(draw.getText().toString()).child("inspector_name").setValue(i_name.getText().toString());
-                work.child(draw.getText().toString()).child("date").setValue(formattedDate);
-                work.child(draw.getText().toString()).child("status").setValue("pending");
+                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
+                 final DatabaseReference work = database.getReference("item");
+
+
+                DatabaseReference ref = database.getReference("inspector");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
+                        DatabaseReference work = database.getReference("item");
+                        for (DataSnapshot ds: snapshot.getChildren()) {
+                            String n =i_name.getText().toString();
+                            if (n.equals(ds.child("name").getValue().toString())){
+
+                                work.child(draw.getText().toString()).child("drawing_no").setValue(draw.getText().toString());
+                                work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
+                                work.child(draw.getText().toString()).child("inspector_name").setValue(i_name.getText().toString());
+                                work.child(draw.getText().toString()).child("date").setValue(formattedDate);
+                                work.child(draw.getText().toString()).child("status").setValue("pending");
+                                work.child(draw.getText().toString()).child("phone").setValue(ds.child("phn").getValue().toString());
+
+
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
 
             }

@@ -3,11 +3,19 @@ package com.hirmiproject.hirmi.fragmentsCustodian
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
@@ -15,6 +23,7 @@ import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
 import com.hirmiproject.hirmi.ui.main.dialog_fragment
 import java.lang.Exception
+import java.util.jar.Manifest
 import java.util.zip.Inflater
 
 
@@ -26,16 +35,22 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onCreateView(
+
      inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
         MainActivityNew.setFragment("Fragment_3")
+
         val view:View = inflater.inflate(R.layout.fragment_custodian_settings, container, false)
         val lv = view.findViewById<ListView>(R.id.listview)
 
         val database:FirebaseDatabase = getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items:DatabaseReference = database.getReference("item")
+
         val arrayList = ArrayList<String>()
         var arrayAdapter: ArrayAdapter<*>
+
+
+
 
         arrayAdapter = context?.let { ArrayAdapter(it,android.R.layout.simple_list_item_1, arrayList) }!!
 
@@ -93,11 +108,43 @@ class SettingsFragment : Fragment() {
                         try{
                             inspectionQuatity = quantityForInsId.text.toString()
                             items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
+                            val num = d.child("phone").getValue().toString()
+
+                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                                if ((ContextCompat.checkSelfPermission(activity!!,android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
+                                    try {val smsManager = SmsManager.getDefault()
+                                        smsManager.sendTextMessage(num,null,"Inspection Call for " +
+                                                " : "+ element+ " "+ "is made",null,null)
+
+                                    }catch (e:Exception ){
+                                        requestPermissions(context as Activity,(arrayOf(android.Manifest.permission.SEND_SMS)),1)
+
+
+                                    }
+                                }
+                            }
+                            if  (ifwhatsappinstalled()){
+                                var i = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+num+"&text="+"Inspection Call for " +
+                                        " : "+ element+ " "+ "is made"))
+
+                                startActivity(i)
+
+
+                                //SMS INTEGRATION
+
+
+
+
+                            }else{
+                                Toast.makeText(context, "Whatsapp Not Found", Toast.LENGTH_SHORT).show()
+                            }
+
                         }catch(e: Exception){
                             Toast.makeText(activity as Context, "Enter Inspection Quantity" , Toast.LENGTH_LONG).show()
                         }
 
-                        //INSPECTION CALL HERE
+
+
 
 
 
@@ -126,10 +173,25 @@ class SettingsFragment : Fragment() {
 
     }
 
+    private fun ifwhatsappinstalled():Boolean {
+        val packageManager: PackageManager
+        var whatsappinstalled:Boolean
+
+        return try {
+            val packageManager = context?.packageManager
+            packageManager ?.getPackageInfo("com.whatsapp", 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+
     override fun onResume() {
         MainActivityNew.setFragment("Fragment_3")
         super.onResume()
     }
+
 
 }
 
