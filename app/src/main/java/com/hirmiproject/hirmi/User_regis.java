@@ -1,5 +1,6 @@
 package com.hirmiproject.hirmi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,24 +12,32 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Random;
 
 public class User_regis extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] workers= { "Make Choice","Custodian", "Inspector"};
     Button proceed;
     String cate;
-    EditText name , email , phn, reg;
+    FirebaseAuth firebaseAuth  ;
+
+    EditText name , phn, reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_regis);
+        setContentView(R.layout.user_reg_final);
         Spinner spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 
         //EditText Declaration
         name = findViewById(R.id.name_id);
-        email = findViewById(R.id.e_id);
+
         phn = findViewById(R.id.mob_id);
         reg = findViewById(R.id.reg_id);
 
@@ -58,7 +67,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
         cate= workers[i].toString();
         final FirebaseDatabase database =FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
 
-
+        firebaseAuth = FirebaseAuth.getInstance();
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,23 +77,54 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
 
                     //TYPE GENERATE PASSWORD HERE
                     //AND SEND MAIL 
+                    String s =  encodeString(reg.getText().toString());
+                    creference.child(s).child("reg_id").setValue(s);
+                    creference.child(s).child("name").setValue(name.getText().toString());
+                    creference.child(s).child("phn").setValue(phn.getText().toString());
 
-                    creference.child(reg.getText().toString()).child("reg_id").setValue(reg.getText().toString());
-                    creference.child(reg.getText().toString()).child("name").setValue(name.getText().toString());
-                    creference.child(reg.getText().toString()).child("phn").setValue(phn.getText().toString());
-                    creference.child(reg.getText().toString()).child("email").setValue(email.getText().toString());
+                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(),phn.getText().toString()).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                            }
+                                                    }
+                    });
+
+
+
 
                 }if (cate.equals("Inspector")){
                     final DatabaseReference ireference = database.getReference("inspector");
-                    ireference.child(reg.getText().toString()).child("reg_id").setValue(reg.getText().toString());
-                    ireference.child(reg.getText().toString()).child("name").setValue(name.getText().toString());
-                    ireference.child(reg.getText().toString()).child("phn").setValue(phn.getText().toString());
-                    ireference.child(reg.getText().toString()).child("email").setValue(email.getText().toString());
+                    String s = encodeString(reg.getText().toString());
+                    ireference.child(s).child("reg_id").setValue(s);
+                    ireference.child(s).child("name").setValue(name.getText().toString());
+                    ireference.child(s).child("phn").setValue(phn.getText().toString());
+                    Random rnd = new Random();
 
-                }else{
-                    Toast.makeText(User_regis.this, "Make Correct Choice", Toast.LENGTH_SHORT).show();
+                    int n = 100000 + rnd.nextInt(900000);
+
+                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (task.isCanceled()){
+                                Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+
                 }
 
+
+            }
+
+            private String encodeString(String string) {
+                return string.replace(".", ",");
             }
         });
     }
