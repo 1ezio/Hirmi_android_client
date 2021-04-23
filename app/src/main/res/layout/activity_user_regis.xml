@@ -1,131 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:orientation="vertical"
     tools:context=".User_regis">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_marginTop="20dp"
-    android:layout_height="wrap_content">
 
-    <TextView
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter Name : "
-        android:textSize="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
-
-    <EditText
-        android:id="@+id/name_id"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:hint="Type.."
-        android:layout_marginTop="10dp"/>
-
-
-
-</LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="Enter Name : "
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/name_id"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20sp"
+            android:background="@drawable/round_corner"
+            android:hint="Type.."
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registered ID : "
-            android:textSize="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_below="@+id/name_id"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Inspector Name : "
+            android:textColor="#000"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/reg_id"
-            android:layout_width="200dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/name_id"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_corner"
             android:hint="Type.."
-            android:layout_marginTop="10dp"/>
-
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/reg_id"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
             android:text="Mobile No : "
-            android:textSize="20dp"
-
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
+            android:textColor="#000"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/mob_id"
-            android:layout_width="200dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/reg_id"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_corner"
             android:hint="Type.."
-            android:layout_marginLeft="10dp"
-            android:inputType="number"
-            android:maxLength="10"
-            android:layout_marginTop="10dp"/>
-
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E-Mail : "
-            android:textSize="20dp"
-
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_below="@+id/mob_id"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Mobile No : "
+            android:textColor="#000"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/e_id"
-            android:layout_width="200dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/mob_id"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_corner"
             android:hint="Type.."
-            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
-            android:layout_marginTop="10dp"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/e_id" />
 
-
-
-    </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="65dp" />
-</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <Button
             android:id="@+id/r_id"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:text="register"/>
-    </LinearLayout>
+            android:layout_below="@id/spinner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="40dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/button_design"
+            android:text="Register" />
 
+    </RelativeLayout>
 
 </LinearLayout>
