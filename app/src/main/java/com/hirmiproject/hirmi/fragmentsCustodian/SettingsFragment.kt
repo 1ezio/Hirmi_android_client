@@ -75,6 +75,7 @@ class SettingsFragment : Fragment() {
                         dialog_fragment().setupDialog(dia)
 
                 }*/
+
                 lv.setOnItemClickListener { parent, view, position, id ->
                     val element = arrayAdapter.getItem(position) // The item that was clicked
                     val dialogView = inflater.inflate(R.layout.custodian_dialog_box,null)
@@ -84,6 +85,7 @@ class SettingsFragment : Fragment() {
                     var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
                     var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
                     var quantityId = dialogView.findViewById<TextView>(R.id.quantity_id)
+                    var reg = dialogView.findViewById<EditText>(R.id.reg_id_id)
                     var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
 
                     var descContainer : String
@@ -100,8 +102,31 @@ class SettingsFragment : Fragment() {
 
 
 
+
                     drawingId.text = element.toString()
                     dialog.setPositiveButton("Inspection Call"){text , listener ->
+                        //Custodian RegID verification
+                        val cus_data:DatabaseReference = database.getReference("custodian")
+                        val listener = object :ValueEventListener{
+                            override fun onDataChange(ss: DataSnapshot) {
+                                for (s in ss.children) {
+                                    if (s.key==reg.text.toString()) {
+                                        val d = reg.text.toString()
+                                        val p = s.child("phn").getValue().toString()
+                                        items.child(element as String).child("cus_phn").setValue(p)
+                                    }
+                                }
+
+
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                        }
+                        cus_data.addListenerForSingleValueEvent(listener)
+
 
                         descContainer = descriptionId.text.toString()
                         items.child(element as String).child("basic_desc").setValue(descContainer)
