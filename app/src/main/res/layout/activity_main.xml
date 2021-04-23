@@ -3,146 +3,129 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-<LinearLayout
-    android:layout_marginTop="100dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
 
-    <TextView
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20sp"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Drawing No. : "
-        />
-
-    <EditText
-        android:id="@+id/draw_id"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="Type.."
-        android:textSize="20sp"
-
-
-        />
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20sp"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inspector Name : "
-        />
-
-    <EditText
-        android:layout_width="150dp"
-        android:id="@+id/ins_id"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="Type.."
-        android:textSize="20sp"
-
-
-        />
-
-
-</LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="20dp"
-            android:textSize="20sp"
-            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quantity (in T) : "
-            />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="Drawing No. : "
+            android:textColor="#000"
+            android:textSize="20sp" />
 
         <EditText
-            android:layout_width="150dp"
-            android:id="@+id/q_id"
+            android:id="@+id/draw_id"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20sp"
+            android:background="@drawable/round_corner"
             android:hint="Type.."
-            android:textSize="20sp"
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
 
-            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/draw_id"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Inspector Name : "
+            android:textColor="#000"
+            android:textSize="20sp" />
 
+        <EditText
+            android:id="@+id/ins_id"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/draw_id"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_corner"
+            android:hint="Type.."
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ins_id"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="28dp"
+            android:text="Quantity (in T) : "
+            android:textColor="#000"
+            android:textSize="20sp" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp"
-        android:layout_height="75dp">
+        <EditText
+            android:id="@+id/q_id"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ins_id"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_corner"
+            android:hint="Type.."
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
 
         <Button
+            android:elevation="22dp"
             android:id="@+id/proc_id"
-            android:layout_width="wrap_content"
-            android:text="Proceed"
-            android:layout_marginLeft="160dp"
-
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:visibility="invisible"
-            android:textSize="20dp"
-            android:id="@+id/add_ins"
-            android:clickable="true"
-
-            android:textColor="#000"
+            android:layout_width="180dp"
+            android:textColor="#ffff"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
-           android:text="ADD"/>
+            android:layout_below="@id/q_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_design"
+            android:text="Proceed" />
 
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-
-        android:layout_marginTop="10dp"
-        android:layout_height="70dp">
-
+        <TextView
+            android:id="@+id/add_ins"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/proc_id"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/round_corner"
+            android:clickable="true"
+            android:text="ADD"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:visibility="invisible" />
+       
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="352dp"
-            android:src="@drawable/a"
-            android:focusable="true"
             android:id="@+id/fab_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:background="@drawable/f_button"
-            app:layout_anchorGravity="bottom|right|end"
+            android:focusable="true"
+            android:src="@drawable/a"
             app:fabCustomSize="40dp"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/add_ins"
+            app:layout_anchorGravity="bottom|right|end" />
 
-
-
+    </RelativeLayout>
 
 </LinearLayout>

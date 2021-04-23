@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="350dp"
-    android:layout_height="250dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="18dp"
-    android:orientation="vertical">
+    android:background="@drawable/gradient"
+    android:orientation="vertical"
+    android:padding="18dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <TextView
 
@@ -23,8 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="Drawing No. "
-
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
 
             <TextView
@@ -33,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="Fetching Data.."
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
         </LinearLayout>
         <LinearLayout
@@ -55,16 +57,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <TextView
-
 
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="Inspector Name : "
-
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
 
             <TextView
@@ -73,120 +75,86 @@
                 android:layout_height="wrap_content"
                 android:text="Fetching Data.."
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <TextView
-
 
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="Brief Dexcription : "
-
                 android:textAlignment="center"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/description_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:hint="Type.."
+                android:textColor="#000"
                 android:textSize="20sp" />
 
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/description_id"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@drawable/round_corner"
+            android:hint="Write Description...."
+            android:lines="4"
+            android:paddingHorizontal="20dp"
+            android:textSize="20sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <TextView
-
-
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Total Quantity : "
-
+                android:text="Total Quantity(in MT) : "
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/quantity_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Fetching Data.."
+                android:textColor="#000"
                 android:textSize="20sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
 
             <TextView
-
 
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="Quantity for Inspection : "
-
+                android:textScaleX="0.95"
                 android:textAlignment="center"
+                android:textColor="#000"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/quantity_i_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:hint="Type.."
+                android:layout_height="55dp"
+                android:background="@drawable/round_corner"
+                android:hint="In MT"
+                android:paddingHorizontal="20dp"
                 android:textSize="20sp" />
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-
-
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Status : "
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/status_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Type.."
-                android:textSize="20sp"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="140dp"
-                android:text="Inspection call" />
         </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>
