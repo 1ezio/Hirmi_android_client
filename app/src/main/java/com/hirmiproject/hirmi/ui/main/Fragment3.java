@@ -1,7 +1,12 @@
 package com.hirmiproject.hirmi.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -102,7 +108,60 @@ public class Fragment3 extends Fragment {
                 @Override
                 public void onClick(View v) {
                     finalMainViewholder.button.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
+                    DatabaseReference items = database.getReference("item");
+                    items.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                               if (dataSnapshot.getKey().equals(getItem(position))){
+                                   String d = dataSnapshot.child("cus_phn").getValue().toString();
+                                   if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+                                       if ((ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
+                                           try {SmsManager smsManager = SmsManager.getDefault();
+                                               smsManager.sendTextMessage(d,null,"Inspection Call for " +
+                                                       " : "+ getItem(position)+ " "+ "is received to Inspector ",null,null);
+
+                                           }catch (Exception e ){
+                                               Toast.makeText(getContext(), "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
+
+                                           }
+                                       }
+                                   }
+
+
+                                   if  (ifwhatsappinstalled()){
+                                       Intent i =new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
+                                               " : "+ getItem(position)+ " "+ "is received to Inspector "));
+
+                                       startActivity(i);
+
+
+                                       //SMS INTEGRATION
+
+
+
+
+                                   }else{
+                                       Toast.makeText(getContext(), "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+                                   }
+                               }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+
+
+
+
+
                 }
             });
             mainViewholder.title.setText(getItem(position));
@@ -110,6 +169,27 @@ public class Fragment3 extends Fragment {
             return convertView;
         }
     }
+
+    private boolean ifwhatsappinstalled() {
+        PackageManager packageManager;
+        Boolean whatsappinstalled ;
+
+        try {
+            packageManager = getActivity().getPackageManager();
+            packageManager.getPackageInfo("com.whstsapp.com",0);
+            whatsappinstalled =true;
+
+
+
+
+        } catch (PackageManager.NameNotFoundException e) {
+            whatsappinstalled =true;
+        }
+
+
+        return whatsappinstalled;
+    }
+
     public class ViewHolder {
 
 
