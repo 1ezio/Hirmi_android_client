@@ -1,0 +1,32 @@
+Index: app/src/main/java/com/hirmiproject/hirmi/ui/main/Fragment3.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.hirmiproject.hirmi.ui.main;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.hirmiproject.hirmi.R;\r\n\r\npublic class Fragment3 extends Fragment {\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        return inflater.inflate(R.layout.fragment3_inspector_layout,container,false);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/hirmiproject/hirmi/ui/main/Fragment3.java	(revision 4e2a574e417fa55c6e04c1ce9bf33a5f5777ba1f)
++++ app/src/main/java/com/hirmiproject/hirmi/ui/main/Fragment3.java	(date 1618998152338)
+@@ -4,6 +4,8 @@
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.ListView;
++import android.widget.Toast;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+@@ -11,10 +13,13 @@
+ 
+ import com.hirmiproject.hirmi.R;
+ 
++import java.util.ArrayList;
++
+ public class Fragment3 extends Fragment {
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+         return inflater.inflate(R.layout.fragment3_inspector_layout,container,false);
+     }
++
+ }
