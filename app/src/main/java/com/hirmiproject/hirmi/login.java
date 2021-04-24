@@ -12,6 +12,7 @@ public class login extends AppCompatActivity {
     Button custodianlayout;
     Button inspectorlayout;
     Button adminlaylout;
+    Button report;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,14 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),Ispector_layout.class));
+            }
+        });
+
+        report = findViewById(R.id.btn_report);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),report.class));
             }
         });
 

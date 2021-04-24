@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_login"></activity>
+        <activity
+            android:name=".report"
+            android:label="@string/title_activity_report"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".main_login" />
         <activity android:name=".AdminMainScreenActivity" />
         <activity android:name=".User_regis" />
         <activity android:name=".MainActivity" />
