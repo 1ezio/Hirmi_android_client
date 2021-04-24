@@ -21,14 +21,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.MainActivity;
 import com.hirmiproject.hirmi.R;
 
-public class inspector_dialog {
+public class inspector_dialog  {
+    Context context;
+    //Constructor
+    
     public void   showDialog(final Activity activity, final String msg){
             final Dialog dialog = new Dialog(activity);
             dialog.setContentView(R.layout.inspector_dialog);
 
+        
+        
         final TextView drawing_no, inspector_name, quantity;
         final Button accept, reject;
         drawing_no = dialog.findViewById(R.id.idrawing_id);
@@ -56,6 +62,12 @@ public class inspector_dialog {
                                 i_items.child(drawing).child("status").setValue("ACCEPTED");
                                 if (s.getKey().equals(drawing)){
                                     String d = s.child("cus_phn").getValue().toString();
+                                    String token = s.child("token").getValue().toString();
+                                    Context context1 = null;
+                                    FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
+                                            ,"Drawing no. : "+ drawing+ " is APPROVED",context1,activity);
+                                    notificationsSender.SendNotifications();
+
                                     if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
 
                                             try {

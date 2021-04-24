@@ -116,27 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //ADD BUTTONS
-        add_ins = findViewById(R.id.add_ins);
-
-        add_btn = findViewById(R.id.fab_btn);
 
 
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onbuttonclicked();
 
-            }
-        });
 
-        add_ins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this,User_regis.class);
-                startActivity(i);
-
-            }
-        });
     }
 
 

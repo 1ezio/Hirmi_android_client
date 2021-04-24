@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +23,24 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static android.content.ContentValues.TAG;
 
 public class Fragment3 extends Fragment {
     @Nullable
@@ -93,6 +103,8 @@ public class Fragment3 extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder mainViewholder = null;
+            FirebaseMessaging.getInstance().subscribeToTopic("all");
+
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
@@ -107,6 +119,20 @@ public class Fragment3 extends Fragment {
             mainViewholder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+
+
+
+
+                    //NOTIFICATION
+
+                   /* FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all","Acknowledge"
+                            ,"Acknowledge by Inspector",Fragment3.this.getContext(),getActivity());
+                    notificationsSender.SendNotifications();
+                        */
+
+
                     finalMainViewholder.button.setVisibility(View.INVISIBLE);
                     //Toast.makeText(getContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
                     final FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
@@ -117,6 +143,14 @@ public class Fragment3 extends Fragment {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                if (dataSnapshot.getKey().equals(getItem(position))){
                                    String d = dataSnapshot.child("cus_phn").getValue().toString();
+                                   String token = dataSnapshot.child("token").getValue().toString();
+                                   FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
+                                           ,"Acknowledge by Inspector",Fragment3.this.getContext(),getActivity());
+                                   notificationsSender.SendNotifications();
+
+
+
+
                                    if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
                                        if ((ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
                                            try {SmsManager smsManager = SmsManager.getDefault();

@@ -85,6 +85,7 @@
             android:layout_below="@id/name_id"
             android:layout_alignParentRight="true"
             android:layout_marginTop="20dp"
+            android:inputType="textEmailAddress"
             android:layout_marginRight="20dp"
             android:background="@drawable/round_corner"
             android:hint="E-Mail"
@@ -134,10 +135,10 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="58dp"
         android:gravity="bottom"
-        android:text="          Login"
+        android:text="          Registration"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
 

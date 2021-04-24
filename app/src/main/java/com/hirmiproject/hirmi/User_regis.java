@@ -120,6 +120,33 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
 
                 }
 
+                if (cate.equals("Make Choice")){
+                    final DatabaseReference ireference = database.getReference("admin");
+                    String s = encodeString(reg.getText().toString());
+                    ireference.child(s).child("reg_id").setValue(s);
+                    ireference.child(s).child("name").setValue(name.getText().toString());
+                    ireference.child(s).child("phn").setValue(phn.getText().toString());
+                    Random rnd = new Random();
+
+
+
+                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), (phn.getText().toString())).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (task.isCanceled()){
+                                Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+
+                }
+
+
 
             }
 
