@@ -3,7 +3,9 @@ package com.hirmiproject.hirmi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Random;
 
@@ -100,6 +104,13 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                     ireference.child(s).child("reg_id").setValue(s);
                     ireference.child(s).child("name").setValue(name.getText().toString());
                     ireference.child(s).child("phn").setValue(phn.getText().toString());
+
+
+
+
+
+
+
                     Random rnd = new Random();
 
                     int n = 100000 + rnd.nextInt(900000);

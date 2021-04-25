@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,16 +26,21 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class main_login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth ;
+
     private FirebaseDatabase database ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
+        final CustomProgress progress = new CustomProgress(main_login.this);
+
 
         final EditText email_text, pass_text;
         Button login;
@@ -51,6 +57,7 @@ public class main_login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progress.show();
                 final String email = email_text.getText().toString().trim();
                 String password = pass_text.getText().toString().trim();
 
@@ -70,12 +77,14 @@ public class main_login extends AppCompatActivity {
                                    a_reference.addValueEventListener(new ValueEventListener() {
                                        @Override
                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                                            for(DataSnapshot snapshot1:snapshot.getChildren()){
                                                String key = snapshot1.getKey();
                                                key = key.replace(",", ".");
                                                if (key.equals(email)){
                                                    Intent intent = new Intent(main_login.this,AdminMainScreenActivity.class);
                                                    startActivity(intent);
+                                                   progress.dismiss();
                                                }else{
                                                    c_reference.addValueEventListener(new ValueEventListener() {
                                                        @Override
@@ -86,7 +95,9 @@ public class main_login extends AppCompatActivity {
                                                                if (key.equals(email)) {
                                                                    Intent intent = new Intent(main_login.this, MainActivityNew.class);
                                                                    startActivity(intent);
+                                                                   progress.dismiss();
                                                                }else{
+
                                                                    i_reference.addValueEventListener(new ValueEventListener() {
                                                                        @Override
                                                                        public void onDataChange(@NonNull DataSnapshot i_snapshot) {
@@ -94,8 +105,30 @@ public class main_login extends AppCompatActivity {
                                                                                String key = i_snapshot1.getKey();
                                                                                key = key.replace(",", ".");
                                                                                if (key.equals(email)) {
+
+                                                                                   final String finalKey = key;
+                                                                                   FirebaseInstanceId.getInstance().getInstanceId()
+                                                                                           .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                                                               @Override
+                                                                                               public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                                                   if (!task.isSuccessful()) {
+
+                                                                                                       return;
+                                                                                                   }
+
+                                                                                                   // Get new Instance ID token
+                                                                                                   String token = task.getResult().getToken();
+                                                                                                   String e = email.replace(".",",");
+                                                                                                   i_reference.child(e).child("i_token").setValue(token);
+                                                                                               }
+                                                                                           });
+
+
+
+
                                                                                    Intent intent = new Intent(main_login.this, Ispector_layout.class);
                                                                                    startActivity(intent);
+                                                                                   progress.dismiss();
                                                                                }
                                                                            }
                                                                        }

@@ -8,6 +8,7 @@ import com.hirmiproject.hirmi.fragmentsCustodian.HistoryFragment
 import com.hirmiproject.hirmi.fragmentsCustodian.HomeFragment
 import com.hirmiproject.hirmi.fragmentsCustodian.SettingsFragment
 import com.hirmiproject.hirmi.fragmentsCustodian.adapter.ViewPageAdapterCustodian
+import com.hirmiproject.hirmi.fragmentsCustodian.history_fragment2
 
 class MainActivityNew : AppCompatActivity() {
     companion object{
@@ -39,7 +40,7 @@ class MainActivityNew : AppCompatActivity() {
     private fun setUpTabs(){
         val adapter = ViewPageAdapterCustodian(supportFragmentManager)
         adapter.addFragment(SettingsFragment(), "Settings")
-        adapter.addFragment(HistoryFragment(), "History")
+        adapter.addFragment(history_fragment2   (), "History")
         
 
 

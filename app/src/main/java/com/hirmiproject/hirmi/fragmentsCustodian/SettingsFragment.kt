@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.google.firebase.iid.FirebaseInstanceId
+import com.hirmiproject.hirmi.FcmNotificationsSender
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
 
@@ -95,7 +96,8 @@ class SettingsFragment : Fragment() {
                         inspectorId.setText(name)
 
 
-                        val q=d.child("quantity").getValue().toString()
+
+                    val q=d.child("quantity").getValue().toString()
                         quantityId.setText(q)
 
 
@@ -132,22 +134,42 @@ class SettingsFragment : Fragment() {
 
                         descContainer = descriptionId.text.toString()
                         items.child(element as String).child("basic_desc").setValue(descContainer)
-                        FirebaseInstanceId.getInstance().instanceId
-                                .addOnCompleteListener(OnCompleteListener { task ->
-                                    if (!task.isSuccessful) {
-                                        Log.w(ContentValues.TAG, "getInstanceId failed", task.exception)
-                                        return@OnCompleteListener
-                                    }
 
-                                    // Get new Instance ID token
-                                    val token = task.result!!.token
-                                    items.child(element as String).child("token").setValue(token)
-                                })
 
                         try{
                             inspectionQuatity = quantityForInsId.text.toString()
                             items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
                             val num = d.child("phone").getValue().toString()
+
+                            val token_id:DatabaseReference = database.getReference("inspector")
+                            val id = object :ValueEventListener{
+                                override fun onDataChange(ss: DataSnapshot) {
+                                    for (s in ss.children) {
+                                        if (s.child("name").getValue().toString()==name) {
+                                            items.child(element as String).child("i_token").setValue(s.child("i_token").getValue().toString())
+                                            val i_tokenn = s.child("i_token").getValue().toString()
+
+                                            val notificationsSender = FcmNotificationsSender(i_tokenn, "Inspection Call", "Inspection Call for " +
+                                                    " : " + element + " " + "is made", context , activity)
+                                            notificationsSender.SendNotifications()
+                                        }
+                                    }
+
+
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+
+                                }
+
+                            }
+                            token_id.addListenerForSingleValueEvent(id)
+
+
+
+
+
+
 
                             if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                                 if ((ContextCompat.checkSelfPermission(activity!!, android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){

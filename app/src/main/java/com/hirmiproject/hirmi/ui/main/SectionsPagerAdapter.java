@@ -34,7 +34,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new Fragment3();
                 break;
             case 1:
-                fragment = new HistoryFragment();
+                fragment = new Fragment2();
                 break;
         }
         return fragment;

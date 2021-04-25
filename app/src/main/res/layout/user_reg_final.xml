@@ -28,14 +28,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DOCUMENTIVE"
+            android:text="𝑫𝒐𝒄𝒖𝒎𝒆𝒏𝒕𝒊𝒗𝒆"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
 
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:layout_marginTop="25dp"
-            android:layout_marginLeft="50dp"
-            android:fontFamily="@font/roboto_mediumitalic"/>
+            android:layout_marginLeft="40dp"
+           />
 
 
     </RelativeLayout>
@@ -122,11 +122,12 @@
 
     </LinearLayout>
     <Button
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:id="@+id/r_id"
         android:layout_height="60dp"
         android:background="@drawable/button_design"
-        android:text="Register"
+        android:text="𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
+        android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,9 +139,9 @@
         android:layout_width="170dp"
         android:layout_height="58dp"
         android:gravity="bottom"
-        android:text="          Registration"
+        android:text="          𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp"
+        android:textSize="22sp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relative_id" />

@@ -28,14 +28,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DOCUMENTIVE"
+            android:text="𝑫𝒐𝒄𝒖𝒎𝒆𝒏𝒕𝒊𝒗𝒆"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
 
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="50dp"
-            android:fontFamily="@font/roboto_mediumitalic"/>
+            />
 
 
     </RelativeLayout>
@@ -92,11 +92,12 @@
 
     </LinearLayout>
     <Button
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:background="@drawable/button_design"
         android:id="@+id/login_id"
-        android:text="Login"
+        android:text="𝑳𝒐𝒈𝒊𝒏"
+        android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,9 +110,9 @@
         android:layout_marginStart="41dp"
         android:layout_marginLeft="20dp"
         android:gravity="bottom"
-        android:text="     LOGIN"
+        android:text="   𝑳𝒐𝒈𝒊𝒏"
         android:textColor="@color/colorAccent"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintTop_toBottomOf="@+id/relative_id" />
