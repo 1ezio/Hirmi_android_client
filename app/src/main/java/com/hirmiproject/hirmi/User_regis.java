@@ -82,7 +82,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                     creference.child(s).child("name").setValue(name.getText().toString());
                     creference.child(s).child("phn").setValue(phn.getText().toString());
 
-                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(),phn.getText().toString()).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(),(phn.getText().toString())).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
