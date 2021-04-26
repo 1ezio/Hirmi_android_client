@@ -44,7 +44,7 @@ public class daily_report_fragment extends Fragment {
         final ListView lv = view.findViewById(R.id.liv_id);
 
         Date date = new Date();
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
