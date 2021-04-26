@@ -19,12 +19,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.fragmentsCustodian.adapter.compare_class;
 import com.hirmiproject.hirmi.model_history_inspector;
 import com.hirmiproject.hirmi.ui.main.Fragment2;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class history_fragment2 extends Fragment {
@@ -52,10 +57,12 @@ public class history_fragment2 extends Fragment {
 
                     objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                             , dataSnapshot.child("date").getValue().toString(),
-                            dataSnapshot.child("date").getValue().toString(), dataSnapshot.child("status").getValue().toString()));
+                            dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString()));
+
                     CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                     listView.setAdapter(customAdapter);
+
 
 
 

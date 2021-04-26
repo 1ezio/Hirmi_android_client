@@ -50,6 +50,7 @@ public class Fragment3 extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         DatabaseReference items = database.getReference("item");
+
         final ArrayList<String> arrayList = new ArrayList<String>();
 
         items.addValueEventListener(new ValueEventListener() {
@@ -120,17 +121,6 @@ public class Fragment3 extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-
-
-
-
-
-                    //NOTIFICATION
-
-                   /* FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all","Acknowledge"
-                            ,"Acknowledge by Inspector",Fragment3.this.getContext(),getActivity());
-                    notificationsSender.SendNotifications();
-                        */
 
 
                     finalMainViewholder.button.setVisibility(View.INVISIBLE);

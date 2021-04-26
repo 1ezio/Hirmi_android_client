@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/tv_daily_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Daily history" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/liv_id"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

@@ -65,7 +65,7 @@
         >
 
         <EditText
-            android:layout_width="254dp"
+            android:layout_width="205dp"
             android:layout_height="78dp"
             android:id="@+id/email_id"
             android:layout_marginTop="50dp"
@@ -73,6 +73,7 @@
         <EditText
             android:layout_width="match_parent"
             android:id="@+id/pass_id"
+            android:inputType="textPassword"
             android:layout_height="60dp"
             android:hint="Password"
 

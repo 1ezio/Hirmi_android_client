@@ -93,6 +93,26 @@ public class main_login extends AppCompatActivity {
                                                                String key = c_snapshot1.getKey();
                                                                key = key.replace(",", ".");
                                                                if (key.equals(email)) {
+                                                                   final String finalKey = key;
+                                                                   FirebaseInstanceId.getInstance().getInstanceId()
+                                                                           .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                                               @Override
+                                                                               public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                                   if (!task.isSuccessful()) {
+
+                                                                                       return;
+                                                                                   }
+
+                                                                                   // Get new Instance ID token
+                                                                                   String token = task.getResult().getToken();
+                                                                                   String e = email.replace(".",",");
+                                                                                   c_reference.child(e).child("c_token").setValue(token);
+                                                                               }
+                                                                           });
+
+
+
+
                                                                    Intent intent = new Intent(main_login.this, MainActivityNew.class);
                                                                    startActivity(intent);
                                                                    progress.dismiss();

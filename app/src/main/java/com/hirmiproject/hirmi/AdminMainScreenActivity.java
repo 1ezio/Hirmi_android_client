@@ -83,6 +83,8 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         monthlyReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(AdminMainScreenActivity.this, report.class);
+                startActivity(intent);
 
 
             }
