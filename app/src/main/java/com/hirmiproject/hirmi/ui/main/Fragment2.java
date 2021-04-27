@@ -55,9 +55,10 @@ public class Fragment2 extends Fragment {
                      name = snapshot.child(n).child("name").getValue().toString();
 
                 items.addValueEventListener(new ValueEventListener() {
-                    final ArrayList<model_history_inspector> objects = new ArrayList<model_history_inspector>();
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        final ArrayList<model_history_inspector> objects = new ArrayList<model_history_inspector>();
                         for(DataSnapshot dataSnapshot: snapshot.getChildren()){
 
                             if(name.equals(dataSnapshot.child("inspector_name").getValue().toString()) && !dataSnapshot.child("status").getValue().toString().equals("TO BE CALL") ){
@@ -68,6 +69,7 @@ public class Fragment2 extends Fragment {
                                 CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                                 listView.setAdapter(customAdapter);
+                                customAdapter.notifyDataSetChanged();
                             }
 
 
