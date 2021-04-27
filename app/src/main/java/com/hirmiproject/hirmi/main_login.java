@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,8 +35,10 @@ import com.google.firebase.iid.InstanceIdResult;
 public class main_login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth ;
-
     private FirebaseDatabase database ;
+    private EditText email_text;
+    private EditText pass_text;
+    private Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +52,17 @@ public class main_login extends AppCompatActivity {
         final CustomProgress progress = new CustomProgress(main_login.this);
 
 
-        final EditText email_text, pass_text;
-        Button login;
         TextView forgot_password ;
-        email_text = (EditText) findViewById(R.id.email_id);
-        pass_text = (EditText) findViewById(R.id.pass_id);
+        email_text = findViewById(R.id.email_id);
+        pass_text = findViewById(R.id.pass_id);
         login = findViewById(R.id.login_id);
         forgot_password = findViewById(R.id.forgot_id);
+
+        email_text.addTextChangedListener(loginTextWatcher);
+        pass_text.addTextChangedListener(loginTextWatcher);
+
+
+
         database = FirebaseDatabase.getInstance();
         final DatabaseReference a_reference = database.getReference("admin") ;
         final DatabaseReference c_reference = database.getReference("custodian") ;
@@ -72,14 +80,6 @@ public class main_login extends AppCompatActivity {
                 progress.show();
                 final String email = email_text.getText().toString().trim();
                 String password = pass_text.getText().toString().trim();
-
-
-                if(TextUtils.isEmpty(email)){
-                    Toast.makeText(main_login.this, "Please Enter E-MAIL", Toast.LENGTH_SHORT).show();
-                }
-                if(TextUtils.isEmpty(password)){
-                    Toast.makeText(main_login.this, "Please Enter PASSWORD", Toast.LENGTH_SHORT).show();
-                }
 
                 firebaseAuth.signInWithEmailAndPassword(email,password)
                         .addOnCompleteListener(main_login.this, new OnCompleteListener<AuthResult>() {
@@ -248,4 +248,24 @@ public class main_login extends AppCompatActivity {
 
 
     }
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            final String email = email_text.getText().toString().trim();
+            String password = pass_text.getText().toString().trim();
+
+            login.setEnabled(!email.isEmpty() && !password.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
 }

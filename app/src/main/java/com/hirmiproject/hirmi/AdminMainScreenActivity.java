@@ -106,6 +106,8 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         employee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(AdminMainScreenActivity.this, employee_layout.class);
+                startActivity(intent);
 
             }
         });

@@ -52,10 +52,11 @@ import static android.app.Activity.RESULT_OK;
 public class inspector_dialog  {
     Context context;
     //Constructor
+    public static Uri mimageuri;
 
-     public static Uri mimageuri;
-
-
+     private TextView drawing_no, inspector_name, quantity;
+     private Button accept, reject;
+     private EditText  remarks;
 
     public void   showDialog(final Activity activity, final String msg){
          final int PICK_IMAGE_REQUEST = 1;
@@ -64,9 +65,6 @@ public class inspector_dialog  {
 
 
 
-        final TextView drawing_no, inspector_name, quantity;
-        final Button accept, reject;
-        final EditText  remarks;
         drawing_no = dialog.findViewById(R.id.idrawing_id);
         inspector_name = dialog.findViewById(R.id.i_inspector_id);
         quantity = dialog.findViewById(R.id.quantity_i_id);

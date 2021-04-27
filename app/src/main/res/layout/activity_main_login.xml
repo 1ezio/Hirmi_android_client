@@ -99,11 +99,12 @@
         android:id="@+id/login_id"
         android:text="𝑳𝒐𝒈𝒊𝒏"
         android:textSize="20sp"
+        android:enabled="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="25dp"/>
+        android:layout_marginBottom="25dp" />
 
     <TextView
         android:layout_width="150dp"
