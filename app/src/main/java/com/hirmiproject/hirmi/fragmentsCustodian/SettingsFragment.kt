@@ -171,11 +171,18 @@ class SettingsFragment : Fragment() {
 
                             val num = d.child("phone").getValue().toString()
 
+
+                            //DATE
+                            val c = Calendar.getInstance().time
+
+                            val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+                            val formattedDate = df.format(c)
                             val token_id:DatabaseReference = database.getReference("inspector")
                             val id = object :ValueEventListener{
                                 override fun onDataChange(ss: DataSnapshot) {
                                     for (s in ss.children) {
                                         if (s.child("name").getValue().toString()==name) {
+                                            items.child(element as String).child("date").setValue(formattedDate)
                                             items.child(element as String).child("i_token").setValue(s.child("i_token").getValue().toString())
                                             val i_tokenn = s.child("i_token").getValue().toString()
 

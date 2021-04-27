@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +40,11 @@ public class main_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_login);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
+
         final CustomProgress progress = new CustomProgress(main_login.this);
 
 
@@ -53,6 +59,12 @@ public class main_login extends AppCompatActivity {
         final DatabaseReference a_reference = database.getReference("admin") ;
         final DatabaseReference c_reference = database.getReference("custodian") ;
         final DatabaseReference i_reference = database.getReference("inspector") ;
+
+
+
+
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override

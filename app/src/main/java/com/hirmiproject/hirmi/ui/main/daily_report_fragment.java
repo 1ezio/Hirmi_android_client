@@ -31,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class daily_report_fragment extends Fragment {
 
@@ -42,20 +44,31 @@ public class daily_report_fragment extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getReference("report");
         final ListView lv = view.findViewById(R.id.liv_id);
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+        final String formattedDate = df.format(c);
 
-        Date date = new Date();
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+        Calendar cal = Calendar.getInstance();
+        final int mnth = cal.get(Calendar.MONTH);
+
+        final int year= cal.get(Calendar.YEAR);
+
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                snapshot =  snapshot.child(String.valueOf(2021)).child(String.valueOf(1));
+                snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(mnth));
                 final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
                 for (DataSnapshot s: snapshot.getChildren()){
-                    objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                            ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString()));
+                    if (s.child("date").getValue().toString().equals(formattedDate)){
+                        objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
+                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString()));
 
-                    CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
-                    lv.setAdapter(customAdapter);
+                        CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
+                        lv.setAdapter(customAdapter);
+                    }
+
+
                 }
             }
 

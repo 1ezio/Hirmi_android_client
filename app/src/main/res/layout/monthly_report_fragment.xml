@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
     <Button
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -16,10 +19,26 @@
         android:textSize="20sp"
         android:text="Choose Date"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_design"
+        android:layout_marginLeft="120dp"
+        android:id="@+id/download_id"
+        android:layout_marginTop="10dp"
+        android:text="Download"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        />
+</LinearLayout>
+
+
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/lv_id"
         android:layout_height="match_parent"/>
+
+
 
 
 

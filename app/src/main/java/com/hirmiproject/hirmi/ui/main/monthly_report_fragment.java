@@ -2,9 +2,16 @@ package com.hirmiproject.hirmi.ui.main;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +37,28 @@ import com.hirmiproject.hirmi.MainActivity;
 import com.hirmiproject.hirmi.R;
 import com.hirmiproject.hirmi.fragmentsCustodian.history_fragment2;
 import com.hirmiproject.hirmi.model_history_inspector;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.itextpdf.text.Annotation.FILE;
+
 public class monthly_report_fragment extends Fragment {
+
 
 
     @Nullable
@@ -49,8 +71,69 @@ public class monthly_report_fragment extends Fragment {
         final DatabaseReference ref = database.getReference("report");
         final ListView lv = view.findViewById(R.id.lv_id);
 
-
+        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         Button date_picker = view.findViewById(R.id.date_id);
+        Button dowmload = view.findViewById(R.id.download_id);
+
+        dowmload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Bitmap screen;
+                View v1= view.getRootView();
+                v1.setDrawingCacheEnabled(true);
+                screen= Bitmap.createBitmap(v1.getDrawingCache());
+                v1.setDrawingCacheEnabled(false);
+
+
+
+
+
+                try
+                {
+                    Document document = new Document();
+
+                    File storage = Environment.getDataDirectory();
+                    PdfWriter.getInstance(document, new FileOutputStream(storage+"/report.pdf"));
+                    document.open();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    addImage(document,byteArray);
+                    document.close();
+                    Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
+                }
+
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
 
         final DatePickerDialog.OnDateSetListener dateSetListener ;
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -106,6 +189,72 @@ public class monthly_report_fragment extends Fragment {
 
         return view;
     }
+
+    private static void addImage(Document document,byte[] byteArray)
+    {
+        Image image = null;
+        try
+        {
+            image = Image.getInstance(byteArray);
+        }
+        catch (BadElementException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (MalformedURLException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // image.scaleAbsolute(150f, 150f);
+        try
+        {
+            document.add(image);
+        } catch (DocumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+    public static Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
+    }
+
+
+
+
+
+
+
+
+
     public class CustomAdapter extends BaseAdapter {
 
         private LayoutInflater inflater;

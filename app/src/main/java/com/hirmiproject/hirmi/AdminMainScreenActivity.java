@@ -32,6 +32,7 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main_screen);
         database = FirebaseDatabase.getInstance();
+        FirebaseUser user1=FirebaseAuth.getInstance().getCurrentUser();
         mauth = FirebaseAuth.getInstance();
         admin_name = findViewById(R.id.admin_name);
         String user = mauth.getCurrentUser().getEmail();
@@ -97,6 +98,13 @@ public class AdminMainScreenActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
 
     }
 }
