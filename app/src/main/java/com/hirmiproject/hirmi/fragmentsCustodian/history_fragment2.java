@@ -54,7 +54,7 @@ public class history_fragment2 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-
+                if (dataSnapshot.child("status").getValue().toString().equals("ACCEPTED") || dataSnapshot.child("status").getValue().toString().equals("REJECTED")){
                     objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                             , dataSnapshot.child("date").getValue().toString(),
                             dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString()));
@@ -62,6 +62,8 @@ public class history_fragment2 extends Fragment {
                     CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                     listView.setAdapter(customAdapter);
+                }
+
 
 
 

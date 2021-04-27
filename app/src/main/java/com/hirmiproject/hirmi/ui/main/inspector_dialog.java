@@ -105,11 +105,6 @@ public class inspector_dialog  {
                         });
                         accept.setOnClickListener(new View.OnClickListener() {
 
-
-
-
-
-
                             @Override
                             public void onClick(View view) {
 

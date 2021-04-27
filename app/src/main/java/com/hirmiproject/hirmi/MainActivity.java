@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                 work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
                                 work.child(draw.getText().toString()).child("inspector_name").setValue(i_name.getText().toString());
                                 work.child(draw.getText().toString()).child("date").setValue(formattedDate);
-                                work.child(draw.getText().toString()).child("status").setValue("pending");
+                                work.child(draw.getText().toString()).child("status").setValue("PENDING");
                                 work.child(draw.getText().toString()).child("phone").setValue(ds.child("phn").getValue().toString());
                                 work.child(draw.getText().toString()).child("i_token").setValue(ds.child("i_token").getValue().toString());
 

@@ -120,7 +120,9 @@ class SettingsFragment : Fragment() {
                             override fun onDataChange(ss: DataSnapshot) {
                                 for (s in ss.children) {
 
-                                    val mail =firebaseAuth.currentUser.email
+                                    var mail =firebaseAuth.currentUser.email
+
+                                    mail = mail.replace(".",",")
                                     if (s.key==mail ) {
 
 
