@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".employee_layout"
+            android:label="@string/title_activity_employee_layout"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +30,8 @@
         <activity
             android:name=".report"
             android:label="@string/title_activity_report"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".main_login">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".main_login"></activity>
         <activity android:name=".AdminMainScreenActivity" />
         <activity android:name=".User_regis" />
         <activity android:name=".MainActivity" />
@@ -39,7 +39,7 @@
             android:name=".Ispector_layout"
             android:label="@string/title_activity_ispector_layout"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".login"></activity>
+        <activity android:name=".login" />
         <activity android:name=".MainActivityNew" />
 
         <service
