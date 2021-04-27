@@ -71,7 +71,6 @@ public class monthly_report_fragment extends Fragment {
         final DatabaseReference ref = database.getReference("report");
         final ListView lv = view.findViewById(R.id.lv_id);
 
-        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         Button date_picker = view.findViewById(R.id.date_id);
 
 

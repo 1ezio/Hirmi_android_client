@@ -60,10 +60,11 @@ public class Fragment2 extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot: snapshot.getChildren()){
 
-                            if(name.equals(dataSnapshot.child("inspector_name").getValue().toString())){
+                            if(name.equals(dataSnapshot.child("inspector_name").getValue().toString()) && !dataSnapshot.child("status").getValue().toString().equals("TO BE CALL") ){
+
                                 objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                                         ,dataSnapshot.child("date").getValue().toString(),
-                                        dataSnapshot.child("date").getValue().toString(),dataSnapshot.child("status").getValue().toString()));
+                                        dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString()));
                                 CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                                 listView.setAdapter(customAdapter);
@@ -137,6 +138,7 @@ public class Fragment2 extends Fragment {
                 holder.textView1 = (TextView) convertView.findViewById(R.id.his_draw_id);
                 holder.textView2 = (TextView) convertView.findViewById(R.id.status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.date_id);
+                holder.textView4= convertView.findViewById(R.id.time_id);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -156,6 +158,9 @@ public class Fragment2 extends Fragment {
 
 
             holder.textView3.setText(objects.get(position).getDate());
+
+            holder.textView4.setText(objects.get(position).getTime());
+
             return convertView;
         }
     }

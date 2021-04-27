@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -42,6 +43,7 @@ import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -86,7 +88,7 @@ public class inspector_dialog  {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference i_items = database.getReference("item");
 
-        DatabaseReference report = database.getReference("report");
+        final DatabaseReference report_ref = database.getReference("report");
         i_items.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -109,6 +111,16 @@ public class inspector_dialog  {
                             public void onClick(View view) {
 
                                 uploadfile();
+
+                                Calendar c= Calendar.getInstance();
+                                int year = c.get(Calendar.YEAR);
+                                int mnth = c.get(Calendar.MONTH);
+                                String stamp = String.valueOf(ServerValue.TIMESTAMP);
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("ACCEPTED");
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(s.child("date").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(drawing);
 
 
 
@@ -186,6 +198,20 @@ public class inspector_dialog  {
                         reject.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
+
+                                uploadfile();
+                                Calendar c= Calendar.getInstance();
+                                int year = c.get(Calendar.YEAR);
+                                int mnth = c.get(Calendar.MONTH);
+                                String stamp = String.valueOf(ServerValue.TIMESTAMP);
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("REJECTED");
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(s.child("date").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(drawing);
+
+
                                 i_items.child(drawing).child("status").setValue("REJECTED");
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);

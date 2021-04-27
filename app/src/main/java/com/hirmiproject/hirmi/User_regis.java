@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,6 +92,10 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(User_regis.this,
+                                        User_regis.class);
+
+                                startActivity(intent);
                             }
                                                     }
                     });
@@ -120,6 +125,10 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(User_regis.this,
+                                        User_regis.class);
+
+                                startActivity(intent);
                             }
                             else if (task.isCanceled()){
                                 Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
@@ -146,6 +155,10 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(User_regis.this,
+                                        User_regis.class);
+
+                                startActivity(intent);
                             }
                             else if (task.isCanceled()){
                                 Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();

@@ -39,55 +39,41 @@
             android:textSize="20sp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinner_id"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/draw_id"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="58dp"
-            android:layout_marginEnd="25dp"
-            android:layout_toStartOf="@+id/ins_id"
-            android:text="Inspector Name : "
-            android:textColor="#000"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/ins_id"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/draw_id"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="27dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/round_corner"
-            android:hint="Type.."
-            android:paddingHorizontal="20dp"
-            android:textSize="20sp" />
+            android:spinnerMode="dropdown" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ins_id"
+            android:layout_below="@+id/spinner_id"
+            android:id="@+id/q_x_id"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="58dp"
-            android:layout_marginEnd="41dp"
-            android:layout_toStartOf="@+id/q_id"
-            android:text="Quantity (in T) : "
+            android:text="Quantity : "
             android:textColor="#000"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/q_id"
-            android:layout_width="190dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ins_id"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
+            android:layout_below="@+id/spinner_id"
+
+
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="110dp"
+            android:layout_marginRight="62dp"
+            android:layout_toEndOf="@+id/q_x_id"
             android:background="@drawable/round_corner"
             android:hint="Type.."
             android:paddingHorizontal="20dp"

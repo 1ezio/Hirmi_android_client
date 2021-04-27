@@ -120,6 +120,7 @@ public class history_fragment2 extends Fragment {
                 holder.textView1 = (TextView) convertView.findViewById(R.id.his_draw_id);
                 holder.textView2 = (TextView) convertView.findViewById(R.id.status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.date_id);
+                holder.textView4 = (TextView) convertView.findViewById(R.id.time_id);
                 convertView.setTag(holder);
             } else {
                 holder = (CustomAdapter.ViewHolder) convertView.getTag();
@@ -139,6 +140,7 @@ public class history_fragment2 extends Fragment {
 
 
             holder.textView3.setText(objects.get(position).getDate());
+            holder.textView4.setText(objects.get(position).getTime());
             return convertView;
         }
     }

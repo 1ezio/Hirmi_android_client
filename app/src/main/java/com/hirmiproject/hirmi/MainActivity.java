@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +24,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private Animation tobottom;
     private FloatingActionButton add_btn ;
 
-    private EditText draw, i_name, quantity;
+    private EditText draw, quantity;
     Button proceed;
 
     private boolean clicked = false;
@@ -49,19 +53,36 @@ public class MainActivity extends AppCompatActivity {
 
         //EditTExt Declarations
         draw = findViewById(R.id.draw_id);
-        i_name = findViewById(R.id.ins_id);
+
         quantity = findViewById(R.id.q_id);
+
+        final Spinner spinner = findViewById(R.id.spinner_id);
+        FirebaseDatabase data = FirebaseDatabase.getInstance();
+        DatabaseReference r = data.getReference("inspector");
+
+        r.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> n = new ArrayList<String>();
+                n.add("Choose Inspector Name");
+                for (DataSnapshot s : snapshot.getChildren()){
+                    n.add(s.child("name").getValue().toString());
+                    ArrayAdapter<String> addressAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, n);
+                    addressAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(addressAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         proceed = findViewById(R.id.proc_id);
 
-
-
-        //ANIMATIONS
-        openanim =  AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim);
-        closeanim=AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim);
-        frombottom=AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim);
-        tobottom= AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim);
 
 
         //PROCEED BUTTON
@@ -75,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 final String formattedDate = df.format(c);
 
                 //FIREBASE
-                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
-                 final DatabaseReference work = database.getReference("item");
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
+                final DatabaseReference work = database.getReference("item");
 
 
                 DatabaseReference ref = database.getReference("inspector");
@@ -86,17 +107,18 @@ public class MainActivity extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
                         DatabaseReference work = database.getReference("item");
                         for (DataSnapshot ds: snapshot.getChildren()) {
-                            String n =i_name.getText().toString();
+                            String n =spinner.getSelectedItem().toString();
                             if (n.equals(ds.child("name").getValue().toString())){
 
                                 work.child(draw.getText().toString()).child("drawing_no").setValue(draw.getText().toString());
                                 work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
-                                work.child(draw.getText().toString()).child("inspector_name").setValue(i_name.getText().toString());
+                                work.child(draw.getText().toString()).child("inspector_name").setValue(n);
                                 work.child(draw.getText().toString()).child("date").setValue(formattedDate);
-                                work.child(draw.getText().toString()).child("status").setValue("PENDING");
+                                work.child(draw.getText().toString()).child("status").setValue("TO BE CALL");
                                 work.child(draw.getText().toString()).child("phone").setValue(ds.child("phn").getValue().toString());
                                 work.child(draw.getText().toString()).child("i_token").setValue(ds.child("i_token").getValue().toString());
-
+                                Toast.makeText(MainActivity.this, "Data Uploaded", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this,MainActivity.class));
 
                             }
 
@@ -124,40 +146,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void onbuttonclicked() {
-        setvisibility(clicked);
-        setanim(clicked);
-        if(!clicked){
-            clicked = true;
-        }else{
-            clicked= false;
-        }
 
-                
-    }
-
-    private void setvisibility(Boolean clicked) {
-        if(!clicked){
-            add_ins.setVisibility(View.VISIBLE);
-
-        }else{
-            add_ins.setVisibility(View.INVISIBLE);
-
-        }
-
-
-    }
-
-    private void setanim(Boolean clicked) {
-        if(!clicked){
-            add_ins.startAnimation(frombottom);
-
-            add_btn.startAnimation(openanim);
-
-        }else{add_ins.startAnimation(tobottom);
-
-            add_btn.startAnimation(closeanim);
-
-        }
-     }
 }

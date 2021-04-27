@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,9 +49,12 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment3_inspector_layout, container, false);
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String mail = user.getEmail().toString();
+        final String nmail = mail.replace(".",",");
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
-        DatabaseReference items = database.getReference("item");
+        final DatabaseReference items = database.getReference("item");
+        final DatabaseReference n = database.getReference("inspector");
 
         final ArrayList<String> arrayList = new ArrayList<String>();
 
@@ -58,23 +63,48 @@ public class Fragment3 extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    String drawing = child.getKey();
-                    arrayList.add(drawing);
-                    // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
-                    ListView lv = (ListView) view.findViewById(R.id.list_id);
-                    //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
-                    lv.setAdapter(new MyListAdaper(getActivity(), R.layout.inspector_drawings, arrayList));
+                for (final DataSnapshot childs : snapshot.getChildren()) {
+                    final String drawing = childs.getKey();
 
-
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    n.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            inspector_dialog dialog = new inspector_dialog();
-                            dialog.showDialog(getActivity(), arrayList.get(i));
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            final String name ;
+                            name = snapshot.child(nmail).child("name").getValue().toString();
+                            if (childs.child("status").getValue().toString().equals("PENDING") && childs.child("inspector_name").getValue().toString().equals(name)) {
+                                arrayList.add(drawing);
+                                // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
+                                ListView lv = (ListView) view.findViewById(R.id.list_id);
+                                //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
+                                MyListAdaper adapter = new MyListAdaper(getActivity(), R.layout.inspector_drawings, arrayList);
+                                lv.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+
+                                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        inspector_dialog dialog = new inspector_dialog();
+                                        dialog.showDialog(getActivity(), arrayList.get(i));
+
+                                    }
+                                });
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
                         }
                     });
+
+
+
+
+
                 }
 
 

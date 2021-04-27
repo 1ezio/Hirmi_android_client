@@ -61,7 +61,7 @@ class SettingsFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (ds in dataSnapshot.children) {
-                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("PENDING")){
+                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL")){
 
                         val drawings =ds.key
                         arrayList.add(drawings.toString())
@@ -122,7 +122,7 @@ class SettingsFragment : Fragment() {
 
                                     var mail =firebaseAuth.currentUser.email
 
-                                    mail = mail.replace(".",",")
+                                    mail = mail.replace(".", ",")
                                     if (s.key==mail ) {
 
 
@@ -185,6 +185,9 @@ class SettingsFragment : Fragment() {
                                     for (s in ss.children) {
                                         if (s.child("name").getValue().toString()==name) {
                                             items.child(element as String).child("date").setValue(formattedDate)
+                                            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+                                            items.child(element as String).child("time").setValue(currentTime)
+                                            items.child(element as String).child("status").setValue("PENDING")
                                             items.child(element as String).child("i_token").setValue(s.child("i_token").getValue().toString())
                                             val i_tokenn = s.child("i_token").getValue().toString()
 

@@ -199,6 +199,7 @@ public class main_login extends AppCompatActivity {
 
                                 } else {
                                     Toast.makeText(main_login.this, "FAILED", Toast.LENGTH_SHORT).show();
+                                    progress.dismiss();
                                 }
                             }
                         });
