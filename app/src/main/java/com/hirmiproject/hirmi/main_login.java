@@ -268,4 +268,10 @@ public class main_login extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(main_login.this,main_login.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }

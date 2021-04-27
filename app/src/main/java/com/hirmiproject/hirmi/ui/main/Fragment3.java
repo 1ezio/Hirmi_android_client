@@ -37,6 +37,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.main_login;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,15 @@ public class Fragment3 extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference items = database.getReference("item");
         final DatabaseReference n = database.getReference("inspector");
-
+        TextView  signout = view.findViewById(R.id.sign_id);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), main_login.class);
+                startActivity(intent);
+            }
+        });
 
 
         items.addValueEventListener(new ValueEventListener() {

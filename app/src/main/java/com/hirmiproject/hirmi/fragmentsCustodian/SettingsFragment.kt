@@ -18,12 +18,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.google.firebase.iid.FirebaseInstanceId
 import com.hirmiproject.hirmi.FcmNotificationsSender
 import com.hirmiproject.hirmi.MainActivityNew
 import com.hirmiproject.hirmi.R
+import com.hirmiproject.hirmi.main_login
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,7 +50,14 @@ class SettingsFragment : Fragment() {
 
         val database:FirebaseDatabase = getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items:DatabaseReference = database.getReference("item")
+        val mauth: FirebaseAuth
+        val signout = view.findViewById<TextView>(R.id.signout_id)
+        signout.setOnClickListener {
 
+            FirebaseAuth.getInstance().signOut()
+            val intent=Intent(activity, main_login::class.java)
+            startActivity(intent)
+        }
 
         var arrayAdapter: ArrayAdapter<*>
         val valueEventListener = object : ValueEventListener {
