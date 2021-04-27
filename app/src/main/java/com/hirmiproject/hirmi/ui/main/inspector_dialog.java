@@ -2,44 +2,66 @@ package com.hirmiproject.hirmi.ui.main;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.hirmiproject.hirmi.CustomProgress;
 import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.MainActivity;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.upload_image_model;
+import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
+
 public class inspector_dialog  {
     Context context;
     //Constructor
-    
+
+     public static Uri mimageuri;
+
+
+
     public void   showDialog(final Activity activity, final String msg){
+         final int PICK_IMAGE_REQUEST = 1;
             final Dialog dialog = new Dialog(activity);
             dialog.setContentView(R.layout.inspector_dialog);
 
 
-        
+
         final TextView drawing_no, inspector_name, quantity;
         final Button accept, reject;
         final EditText  remarks;
@@ -49,8 +71,16 @@ public class inspector_dialog  {
         accept = dialog.findViewById(R.id.accept_id);
         reject = dialog.findViewById(R.id.reject_id);
 
+        final ProgressBar mprogress = dialog.findViewById(R.id.prog_id);
+        final StorageReference storageReference;
+        storageReference = FirebaseStorage.getInstance().getReference("images");
+
+
+
         remarks = dialog.findViewById(R.id.remark_id);
         final Fragment3 context = new Fragment3();
+        final TextView attach ;
+        attach = dialog.findViewById(R.id.attch_id);
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
@@ -66,9 +96,27 @@ public class inspector_dialog  {
                         drawing_no.setText(drawing);
                         inspector_name.setText(s.child("inspector_name").getValue().toString());
                         quantity.setText(s.child("quantity").getValue().toString());
-                        accept.setOnClickListener(new View.OnClickListener() {
+                        attach.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                openfilechooser();
+
+                            }
+                        });
+                        accept.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+
+                            @Override
+                            public void onClick(View view) {
+
+                                uploadfile();
+
+
+
                                 i_items.child(drawing).child("status").setValue("ACCEPTED");
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);
@@ -220,6 +268,61 @@ public class inspector_dialog  {
                 }
             }
 
+            private String getfileExtension(URI uri){
+                ContentResolver cr = activity.getContentResolver();
+                MimeTypeMap mime =MimeTypeMap.getSingleton();
+                return mime.getExtensionFromMimeType(cr.getType(mimageuri));
+
+            }
+            private void uploadfile() {
+
+                if(mimageuri!=null){
+                    StorageReference fileref = storageReference.child(System.currentTimeMillis()+"."+"jpg");
+                    fileref.putFile(mimageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mprogress.setProgress(0);
+                                }
+                            },5000);
+                            Toast.makeText(activity, "Succes", Toast.LENGTH_SHORT).show();
+                            upload_image_model model = new upload_image_model(msg,storageReference.getDownloadUrl().toString());
+                            i_items.child(msg).child("image_url").setValue(model);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            int progress = (int) (100*((snapshot.getBytesTransferred())/(snapshot.getTotalByteCount())));
+                            mprogress.setProgress((int) progress);
+                        }
+                    });
+
+
+                }else{
+                    Toast.makeText(activity, "No Image Selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            private void openfilechooser() {
+                Intent intent= new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                activity.startActivityForResult(intent,1);
+
+
+
+            }
+
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -228,9 +331,18 @@ public class inspector_dialog  {
 
 
 
+
     dialog.show();
 
     }
+    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1 && resultCode==RESULT_OK  && data!=null && data.getData()!=null){
+            mimageuri = data.getData();
+
+
+        }
+    }
+
 
 
 

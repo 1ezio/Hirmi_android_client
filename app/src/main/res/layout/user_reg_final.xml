@@ -126,7 +126,7 @@
         android:id="@+id/r_id"
         android:layout_height="60dp"
         android:background="@drawable/button_design"
-        android:text="𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
+        android:text="𝙍𝙚𝙜𝙞𝙨𝙩𝙚𝙧"
         android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
@@ -138,11 +138,13 @@
         android:id="@+id/textView2"
         android:layout_width="170dp"
         android:layout_height="58dp"
+        android:layout_marginStart="20dp"
         android:gravity="bottom"
-        android:text="          𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
+        android:text="𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
         android:textColor="@color/colorAccent"
-        android:textSize="22sp"
 
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relative_id" />
 

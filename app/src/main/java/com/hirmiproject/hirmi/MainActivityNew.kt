@@ -53,11 +53,6 @@ class MainActivityNew : AppCompatActivity() {
         tabsCustodian.getTabAt(1)?.setIcon(R.drawable.ic_baseline_history_24)
         tabsCustodian.getTabAt(0)?.setIcon(R.drawable.ic_baseline_settings_24)
     }
-    override fun onBackPressed() {
-        val a = Intent(Intent.ACTION_MAIN)
-        a.addCategory(Intent.CATEGORY_HOME)
-        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(a)
-    }
+
 
 }

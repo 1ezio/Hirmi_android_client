@@ -73,60 +73,6 @@ public class monthly_report_fragment extends Fragment {
 
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
         Button date_picker = view.findViewById(R.id.date_id);
-        Button dowmload = view.findViewById(R.id.download_id);
-
-        dowmload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Bitmap screen;
-                View v1= view.getRootView();
-                v1.setDrawingCacheEnabled(true);
-                screen= Bitmap.createBitmap(v1.getDrawingCache());
-                v1.setDrawingCacheEnabled(false);
-
-
-
-
-
-                try
-                {
-                    Document document = new Document();
-
-                    File storage = Environment.getDataDirectory();
-                    PdfWriter.getInstance(document, new FileOutputStream(storage+"/report.pdf"));
-                    document.open();
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    addImage(document,byteArray);
-                    document.close();
-                    Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
-                }
-
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }
-        });
-
-
-
 
 
 

@@ -25,6 +25,7 @@ public class AdminMainScreenActivity extends AppCompatActivity {
     CardView employee;
     TextView admin_name;
     FirebaseDatabase database;
+    TextView signout ;
     FirebaseAuth mauth ;
 
     @Override
@@ -37,6 +38,16 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         admin_name = findViewById(R.id.admin_name);
         String user = mauth.getCurrentUser().getEmail();
         user = user.replace(".",",");
+        signout = findViewById(R.id.signout_id);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(AdminMainScreenActivity.this,main_login.class);
+                startActivity(intent);
+
+            }
+        });
 
         DatabaseReference name = database.getReference("admin");
         final String finalUser = user;
