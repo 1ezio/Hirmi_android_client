@@ -8,7 +8,9 @@
 
 
     <ListView
+        android:background="@drawable/gradient"
         android:layout_width="match_parent"
+
         android:id="@+id/list_id"
         android:layout_height="match_parent"/>
 

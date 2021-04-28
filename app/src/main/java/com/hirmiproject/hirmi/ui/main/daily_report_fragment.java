@@ -45,18 +45,19 @@ public class daily_report_fragment extends Fragment {
         final DatabaseReference ref = database.getReference("report");
         final ListView lv = view.findViewById(R.id.liv_id);
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-        final String formattedDate = df.format(c);
+        final String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-        Calendar cal = Calendar.getInstance();
-        final int mnth = cal.get(Calendar.MONTH);
 
-        final int year= cal.get(Calendar.YEAR);
 
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Calendar cal = Calendar.getInstance();
+                int mnth = cal.get(Calendar.MONTH);
+                mnth+=1;
+                 int year= cal.get(Calendar.YEAR);
+
                 snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(mnth));
                 final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
                 for (DataSnapshot s: snapshot.getChildren()){

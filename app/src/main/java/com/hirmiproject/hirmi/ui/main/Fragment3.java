@@ -69,7 +69,7 @@ public class Fragment3 extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                final List<String> arrayList = new ArrayList<String>();
 
                 for (final DataSnapshot childs : snapshot.getChildren()) {
 
@@ -78,7 +78,7 @@ public class Fragment3 extends Fragment {
                     n.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dsnapshot) {
-                            final List<String> arrayList = new ArrayList<String>();
+
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             String mail = user.getEmail().toString();
@@ -179,7 +179,7 @@ public class Fragment3 extends Fragment {
                                if (dataSnapshot.getKey().equals(getItem(position))){
                                    String d = dataSnapshot.child("cus_phn").getValue().toString();
                                    String token = dataSnapshot.child("token").getValue().toString();
-                                   FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
+                                       FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                            ,"Acknowledge by Inspector",Fragment3.this.getContext(),getActivity());
                                    notificationsSender.SendNotifications();
 

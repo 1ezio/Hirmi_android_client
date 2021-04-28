@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:id="@+id/sign_id"
-
+        android:layout_marginRight="20dp"
         android:text="Sign Out"
         android:textSize="20sp" />
 

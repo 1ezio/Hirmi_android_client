@@ -2,6 +2,7 @@ package com.hirmiproject.hirmi.ui.main;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -113,18 +114,25 @@ public class inspector_dialog  {
                                 Calendar c= Calendar.getInstance();
                                 int year = c.get(Calendar.YEAR);
                                 int mnth = c.get(Calendar.MONTH);
-                                String stamp = String.valueOf(ServerValue.TIMESTAMP);
+                                mnth+=1;
+                                Long tsLong = System.currentTimeMillis()/1000;
+                                String stamp = tsLong.toString();
+
+                                String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("ACCEPTED");
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(s.child("date").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(drawing);
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
 
 
                                 i_items.child(drawing).child("status").setValue("ACCEPTED");
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);
+                                i_items.child(drawing).child("date").setValue(date);
                                 i_items.child(drawing).child("remark").setValue(remarks.getText().toString());
                                 if (s.getKey().equals(drawing)){
 
@@ -159,11 +167,12 @@ public class inspector_dialog  {
 
                                         //SMS INTEGRATION
 
-
+                                        dialog.dismiss();
 
 
                                     }else{
                                         Toast.makeText(activity, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
                                     }
                                 }
 
@@ -202,17 +211,23 @@ public class inspector_dialog  {
                                 Calendar c= Calendar.getInstance();
                                 int year = c.get(Calendar.YEAR);
                                 int mnth = c.get(Calendar.MONTH);
-                                String stamp = String.valueOf(ServerValue.TIMESTAMP);
+                                mnth+=1;
+                                Long tsLong = System.currentTimeMillis()/1000;
+                                String stamp = tsLong.toString();
+                                String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
+
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("REJECTED");
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(s.child("date").getValue().toString());
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(drawing);
+                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
 
                                 i_items.child(drawing).child("status").setValue("REJECTED");
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);
+                                i_items.child(drawing).child("date").setValue(date);
 
                                 if (s.getKey().equals(drawing)) {
                                     String d = s.child("cus_phn").getValue().toString();
@@ -247,6 +262,7 @@ public class inspector_dialog  {
 
 
                                         context.startActivity(i);
+                                        dialog.dismiss();
 
 
                                         //SMS INTEGRATION
@@ -254,6 +270,7 @@ public class inspector_dialog  {
 
                                     } else {
                                         Toast.makeText(activity, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();   
                                     }
 
                                 }
