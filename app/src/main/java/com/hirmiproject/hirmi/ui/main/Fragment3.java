@@ -56,19 +56,22 @@ public class Fragment3 extends Fragment {
         final DatabaseReference items = database.getReference("item");
         final DatabaseReference n = database.getReference("inspector");
 
-        final ArrayList<String> arrayList = new ArrayList<String>();
+
 
         items.addValueEventListener(new ValueEventListener() {
         ArrayAdapter<String> arrayAdapter  ;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final ArrayList<String> arrayList = new ArrayList<String>();
                 for (final DataSnapshot childs : snapshot.getChildren()) {
+
                     final String drawing = childs.getKey();
 
                     n.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                             final String name ;
                             name = snapshot.child(nmail).child("name").getValue().toString();
                             if (childs.child("status").getValue().toString().equals("PENDING") && childs.child("inspector_name").getValue().toString().equals(name)) {
@@ -77,8 +80,10 @@ public class Fragment3 extends Fragment {
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
                                 MyListAdaper adapter = new MyListAdaper(getActivity(), R.layout.inspector_drawings, arrayList);
+
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
+
 
 
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

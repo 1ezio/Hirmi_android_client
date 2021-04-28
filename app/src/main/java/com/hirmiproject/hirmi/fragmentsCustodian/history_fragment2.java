@@ -44,7 +44,7 @@ public class history_fragment2 extends Fragment {
         final DatabaseReference items = database.getReference("item");
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final ListView listView = view.findViewById(R.id.list_id);
-        final ArrayList<String> arrayList = new ArrayList<String>();
+
 
 
         items.addValueEventListener(new ValueEventListener() {
@@ -52,6 +52,7 @@ public class history_fragment2 extends Fragment {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final ArrayList<String> arrayList = new ArrayList<String>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                 if (dataSnapshot.child("status").getValue().toString().equals("ACCEPTED") || dataSnapshot.child("status").getValue().toString().equals("REJECTED")){
@@ -62,6 +63,7 @@ public class history_fragment2 extends Fragment {
                     CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                     listView.setAdapter(customAdapter);
+                    customAdapter.notifyDataSetChanged();
                 }
 
 

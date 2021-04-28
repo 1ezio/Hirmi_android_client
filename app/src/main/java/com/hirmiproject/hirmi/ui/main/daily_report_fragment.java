@@ -66,6 +66,7 @@ public class daily_report_fragment extends Fragment {
 
                         CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
                         lv.setAdapter(customAdapter);
+                        customAdapter.notifyDataSetChanged();
                     }
 
 

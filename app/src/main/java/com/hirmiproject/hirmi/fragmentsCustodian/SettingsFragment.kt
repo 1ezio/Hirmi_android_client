@@ -49,17 +49,14 @@ class SettingsFragment : Fragment() {
         val database:FirebaseDatabase = getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items:DatabaseReference = database.getReference("item")
 
-        val arrayList = ArrayList<String>()
+
         var arrayAdapter: ArrayAdapter<*>
-
-
-
-
-        arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
-
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val arrayList = ArrayList<String>()
 
+
+                arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                 for (ds in dataSnapshot.children) {
                     if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL")){
 
@@ -67,7 +64,7 @@ class SettingsFragment : Fragment() {
                         arrayList.add(drawings.toString())
                         arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter
-
+                        arrayAdapter.notifyDataSetChanged();
                     }
 
 
@@ -92,7 +89,7 @@ class SettingsFragment : Fragment() {
                     var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
                     var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
                     var quantityId = dialogView.findViewById<TextView>(R.id.quantity_id)
-                    var reg = dialogView.findViewById<EditText>(R.id.reg_id)
+
                     var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
 
 
