@@ -72,8 +72,9 @@ public class splash extends AwesomeSplash {
             final String user1 = user.getEmail().toString();
             FirebaseDatabase database ;
             database = FirebaseDatabase.getInstance();
+
             final DatabaseReference a_reference = database.getReference("admin") ;
-            final DatabaseReference c_reference = database.getReference("custodian") ;
+
             final DatabaseReference i_reference = database.getReference("inspector") ;
 
 
@@ -90,7 +91,10 @@ public class splash extends AwesomeSplash {
                                 startActivity(intent);
                                 progress.dismiss();
 
-                            }else{
+                            }else {
+                                FirebaseDatabase database ;
+                                database = FirebaseDatabase.getInstance();
+                                final DatabaseReference c_reference = database.getReference("custodian") ;
                                 c_reference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot c_snapshot) {
@@ -123,6 +127,9 @@ public class splash extends AwesomeSplash {
                                                 progress.dismiss();
 
                                             }else{
+                                                FirebaseDatabase database ;
+                                                database = FirebaseDatabase.getInstance();
+                                                final DatabaseReference i_reference = database.getReference("inspector") ;
 
                                                 i_reference.addValueEventListener(new ValueEventListener() {
                                                     @Override

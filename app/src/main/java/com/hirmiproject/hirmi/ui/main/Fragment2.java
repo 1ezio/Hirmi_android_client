@@ -49,6 +49,7 @@ public class Fragment2 extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final ArrayList<model_history_inspector> objects = new ArrayList<model_history_inspector>();
                 final String name ;
                 String n = Objects.requireNonNull(auth.getCurrentUser()).getEmail();
                     n = n.replace(".",",");
@@ -58,7 +59,7 @@ public class Fragment2 extends Fragment {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        final ArrayList<model_history_inspector> objects = new ArrayList<model_history_inspector>();
+
                         for(DataSnapshot dataSnapshot: snapshot.getChildren()){
 
                             if(name.equals(dataSnapshot.child("inspector_name").getValue().toString()) && !dataSnapshot.child("status").getValue().toString().equals("TO BE CALL") ){

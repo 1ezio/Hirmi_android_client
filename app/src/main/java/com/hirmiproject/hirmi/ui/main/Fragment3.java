@@ -50,45 +50,48 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment3_inspector_layout, container, false);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String mail = user.getEmail().toString();
-        final String nmail = mail.replace(".",",");
+
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference items = database.getReference("item");
         final DatabaseReference n = database.getReference("inspector");
-        TextView  signout = view.findViewById(R.id.sign_id);
+       TextView  signout = view.findViewById(R.id.sign_id);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), main_login.class);
+                Intent intent = new Intent(getContext(), main_login.class);
                 startActivity(intent);
             }
         });
 
-
         items.addValueEventListener(new ValueEventListener() {
-        ArrayAdapter<String> arrayAdapter  ;
+
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                final ArrayList<String> arrayList = new ArrayList<String>();
+
+
                 for (final DataSnapshot childs : snapshot.getChildren()) {
 
-                    final String drawing = childs.getKey();
 
-                    n.addValueEventListener(new ValueEventListener() {
+
+                    n.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        public void onDataChange(@NonNull DataSnapshot dsnapshot) {
+                            final List<String> arrayList = new ArrayList<String>();
 
-                            final String name ;
-                            name = snapshot.child(nmail).child("name").getValue().toString();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            String mail = user.getEmail().toString();
+                            String nmail = mail.replace(".",",");
+                            String drawing = childs.getKey();
+                            String name ;
+                            name = dsnapshot.child(nmail).child("name").getValue().toString();
                             if (childs.child("status").getValue().toString().equals("PENDING") && childs.child("inspector_name").getValue().toString().equals(name)) {
                                 arrayList.add(drawing);
                                 // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
-                                MyListAdaper adapter = new MyListAdaper(getActivity(), R.layout.inspector_drawings, arrayList);
+                                MyListAdaper adapter = new MyListAdaper(getContext(), R.layout.inspector_drawings, arrayList);
 
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
