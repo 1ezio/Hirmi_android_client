@@ -132,7 +132,8 @@
         app:layout_constraintBottom_toBottomOf="@id/panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="25dp"/>
+        android:layout_marginBottom="25dp"
+        android:enabled="false"/>
 
     <TextView
         android:id="@+id/textView2"

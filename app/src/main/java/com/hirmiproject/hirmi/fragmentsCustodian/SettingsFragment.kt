@@ -92,7 +92,7 @@ class SettingsFragment : Fragment() {
                     var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
                     var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
                     var quantityId = dialogView.findViewById<TextView>(R.id.quantity_id)
-                    var reg = dialogView.findViewById<EditText>(R.id.reg_id_id)
+                    var reg = dialogView.findViewById<EditText>(R.id.reg_id)
                     var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
 
 

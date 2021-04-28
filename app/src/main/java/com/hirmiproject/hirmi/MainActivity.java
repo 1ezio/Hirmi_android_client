@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -53,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
         //EditTExt Declarations
         draw = findViewById(R.id.draw_id);
-
         quantity = findViewById(R.id.q_id);
+
+        //applying validation
+        draw.addTextChangedListener(loginTextWatcher);
+        quantity.addTextChangedListener(loginTextWatcher);
 
         final Spinner spinner = findViewById(R.id.spinner_id);
         FirebaseDatabase data = FirebaseDatabase.getInstance();
@@ -144,6 +149,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            final String Draw = draw.getText().toString().trim();
+            String Quantity = quantity.getText().toString().trim();
+
+            proceed.setEnabled(!Draw.isEmpty() && !Quantity.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 
 
