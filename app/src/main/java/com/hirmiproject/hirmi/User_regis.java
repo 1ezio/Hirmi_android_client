@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,8 +33,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
     Button proceed;
     String cate;
     FirebaseAuth firebaseAuth  ;
-
-    EditText name , phn, reg;
+    private EditText name , phn, reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,15 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
 
         //EditText Declaration
         name = findViewById(R.id.name_id);
-
         phn = findViewById(R.id.mob_id);
         reg = findViewById(R.id.reg_id);
-
-
         proceed = findViewById(R.id.r_id);
+
+        //validation
+        name.addTextChangedListener(loginTextWatcher);
+        phn.addTextChangedListener(loginTextWatcher);
+        reg.addTextChangedListener(loginTextWatcher);
+
 
 
 
@@ -184,4 +188,24 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            final String email = name.getText().toString().trim();
+            String password = phn.getText().toString().trim();
+            String registration = reg.getText().toString().trim();
+
+            proceed.setEnabled(!email.isEmpty() && !password.isEmpty() && !registration.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 }
