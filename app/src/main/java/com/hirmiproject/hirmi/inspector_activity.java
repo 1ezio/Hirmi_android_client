@@ -1,16 +1,17 @@
-package com.hirmiproject.hirmi.ui.main;
+package com.hirmiproject.hirmi;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -20,28 +21,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.hirmiproject.hirmi.CustomProgress;
-import com.hirmiproject.hirmi.FcmNotificationsSender;
-import com.hirmiproject.hirmi.MainActivity;
-import com.hirmiproject.hirmi.R;
-import com.hirmiproject.hirmi.upload_image_model;
-import com.squareup.picasso.Picasso;
+import com.hirmiproject.hirmi.ui.main.Fragment3;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
@@ -49,42 +40,38 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.app.Activity.RESULT_OK;
+public class inspector_activity extends AppCompatActivity {
 
-public class inspector_dialog  {
-    Context context;
-    //Constructor
     public static Uri mimageuri;
 
-     private TextView drawing_no, inspector_name, quantity;
-     private Button accept, reject;
-     private EditText  remarks;
+    private TextView drawing_no, inspector_name, quantity;
+    private Button accept, reject;
+    final int PICK_IMAGE_REQUEST = 1;
 
-    public void   showDialog(final Activity activity, final String msg){
-         final int PICK_IMAGE_REQUEST = 1;
-            final Dialog dialog = new Dialog(activity);
-            dialog.setContentView(R.layout.inspector_dialog);
+    private EditText remarks;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.inspector_dialog);
+        drawing_no = findViewById(R.id.idrawing_id);
+        inspector_name =findViewById(R.id.i_inspector_id);
+        quantity = findViewById(R.id.quantity_i_id);
+        accept = findViewById(R.id.accept_id);
+        reject = findViewById(R.id.reject_id);
 
+        Intent i = getIntent();
+        final String msg = i.getStringExtra("key");
 
-
-        drawing_no = dialog.findViewById(R.id.idrawing_id);
-        inspector_name = dialog.findViewById(R.id.i_inspector_id);
-        quantity = dialog.findViewById(R.id.quantity_i_id);
-        accept = dialog.findViewById(R.id.accept_id);
-        reject = dialog.findViewById(R.id.reject_id);
-
-        final ProgressBar mprogress = dialog.findViewById(R.id.prog_id);
+        final ProgressBar mprogress = findViewById(R.id.prog_id);
         final StorageReference storageReference;
-        storageReference = FirebaseStorage.getInstance().getReference("images");
+        storageReference = FirebaseStorage.getInstance().getReference("images/");
 
 
 
-        remarks = dialog.findViewById(R.id.remark_id);
-        final Fragment3 context = new Fragment3();
+        remarks = findViewById(R.id.remark_id);
+
         final TextView attach ;
-        attach = dialog.findViewById(R.id.attch_id);
-
-
+        attach = findViewById(R.id.attch_id);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference i_items = database.getReference("item");
 
@@ -107,6 +94,7 @@ public class inspector_dialog  {
                         });
                         accept.setOnClickListener(new View.OnClickListener() {
 
+                            @SuppressLint("ResourceType")
                             @Override
                             public void onClick(View view) {
 
@@ -139,23 +127,23 @@ public class inspector_dialog  {
 
                                     String d = s.child("cus_phn").getValue().toString();
                                     String token = s.child("token").getValue().toString();
-                                    Context context1 = null;
+
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                             ,"Inspection Call for " +
-                                            " : "+ drawing+ " "+ "is ACCEPTED",context1,activity);
+                                            " : "+ drawing+ " "+ "is ACCEPTED",getApplicationContext(),inspector_activity.this);
                                     notificationsSender.SendNotifications();
 
                                     if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
 
-                                            try {
-                                                SmsManager smsManager = SmsManager.getDefault();
-                                                smsManager.sendTextMessage(d,null,"Inspection Call for " +
-                                                        " : "+ drawing+ " "+ "is ACCEPTED",null,null);
+                                        try {
+                                            SmsManager smsManager = SmsManager.getDefault();
+                                            smsManager.sendTextMessage(d,null,"Inspection Call for " +
+                                                    " : "+ drawing+ " "+ "is ACCEPTED",null,null);
 
-                                            }catch (Exception e ){
-                                                Toast.makeText(activity, "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
+                                        }catch (Exception e ){
+                                            Toast.makeText(inspector_activity.this, "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
 
-                                            }
+                                        }
 
                                     }
                                     if  (whatsappinstalled()){
@@ -163,14 +151,15 @@ public class inspector_dialog  {
                                                 " : "+ drawing+ " "+ "is ACCEPTED "));
 
 
-                                        activity.startActivity(i);
+                                        startActivityForResult(i,100);
+
 
 
                                         //SMS INTEGRATION
 
 
                                     }else{
-                                        Toast.makeText(activity, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -184,7 +173,7 @@ public class inspector_dialog  {
 
                                 try {
                                     PackageManager packageManager;
-                                    packageManager =activity.getPackageManager();
+                                    packageManager =getPackageManager();
                                     packageManager.getPackageInfo("com.whstsapp.com",0);
                                     n =true;
 
@@ -235,7 +224,7 @@ public class inspector_dialog  {
                                         String token = s.child("token").getValue().toString();
                                         Context context1 = null;
                                         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                                , "Drawing no. : " + drawing + " is REJECTED", context1, activity);
+                                                , "Drawing no. : " + drawing + " is REJECTED", getApplicationContext(), inspector_activity.this);
                                         notificationsSender.SendNotifications();
 
                                         i_items.child(drawing).child("remark").setValue(remarks.getText().toString());
@@ -247,7 +236,7 @@ public class inspector_dialog  {
                                                         " : " + drawing + " " + "is REJECTED", null, null);
 
                                             } catch (Exception e) {
-                                                Toast.makeText(activity, "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(inspector_activity.this, "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
 
                                             }
 
@@ -260,7 +249,7 @@ public class inspector_dialog  {
                                                 " : " + drawing + " " + "is REJECTED "));
 
 
-                                        activity.startActivity(i);
+                                        startActivityForResult(i,100);
 
 
 
@@ -268,7 +257,7 @@ public class inspector_dialog  {
 
 
                                     } else {
-                                        Toast.makeText(activity, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -281,7 +270,7 @@ public class inspector_dialog  {
                                 boolean n ;
 
                                 try {
-                                    packageManager =activity.getPackageManager();
+                                    packageManager =getPackageManager();
                                     packageManager.getPackageInfo("com.whstsapp.com",0);
                                     n =true;
 
@@ -304,7 +293,7 @@ public class inspector_dialog  {
             }
 
             private String getfileExtension(URI uri){
-                ContentResolver cr = activity.getContentResolver();
+                ContentResolver cr = getContentResolver();
                 MimeTypeMap mime =MimeTypeMap.getSingleton();
                 return mime.getExtensionFromMimeType(cr.getType(mimageuri));
 
@@ -312,10 +301,21 @@ public class inspector_dialog  {
             private void uploadfile() {
 
                 if(mimageuri!=null){
-                    StorageReference fileref = storageReference.child(System.currentTimeMillis()+"."+"jpg");
+                    final StorageReference fileref = storageReference.child(msg+"."+"jpg");
                     fileref.putFile(mimageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            fileref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Toast.makeText(inspector_activity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    upload_image_model model = new upload_image_model(msg+"."+"jpg", uri.toString());
+                                    i_items.child(msg).child("image_url").setValue(model);
+                                }
+                            });
+
+
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -323,14 +323,12 @@ public class inspector_dialog  {
                                     mprogress.setProgress(0);
                                 }
                             },5000);
-                            Toast.makeText(activity, "Succes", Toast.LENGTH_SHORT).show();
-                            upload_image_model model = new upload_image_model(msg,storageReference.getDownloadUrl().toString());
-                            i_items.child(msg).child("image_url").setValue(model);
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(inspector_activity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -342,7 +340,7 @@ public class inspector_dialog  {
 
 
                 }else{
-                    Toast.makeText(activity, "No Image Selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(inspector_activity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -350,7 +348,7 @@ public class inspector_dialog  {
                 Intent intent= new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                activity.startActivityForResult(intent,1);
+                startActivityForResult(intent,1);
 
 
 
@@ -367,19 +365,22 @@ public class inspector_dialog  {
 
 
 
-    dialog.show();
+
 
     }
-    public static void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==1 && resultCode==RESULT_OK  && data!=null && data.getData()!=null){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             mimageuri = data.getData();
+        if (requestCode == 100 && resultCode == RESULT_OK){
+            Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
+            startActivity(intent);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
 
 
         }
     }
-
-
-
-
 
 }

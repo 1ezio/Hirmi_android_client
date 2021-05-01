@@ -39,15 +39,12 @@ public class Ispector_layout extends AppCompatActivity {
         tabs.getTabAt(0).setIcon(R.drawable.ic_baseline_home_24);
         tabs.getTabAt(1).setIcon(R.drawable.ic_baseline_history_24);
 
-    }
 
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        inspector_dialog.onActivityResult(requestCode, resultCode, data);
+
         super.onActivityResult(requestCode, resultCode, data);
-
-
-
     }
 }

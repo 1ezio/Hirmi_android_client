@@ -75,7 +75,6 @@ public class splash extends AwesomeSplash {
 
             final DatabaseReference a_reference = database.getReference("admin") ;
 
-            final DatabaseReference i_reference = database.getReference("inspector") ;
 
 
             if (user1!=null){

@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
     Button proceed;
     String cate;
     FirebaseAuth firebaseAuth  ;
-    private EditText name , phn, reg;
+    EditText name , phn, reg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
         proceed = findViewById(R.id.r_id);
 
         //validation
-        name.addTextChangedListener(loginTextWatcher);
+       name.addTextChangedListener(loginTextWatcher);
         phn.addTextChangedListener(loginTextWatcher);
         reg.addTextChangedListener(loginTextWatcher);
 
@@ -81,97 +82,106 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (cate.equals("Custodian")){
-                    final DatabaseReference creference = database.getReference("custodian");
 
-                    //TYPE GENERATE PASSWORD HERE
-                    //AND SEND MAIL 
-                    String s =  encodeString(reg.getText().toString());
-                    creference.child(s).child("reg_id").setValue(s);
-                    creference.child(s).child("name").setValue(name.getText().toString());
-                    creference.child(s).child("phn").setValue(phn.getText().toString());
-
-                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(),(phn.getText().toString())).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(User_regis.this,
-                                        User_regis.class);
-
-                                startActivity(intent);
-                            }
-                                                    }
-                    });
-
-
-
-
-                }if (cate.equals("Inspector")){
-                    final DatabaseReference ireference = database.getReference("inspector");
-                    String s = encodeString(reg.getText().toString());
-                    ireference.child(s).child("reg_id").setValue(s);
-                    ireference.child(s).child("name").setValue(name.getText().toString());
-                    ireference.child(s).child("phn").setValue(phn.getText().toString());
-
-
-
-
-
-
-
-                    Random rnd = new Random();
-
-                    int n = 100000 + rnd.nextInt(900000);
-
-                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(User_regis.this,
-                                        User_regis.class);
-
-                                startActivity(intent);
-                            }
-                            else if (task.isCanceled()){
-                                Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-
-
+                if (TextUtils.isEmpty(reg.getText().toString())){
+                    Toast.makeText(User_regis.this, "Enter E-mail", Toast.LENGTH_SHORT).show();
+                }if (TextUtils.isEmpty(name.getText().toString())){
+                    Toast.makeText(User_regis.this, "Enter Name", Toast.LENGTH_SHORT).show();
                 }
+                if (TextUtils.isEmpty(phn.getText().toString()) && (phn.getText().toString().length()<10 || phn.getText().toString().length()>10)){
+                    Toast.makeText(User_regis.this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
+                }
+                else {
 
-                if (cate.equals("Make Choice")){
-                    final DatabaseReference ireference = database.getReference("admin");
-                    String s = encodeString(reg.getText().toString());
-                    ireference.child(s).child("reg_id").setValue(s);
-                    ireference.child(s).child("name").setValue(name.getText().toString());
-                    ireference.child(s).child("phn").setValue(phn.getText().toString());
-                    Random rnd = new Random();
+                    if (cate.equals("Custodian")) {
+                        final DatabaseReference creference = database.getReference("custodian");
 
+                        //TYPE GENERATE PASSWORD HERE
+                        //AND SEND MAIL
+                        String s = encodeString(reg.getText().toString());
+                        creference.child(s).child("reg_id").setValue(s);
+                        creference.child(s).child("name").setValue(name.getText().toString());
+                        creference.child(s).child("phn").setValue(phn.getText().toString());
 
+                        Random rnd = new Random();
 
-                    firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), (phn.getText().toString())).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(User_regis.this, "REGISTERD", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(User_regis.this,
-                                        User_regis.class);
+                        int n = 100000 + rnd.nextInt(900000);
 
-                                startActivity(intent);
+                        firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(User_regis.this, "REGISTERED", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(User_regis.this, User_regis.class);
+
+                                    startActivity(intent);
+                                } else if (task.isCanceled()) {
+                                    Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else if (task.isCanceled()){
-                                Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                        });
+
+
+                    }
+                    if (cate.equals("Inspector")) {
+                        final DatabaseReference ireference = database.getReference("inspector");
+                        String s = encodeString(reg.getText().toString());
+                        ireference.child(s).child("reg_id").setValue(s);
+                        ireference.child(s).child("name").setValue(name.getText().toString());
+                        ireference.child(s).child("phn").setValue(phn.getText().toString());
+
+
+                        Random rnd = new Random();
+
+                        int n = 100000 + rnd.nextInt(900000);
+
+                        firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(User_regis.this, "REGISTERED", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(User_regis.this, User_regis.class);
+
+                                    startActivity(intent);
+                                } else if (task.isCanceled()) {
+                                    Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
 
+
+                    }
+
+                    if (cate.equals("Make Choice")) {
+                        final DatabaseReference ireference = database.getReference("monitor");
+                        String s = encodeString(reg.getText().toString());
+                        ireference.child(s).child("reg_id").setValue(s);
+                        ireference.child(s).child("name").setValue(name.getText().toString());
+                        ireference.child(s).child("phn").setValue(phn.getText().toString());
+
+
+                        Random rnd = new Random();
+
+                        int n = 100000 + rnd.nextInt(900000);
+
+                        firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(User_regis.this, "REGISTERED", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(User_regis.this, User_regis.class);
+
+                                    startActivity(intent);
+                                } else if (task.isCanceled()) {
+                                    Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+                    }
                 }
 
 

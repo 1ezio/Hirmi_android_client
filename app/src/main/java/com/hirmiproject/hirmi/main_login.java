@@ -35,7 +35,7 @@ import com.google.firebase.iid.InstanceIdResult;
 public class main_login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth ;
-    private FirebaseDatabase database ;
+
     private EditText email_text;
     private EditText pass_text;
     private Button login;
@@ -63,10 +63,9 @@ public class main_login extends AppCompatActivity {
 
 
 
-        database = FirebaseDatabase.getInstance();
-        final DatabaseReference a_reference = database.getReference("admin") ;
-        final DatabaseReference c_reference = database.getReference("custodian") ;
-        final DatabaseReference i_reference = database.getReference("inspector") ;
+
+
+
 
 
 
@@ -78,131 +77,175 @@ public class main_login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progress.show();
-                final String email = email_text.getText().toString().trim();
-                String password = pass_text.getText().toString().trim();
+                if (TextUtils.isEmpty(email_text.getText().toString()) || (TextUtils.isEmpty(pass_text.getText().toString())) ){
+                    Toast.makeText(main_login.this, "Enter Email and Password", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
 
-                firebaseAuth.signInWithEmailAndPassword(email,password)
-                        .addOnCompleteListener(main_login.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                   a_reference.addValueEventListener(new ValueEventListener() {
-                                       @Override
-                                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+                }
+                else{
+                    final String email = email_text.getText().toString().trim();
+                    String password = pass_text.getText().toString().trim();
 
-                                           for(DataSnapshot snapshot1:snapshot.getChildren()){
-                                               String key = snapshot1.getKey();
-                                               key = key.replace(",", ".");
-                                               if (key.equals(email)){
-                                                   Intent intent = new Intent(main_login.this,AdminMainScreenActivity.class);
-                                                   startActivity(intent);
-                                                   progress.dismiss();
-                                               }else{
-                                                   c_reference.addValueEventListener(new ValueEventListener() {
-                                                       @Override
-                                                       public void onDataChange(@NonNull DataSnapshot c_snapshot) {
-                                                           for(DataSnapshot c_snapshot1:c_snapshot.getChildren()) {
-                                                               String key = c_snapshot1.getKey();
-                                                               key = key.replace(",", ".");
-                                                               if (key.equals(email)) {
-                                                                   final String finalKey = key;
-                                                                   FirebaseInstanceId.getInstance().getInstanceId()
-                                                                           .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                                                               @Override
-                                                                               public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                                                   if (!task.isSuccessful()) {
+                    firebaseAuth.signInWithEmailAndPassword(email,password)
+                            .addOnCompleteListener(main_login.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    FirebaseDatabase database  = FirebaseDatabase.getInstance();
+                                    final DatabaseReference a_reference = database.getReference("admin") ;
 
-                                                                                       return;
-                                                                                   }
+                                    if (task.isSuccessful()) {
+                                        a_reference.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                                                                   // Get new Instance ID token
-                                                                                   String token = task.getResult().getToken();
-                                                                                   String e = email.replace(".",",");
-                                                                                   c_reference.child(e).child("c_token").setValue(token);
-                                                                               }
-                                                                           });
+                                                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                                                    String key = snapshot1.getKey();
+                                                    key = key.replace(",", ".");
+                                                    if (key.equals(email)){
+                                                        Intent intent = new Intent(main_login.this,AdminMainScreenActivity.class);
+                                                        startActivity(intent);
+                                                        progress.dismiss();
+                                                    }else{
+                                                        FirebaseDatabase database  = FirebaseDatabase.getInstance();
+                                                        final DatabaseReference c_reference = database.getReference("custodian") ;
+                                                        c_reference.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot c_snapshot) {
+                                                                for(DataSnapshot c_snapshot1:c_snapshot.getChildren()) {
+                                                                    String key = c_snapshot1.getKey();
+                                                                    key = key.replace(",", ".");
+                                                                    if (key.equals(email)) {
+                                                                        final String finalKey = key;
+                                                                        FirebaseInstanceId.getInstance().getInstanceId()
+                                                                                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                                        if (!task.isSuccessful()) {
 
+                                                                                            return;
+                                                                                        }
 
-
-
-                                                                   Intent intent = new Intent(main_login.this, MainActivityNew.class);
-                                                                   startActivity(intent);
-                                                                   progress.dismiss();
-                                                               }else{
-
-                                                                   i_reference.addValueEventListener(new ValueEventListener() {
-                                                                       @Override
-                                                                       public void onDataChange(@NonNull DataSnapshot i_snapshot) {
-                                                                           for(DataSnapshot i_snapshot1:i_snapshot.getChildren()) {
-                                                                               String key = i_snapshot1.getKey();
-                                                                               key = key.replace(",", ".");
-                                                                               if (key.equals(email)) {
-
-                                                                                   final String finalKey = key;
-                                                                                   FirebaseInstanceId.getInstance().getInstanceId()
-                                                                                           .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                                                                               @Override
-                                                                                               public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                                                                   if (!task.isSuccessful()) {
-
-                                                                                                       return;
-                                                                                                   }
-
-                                                                                                   // Get new Instance ID token
-                                                                                                   String token = task.getResult().getToken();
-                                                                                                   String e = email.replace(".",",");
-                                                                                                   i_reference.child(e).child("i_token").setValue(token);
-                                                                                               }
-                                                                                           });
+                                                                                        // Get new Instance ID token
+                                                                                        String token = task.getResult().getToken();
+                                                                                        String e = email.replace(".",",");
+                                                                                        c_reference.child(e).child("c_token").setValue(token);
+                                                                                    }
+                                                                                });
 
 
 
 
-                                                                                   Intent intent = new Intent(main_login.this, Ispector_layout.class);
-                                                                                   startActivity(intent);
-                                                                                   progress.dismiss();
-                                                                               }
-                                                                           }
-                                                                       }
+                                                                        Intent intent = new Intent(main_login.this, MainActivityNew.class);
+                                                                        startActivity(intent);
+                                                                        progress.dismiss();
+                                                                    }else{FirebaseDatabase database  = FirebaseDatabase.getInstance();
 
-                                                                       @Override
-                                                                       public void onCancelled(@NonNull DatabaseError error) {
+                                                                        final DatabaseReference i_reference = database.getReference("inspector") ;
 
-                                                                       }
-                                                                   });
+                                                                        i_reference.addValueEventListener(new ValueEventListener() {
+                                                                            @Override
+                                                                            public void onDataChange(@NonNull DataSnapshot i_snapshot) {
+                                                                                for(DataSnapshot i_snapshot1:i_snapshot.getChildren()) {
+                                                                                    String key = i_snapshot1.getKey();
+                                                                                    key = key.replace(",", ".");
+                                                                                    if (key.equals(email)) {
 
-                                                               }
-                                                           }
-                                                       }
+                                                                                        final String finalKey = key;
+                                                                                        FirebaseInstanceId.getInstance().getInstanceId()
+                                                                                                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                                                                                    @Override
+                                                                                                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                                                                        if (!task.isSuccessful()) {
 
-                                                       @Override
-                                                       public void onCancelled(@NonNull DatabaseError error) {
+                                                                                                            return;
+                                                                                                        }
 
-                                                       }
-                                                   });
-                                               }
-                                           }
-
-                                       }
-
-
-                                           @Override
-                                       public void onCancelled(@NonNull DatabaseError error) {
-
-                                       }
-                                   });
+                                                                                                        // Get new Instance ID token
+                                                                                                        String token = task.getResult().getToken();
+                                                                                                        String e = email.replace(".",",");
+                                                                                                        i_reference.child(e).child("i_token").setValue(token);
+                                                                                                    }
+                                                                                                });
 
 
 
 
+                                                                                        Intent intent = new Intent(main_login.this, Ispector_layout.class);
+                                                                                        startActivity(intent);
+                                                                                        progress.dismiss();
+                                                                                    }else{
+                                                                                        FirebaseDatabase database  = FirebaseDatabase.getInstance();
+
+                                                                                        final DatabaseReference m_reference = database.getReference("monitor") ;
+                                                                                        m_reference.addValueEventListener(new ValueEventListener() {
+                                                                                            @Override
+                                                                                            public void onDataChange(@NonNull DataSnapshot m_snapshot) {
+                                                                                                for(DataSnapshot i_snapshot1:m_snapshot.getChildren()) {
+                                                                                                    String key = i_snapshot1.getKey();
+                                                                                                    key = key.replace(",", ".");
+                                                                                                    if (key.equals(email)) {
 
 
-                                } else {
-                                    Toast.makeText(main_login.this, "FAILED", Toast.LENGTH_SHORT).show();
-                                    progress.dismiss();
+                                                                                                        Intent intent = new Intent(main_login.this, Ispector_layout.class);
+                                                                                                        startActivity(intent);
+                                                                                                        progress.dismiss();
+
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                                            }
+                                                                                        });
+
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                            }
+                                                                        });
+
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                            }
+
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+
+
+
+
+                                    } else {
+                                        Toast.makeText(main_login.this, "FAILED. Enter Valid Credentials", Toast.LENGTH_LONG).show();
+                                        progress.dismiss();
+                                    }
                                 }
-                            }
-                        });
+                            });
+
+
+                }
+
 
             }
         });

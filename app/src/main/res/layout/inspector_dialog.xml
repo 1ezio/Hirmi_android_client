@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:background="@drawable/gradient"
     android:orientation="vertical"
@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -23,6 +23,7 @@
 
                 <TextView
                     android:textColor="#000"
+                    android:layout_marginTop="20dp"
                     android:id="@+id/message_box_header"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
@@ -32,6 +33,7 @@
 
                 <TextView
                     android:textColor="#000"
+                    android:layout_marginTop="20dp"
                     android:id="@+id/idrawing_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,6 +48,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_height="30dp"
                     android:text="Inspector Name : "
                     android:textColor="#000"
@@ -58,6 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fetching Data.."
+                    android:layout_marginTop="20dp"
                     android:textAlignment="center"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -72,6 +76,7 @@
                     android:layout_height="30dp"
                     android:text="Quantity for Inspection : "
                     android:textColor="#000"
+                    android:layout_marginTop="20dp"
                     android:textAlignment="center"
                     android:textSize="20sp" />
 
@@ -80,6 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
+                    android:layout_marginTop="20dp"
                     android:hint="Fetching Data.."
                     android:textSize="20sp" />
 
@@ -95,6 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:text="Remarks : "
                     android:textColor="#000"
                     android:textSize="20sp"/>
@@ -103,6 +110,7 @@
                     android:id="@+id/remark_id"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/round_corner"
                     android:hint="Type Here.." />
             </LinearLayout>
@@ -138,6 +146,7 @@
                 <Button
                     android:id="@+id/reject_id"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
@@ -150,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_alignEnd="@+id/reject_id"
                     android:layout_alignParentEnd="true"

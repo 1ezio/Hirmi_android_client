@@ -113,11 +113,13 @@ public class MainActivity extends AppCompatActivity {
                         DatabaseReference work = database.getReference("item");
                         for (DataSnapshot ds: snapshot.getChildren()) {
                             String n =spinner.getSelectedItem().toString();
+                            String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                             if (n.equals(ds.child("name").getValue().toString())){
 
                                 work.child(draw.getText().toString()).child("drawing_no").setValue(draw.getText().toString());
                                 work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
                                 work.child(draw.getText().toString()).child("inspector_name").setValue(n);
+                                work.child(draw.getText().toString()).child("time").setValue(currentTime);
                                 work.child(draw.getText().toString()).child("date").setValue(formattedDate);
                                 work.child(draw.getText().toString()).child("status").setValue("TO BE CALL");
                                 work.child(draw.getText().toString()).child("phone").setValue(ds.child("phn").getValue().toString());

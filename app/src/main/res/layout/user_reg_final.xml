@@ -65,46 +65,38 @@
         >
 
         <EditText
-            android:layout_marginTop="20dp"
             android:id="@+id/name_id"
-            android:layout_width="190dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20sp"
-            android:background="@drawable/round_corner"
-            android:hint="Enter Name"
-            android:paddingHorizontal="20dp"
-            android:textSize="20sp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            android:layout_marginTop="20dp"
+
+
+            android:hint="Enter Name"
+
+            android:textSize="20sp" />
 
 
         <EditText
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
             android:id="@+id/reg_id"
-            android:layout_width="190dp"
-            android:layout_height="40dp"
-            android:layout_below="@id/name_id"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:inputType="textEmailAddress"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/round_corner"
-            android:hint="E-Mail"
-            android:paddingHorizontal="20dp"
-            android:textSize="20sp" />
+            android:layout_marginTop="10dp"
+            android:hint="E-Mail" />
 
 
 
         <EditText
             android:id="@+id/mob_id"
-            android:layout_width="190dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/reg_id"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
+
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/round_corner"
+
             android:hint="Mobile"
-            android:paddingHorizontal="20dp"
+
             android:textSize="20sp" />
 
 
@@ -132,14 +124,13 @@
         app:layout_constraintBottom_toBottomOf="@id/panel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="25dp"
-        android:enabled="false"/>
+        android:layout_marginBottom="25dp" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="58dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:gravity="bottom"
         android:text="𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
         android:textColor="@color/colorAccent"

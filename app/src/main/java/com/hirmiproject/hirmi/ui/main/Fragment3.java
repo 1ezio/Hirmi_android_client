@@ -1,4 +1,4 @@
-package com.hirmiproject.hirmi.ui.main;
+    package com.hirmiproject.hirmi.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,12 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hirmiproject.hirmi.FcmNotificationsSender;
+import com.hirmiproject.hirmi.Ispector_layout;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.inspector_activity;
 import com.hirmiproject.hirmi.main_login;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -101,8 +105,13 @@ public class Fragment3 extends Fragment {
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                        inspector_dialog dialog = new inspector_dialog();
-                                        dialog.showDialog(getActivity(), arrayList.get(i));
+                                        //inspector_dialog dialog = new inspector_dialog();
+
+                                        //dialog.showDialog(getActivity(), arrayList.get(i));
+                                        Intent intent = new Intent(getActivity(), inspector_activity.class);
+                                        intent.putExtra("key",arrayList.get(i));
+                                        startActivity(intent);
+                                        getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
 
                                     }
                                 });
@@ -169,30 +178,31 @@ public class Fragment3 extends Fragment {
 
 
                     finalMainViewholder.button.setVisibility(View.INVISIBLE);
+
                     //Toast.makeText(getContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
                     final FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
                     DatabaseReference items = database.getReference("item");
+                    final Context context = null;
                     items.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                               if (dataSnapshot.getKey().equals(getItem(position))){
+                               if (dataSnapshot.getKey().equals(getItem(position)) && dataSnapshot.child("status").getValue().toString().equals("PENDING")) {
+
                                    String d = dataSnapshot.child("cus_phn").getValue().toString();
                                    String token = dataSnapshot.child("token").getValue().toString();
-                                       FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
-                                           ,"Acknowledge by Inspector",Fragment3.this.getContext(),getActivity());
+                                   FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
+                                           , "Acknowledge by Inspector",context ,getActivity());
                                    notificationsSender.SendNotifications();
 
+                                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                       if ((ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)) {
+                                           try {
+                                               SmsManager smsManager = SmsManager.getDefault();
+                                               smsManager.sendTextMessage(d, null, "Inspection Call for " +
+                                                       " : " + getItem(position) + " " + "is received to Inspector ", null, null);
 
-
-
-                                   if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-                                       if ((ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
-                                           try {SmsManager smsManager = SmsManager.getDefault();
-                                               smsManager.sendTextMessage(d,null,"Inspection Call for " +
-                                                       " : "+ getItem(position)+ " "+ "is received to Inspector ",null,null);
-
-                                           }catch (Exception e ){
+                                           } catch (Exception e) {
                                                Toast.makeText(getContext(), "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
 
                                            }
@@ -200,11 +210,30 @@ public class Fragment3 extends Fragment {
                                    }
 
 
-                                   if  (ifwhatsappinstalled()){
-                                       Intent i =new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
+                                   try {
+                                       PackageManager packageManager = getActivity().getPackageManager();
+                                       Intent i = new Intent(Intent.ACTION_VIEW);
+                                       String url = "https://api.whatsapp.com/send?phone=" + "91"+d + "&text=" + URLEncoder.encode("Inspection Call for " +
+                                               " : " + getItem(position) + " " + "is received to Inspector ", "UTF-8");
+                                       i.setPackage("com.whatsapp");
+                                       i.setData(Uri.parse(url));
+                                       if (i.resolveActivity(packageManager) != null) {
+                                           startActivity(i);
+
+                                       } else {
+                                           Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
+                                       }
+                                   } catch (Exception e) {
+                                       Log.e("ERROR WHATSAPP", e.toString());
+                                       Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
+                                   }
+
+
+                                  /* if  (ifwhatsappinstalled()){
+                                       Intent i =new Intent(String.valueOf(getContext()), Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
                                                " : "+ getItem(position)+ " "+ "is received to Inspector "));
 
-                                       startActivity(i);
+                                        startActivity(i);
 
 
                                        //SMS INTEGRATION
@@ -214,10 +243,11 @@ public class Fragment3 extends Fragment {
 
                                    }else{
                                        Toast.makeText(getContext(), "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
-                                   }
+                                   }*/
+                               }
                                }
                             }
-                        }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

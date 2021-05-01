@@ -73,7 +73,7 @@ class SettingsFragment : Fragment() {
                         arrayList.add(drawings.toString())
                         arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter
-                        arrayAdapter.notifyDataSetChanged();
+                        arrayAdapter.notifyDataSetChanged()
                     }
 
 
@@ -214,11 +214,6 @@ class SettingsFragment : Fragment() {
                             token_id.addListenerForSingleValueEvent(id)
 
 
-
-
-
-
-
                             if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                                 if ((ContextCompat.checkSelfPermission(activity!!, android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
                                     try {val smsManager = SmsManager.getDefault()
@@ -233,16 +228,13 @@ class SettingsFragment : Fragment() {
                                 }
                             }
                             if  (ifwhatsappinstalled()){
-                                var i = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + num + "&text=" + "Inspection Call for " +
+                                val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + num + "&text=" + "Inspection Call for " +
                                         " : " + element + " " + "is made"))
 
                                 startActivity(i)
 
 
                                 //SMS INTEGRATION
-
-
-
 
                             }else{
                                 Toast.makeText(context, "Whatsapp Not Found", Toast.LENGTH_SHORT).show()
