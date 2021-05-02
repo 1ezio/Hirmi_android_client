@@ -7,6 +7,7 @@
     <string name="tab_text_2">HISTORY</string>
     <string name="tab_text_3">DRAWINGS</string>
     <string name="title_activity_report">report</string>
+    <string name="graphs">GRAPHS</string>
     <string name="tab_monthly_report">MONTHLY REPORT</string>
     <string name="tab_daily_report">DAILY REPORT</string>
     <string name="title_activity_employee_layout">employee_layout</string>

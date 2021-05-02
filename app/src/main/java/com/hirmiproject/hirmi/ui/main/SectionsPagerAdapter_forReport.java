@@ -9,11 +9,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.graphs;
 
 public class SectionsPagerAdapter_forReport extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.tab_daily_report,R.string.tab_monthly_report};
+    private static final int[] TAB_TITLES = new int[]{ R.string.tab_daily_report,R.string.tab_monthly_report, R.string.graphs};
     private final Context mContext;
 
     public SectionsPagerAdapter_forReport(Context context, FragmentManager fm) {
@@ -31,6 +32,9 @@ public class SectionsPagerAdapter_forReport extends FragmentPagerAdapter {
             case 1:
                 fragment = new monthly_report_fragment();
                 break;
+            case 2:
+                fragment = new graphs();
+                break;
         }
         return fragment;
     }
@@ -43,7 +47,7 @@ public class SectionsPagerAdapter_forReport extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        // Show 3 total pages.
+        return 3;
     }
 }

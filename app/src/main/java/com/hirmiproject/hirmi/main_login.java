@@ -186,9 +186,10 @@ public class main_login extends AppCompatActivity {
                                                                                                     if (key.equals(email)) {
 
 
-                                                                                                        Intent intent = new Intent(main_login.this, Ispector_layout.class);
+                                                                                                        Intent intent = new Intent(main_login.this, report.class);
                                                                                                         startActivity(intent);
                                                                                                         progress.dismiss();
+
 
                                                                                                     }
                                                                                                 }

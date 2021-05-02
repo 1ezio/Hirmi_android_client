@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     package="com.hirmiproject.hirmi">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".inspector_activity"></activity>
+        <activity android:name=".graphs">
+
+        </activity>
+        <activity android:name=".inspector_activity" />
         <activity
             android:name=".employee_layout"
             android:label="@string/title_activity_employee_layout"
@@ -51,6 +55,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <activity android:name="org.achartengine.GraphicalActivity" />
     </application>
 
 </manifest>
