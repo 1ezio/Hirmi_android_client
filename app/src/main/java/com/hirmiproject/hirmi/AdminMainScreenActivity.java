@@ -22,7 +22,7 @@ public class AdminMainScreenActivity extends AppCompatActivity {
     CardView addNewRoles;
     CardView addDrawings;
     CardView monthlyReport;
-    CardView employee;
+    CardView employee, inven;
     TextView admin_name;
     FirebaseDatabase database;
     TextView signout ;
@@ -107,6 +107,15 @@ public class AdminMainScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminMainScreenActivity.this, employee_layout.class);
+                startActivity(intent);
+
+            }
+        });
+        inven = findViewById(R.id.inventory_id);
+        inven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminMainScreenActivity.this, inventory.class);
                 startActivity(intent);
 
             }
