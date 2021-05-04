@@ -7,170 +7,179 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textColor="#000"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/message_box_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Drawing No. "
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:textColor="#000"
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/idrawing_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fetching Data.."
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_height="30dp"
-                    android:text="Inspector Name : "
-                    android:textColor="#000"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:textColor="#000"
-                    android:id="@+id/i_inspector_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fetching Data.."
-                    android:layout_marginTop="20dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Quantity for Inspection : "
-                    android:textColor="#000"
-                    android:layout_marginTop="20dp"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/quantity_i_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000"
-                    android:layout_marginTop="20dp"
-                    android:hint="Fetching Data.."
-                    android:textSize="20sp" />
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Remarks : "
-                    android:textColor="#000"
-                    android:textSize="20sp"/>
-
-                <EditText
-                    android:id="@+id/remark_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/round_corner"
-                    android:hint="Type Here.." />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="20sp"
-                    android:layout_marginTop="10dp"
-                    android:clickable="true"
-                    android:id="@+id/attch_id"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/black"
-                    android:text="Attach Image ?" />
-
-
-            </RelativeLayout>
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:layout_width="match_parent"
-                android:id="@+id/prog_id"
-                android:layout_height="wrap_content"/>
-            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/reject_id"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="20dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/message_box_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Drawing No. "
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:textColor="#000"
+                        android:layout_marginTop="20dp"
+                        android:id="@+id/idrawing_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fetching Data.."
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_height="30dp"
+                        android:text="Inspector Name : "
+                        android:textColor="#000"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:textColor="#000"
+                        android:id="@+id/i_inspector_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fetching Data.."
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Quantity for Inspection : "
+                        android:textColor="#000"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/quantity_i_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginTop="20dp"
+                        android:hint="Fetching Data.."
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Remarks : "
+                        android:textColor="#000"
+                        android:textSize="20sp"/>
+
+                    <EditText
+                        android:id="@+id/remark_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/round_corner"
+                        android:hint="Type Here.." />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="20sp"
+                        android:layout_marginTop="10dp"
+                        android:clickable="true"
+                        android:id="@+id/attch_id"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/black"
+                        android:text="Attach Image ?" />
+
+
+                </RelativeLayout>
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:layout_width="match_parent"
+                    android:id="@+id/prog_id"
+                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="20dp"
-                    android:background="@drawable/button_design"
-                    android:text="REJECT"
-                    android:textColor="#ffff" />
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/accept_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_alignEnd="@+id/reject_id"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/button_design"
-                    android:text="Accept"
-                    android:textColor="#ffff" />
+                    <Button
+                        android:id="@+id/reject_id"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/button_design"
+                        android:text="REJECT"
+                        android:textColor="#ffff" />
 
-            </RelativeLayout>
+                    <Button
+                        android:id="@+id/accept_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_alignEnd="@+id/reject_id"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/button_design"
+                        android:text="Accept"
+                        android:textColor="#ffff" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
 
-    </LinearLayout>
+
+
+    </ScrollView>
 </LinearLayout>

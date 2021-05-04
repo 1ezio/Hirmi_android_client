@@ -30,7 +30,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import java.util.Random;
 
 public class User_regis extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] workers= { "Make Choice","Custodian", "Inspector"};
+    String[] workers= { "Make Choice","Initiator", "Inspector"};
     Button proceed;
     String cate;
     FirebaseAuth firebaseAuth  ;
@@ -218,4 +218,10 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
 
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(User_regis.this,AdminMainScreenActivity.class));
+        super.onBackPressed();
+    }
 }

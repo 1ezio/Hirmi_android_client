@@ -74,6 +74,7 @@ public class Fragment3 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final List<String> arrayList = new ArrayList<String>();
+                final Context context = getContext();
 
                 for (final DataSnapshot childs : snapshot.getChildren()) {
 
@@ -95,7 +96,8 @@ public class Fragment3 extends Fragment {
                                 // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
-                                MyListAdaper adapter = new MyListAdaper(getContext(), R.layout.inspector_drawings, arrayList);
+
+                                MyListAdaper adapter = new MyListAdaper(    context, R.layout.inspector_drawings, arrayList);
 
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();

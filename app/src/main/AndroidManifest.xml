@@ -16,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".inventory"></activity>
-        <activity android:name=".graphs"></activity>
+        <activity android:name=".invertory_options.adding_existing"></activity>
+        <activity android:name=".invertory_options.adding_new" />
+        <activity android:name=".inventory" />
+        <activity android:name=".graphs" />
         <activity android:name=".inspector_activity" />
         <activity
             android:name=".employee_layout"

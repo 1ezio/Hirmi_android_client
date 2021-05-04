@@ -40,7 +40,7 @@ public class splash extends AwesomeSplash {
         configSplash.setRevealFlagX(Flags.REVEAL_BOTTOM);
 
 
-        configSplash.setTitleSplash("\uD835\uDCD3\uD835\uDCF8\uD835\uDCEC\uD835\uDCFE\uD835\uDCF6\uD835\uDCEE\uD835\uDCF7\uD835\uDCFD\uD835\uDCF2\uD835\uDCFF\uD835\uDCEE");
+        configSplash.setTitleSplash("\uD835\uDE42\uD835\uDE56\uD835\uDE69\uD835\uDE5E\uD835\uDE68\uD835\uDE5D\uD835\uDE5A\uD835\uDE5A\uD835\uDE61");
 
         configSplash.setOriginalHeight(550); //in relation to your svg (path) resource
         configSplash.setOriginalWidth(450); //in relation to your svg (path) resource

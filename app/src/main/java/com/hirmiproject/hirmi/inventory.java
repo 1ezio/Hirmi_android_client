@@ -3,10 +3,13 @@ package com.hirmiproject.hirmi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -15,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hirmiproject.hirmi.invertory_options.adding_existing;
+import com.hirmiproject.hirmi.invertory_options.adding_new;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +39,43 @@ public class inventory extends AppCompatActivity {
 
         final Spinner spinner = findViewById(R.id.spinner_id);
 
+        Button add = findViewById(R.id.add_id);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(inventory.this);
+                dialog.setTitle("MAKE A CHOICE");
+                dialog.setContentView(R.layout.inventory_dialog);
+                final Button add_new = dialog.findViewById(R.id.new_id);
+
+                final Button add_existing = dialog.findViewById(R.id.existing_id);
+
+                dialog.show();
+                add_new.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(inventory.this, adding_new.class));
+                    }
+                });
+
+                add_existing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(inventory.this, adding_existing.class));
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+
+
         final List<String> materials = new ArrayList<String>();
         materials.add("Choose Material");
+
+
+
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,4 +125,5 @@ public class inventory extends AppCompatActivity {
             }
         });
     }
+
 }

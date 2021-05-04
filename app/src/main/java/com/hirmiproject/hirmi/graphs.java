@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.Hex;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -223,17 +225,12 @@ public class graphs extends Fragment {
                             rejectedseries.setDisplayChartValues(true);
 
 
-
-
-
-
-
-
                             XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
                             multiRenderer.setXLabels(0);
                             multiRenderer.setChartTitle("ACCEPTED CHART");
                             multiRenderer.setXTitle(s2);
                             multiRenderer.setBarSpacing(0.5);
+                            multiRenderer.setBackgroundColor(Color.WHITE);
                             multiRenderer.setYTitle("COUNT");
 
 
@@ -248,14 +245,16 @@ public class graphs extends Fragment {
                                 y+=1;
                             }
 
-
+                            View chart ;
 
                             multiRenderer.addSeriesRenderer(accpetRendere);
                             multiRenderer.addSeriesRenderer(rejectedseries);
-                            Intent intent = ChartFactory.getBarChartIntent(getContext(), dataset, multiRenderer, BarChart.Type.DEFAULT);
+                            LinearLayout chartlayout = getActivity().findViewById(R.id.linear_id);
+
+                            chart= ChartFactory.getBarChartView(getContext(), dataset, multiRenderer, BarChart.Type.DEFAULT);
 
                             // Start Activity
-                            startActivity(intent);
+                            chartlayout.addView(chart);
 
 
                         }

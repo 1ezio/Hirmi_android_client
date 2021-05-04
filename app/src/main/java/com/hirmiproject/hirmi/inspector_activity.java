@@ -84,7 +84,7 @@ public class inspector_activity extends AppCompatActivity {
                     if (msg.equals(drawing)){
                         drawing_no.setText(drawing);
                         inspector_name.setText(s.child("inspector_name").getValue().toString());
-                        quantity.setText(s.child("quantity").getValue().toString());
+                        quantity.setText(s.child("quantity_for_inspection").getValue().toString());
                         attach.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -251,7 +251,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                         startActivityForResult(i,100);
 
-
+                                        Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
+                                        startActivity(intent);
 
                                         //SMS INTEGRATION
 

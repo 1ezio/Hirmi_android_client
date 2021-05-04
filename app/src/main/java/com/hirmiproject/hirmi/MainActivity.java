@@ -171,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MainActivity.this,AdminMainScreenActivity.class));
 
-
+        super.onBackPressed();
+    }
 }
