@@ -2,6 +2,7 @@ package com.hirmiproject.hirmi.ui.main;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -67,8 +69,9 @@ public class monthly_report_fragment extends Fragment {
 
         View  view  = inflater.inflate(R.layout.monthly_report_fragment, container, false);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getReference("report");
+        final DatabaseReference image_ref = database.getReference("item");
         final ListView lv = view.findViewById(R.id.lv_id);
 
         Button date_picker = view.findViewById(R.id.date_id);
@@ -93,13 +96,38 @@ public class monthly_report_fragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                        snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(finalMonth));
                         final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
-                        for (DataSnapshot s: snapshot.getChildren()){
-                            objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString()));
+                        for (final DataSnapshot s: snapshot.getChildren()){
 
-                            CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
-                            lv.setAdapter(customAdapter);
-                            customAdapter.notifyDataSetChanged();
+                            image_ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot1) {
+
+                                    for (DataSnapshot i:snapshot1.getChildren()){
+                                        if (i.getKey().equals(s.child("drawing").getValue().toString())){
+                                            String url = i.child("image_url").child("murl").getValue().toString();
+                                            objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
+                                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),url));
+
+                                            CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
+                                            lv.setAdapter(customAdapter);
+                                            customAdapter.notifyDataSetChanged();
+
+                                        }
+                                        //.child("image_url").child("murl").getValue().toString();
+
+                                    }
+
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
                         }
                     }
 
@@ -136,63 +164,6 @@ public class monthly_report_fragment extends Fragment {
         return view;
     }
 
-    private static void addImage(Document document,byte[] byteArray)
-    {
-        Image image = null;
-        try
-        {
-            image = Image.getInstance(byteArray);
-        }
-        catch (BadElementException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (MalformedURLException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        // image.scaleAbsolute(150f, 150f);
-        try
-        {
-            document.add(image);
-        } catch (DocumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
-    public static Bitmap getBitmapFromView(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null)
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        else
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
-
 
 
 
@@ -208,7 +179,7 @@ public class monthly_report_fragment extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2, textView3, textView4;
+            TextView textView2, textView3, textView4,textView5;
 
         }
 
@@ -229,7 +200,7 @@ public class monthly_report_fragment extends Fragment {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             CustomAdapter.ViewHolder holder = null;
             if (convertView == null) {
                 holder = new CustomAdapter.ViewHolder();
@@ -238,6 +209,7 @@ public class monthly_report_fragment extends Fragment {
                 holder.textView2 = (TextView) convertView.findViewById(R.id.m_status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.m_date_time_id);
                 holder.textView4 = convertView.findViewById(R.id.m_ins_id);
+                holder.textView5 = convertView.findViewById(R.id.image_id);
                 convertView.setTag(holder);
             } else {
                 holder = (CustomAdapter.ViewHolder) convertView.getTag();
@@ -255,8 +227,16 @@ public class monthly_report_fragment extends Fragment {
                 holder.textView2.setTextColor(Color.GRAY);
             }
 
+            holder.textView5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
+                    startActivity(browser);
+                }
+            });
             holder.textView3.setText(objects.get(position).getDate());
+
             holder.textView4.setText(objects.get(position).getInspector());
             return convertView;
 

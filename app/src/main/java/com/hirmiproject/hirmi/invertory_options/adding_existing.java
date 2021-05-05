@@ -28,21 +28,20 @@ import java.util.List;
 public class adding_existing extends AppCompatActivity {
     Spinner m_spin, p_spin;
     EditText value ;
-
+    TextView add_new;
     Button save ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_existing);
-        TextView add_new;
 
         m_spin  = findViewById(R.id.material_spin_id);
         p_spin = findViewById(R.id.p_spin_id);
         value = findViewById(R.id.value_id);
 
         add_new = findViewById(R.id.some_id);
-        add_new.setClickable(true);
+
         save = findViewById(R.id.save_id);
 
 
@@ -109,6 +108,56 @@ public class adding_existing extends AppCompatActivity {
 
             }
         });
+
+        add_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(adding_existing.this);
+                dialog.setContentView(R.layout.new_parameter_dialog);
+                if (m[0].equals("Choose Material")){
+                    Toast.makeText(adding_existing.this, "Select a Material", Toast.LENGTH_SHORT).show();
+                }else{
+                    dialog.show();
+                    final EditText p_name= dialog.findViewById(R.id.editText4);
+                    final EditText p_value= dialog.findViewById(R.id.editText5);
+                    TextView add_more = dialog.findViewById(R.id.textView5);
+                    Button  save1= dialog.findViewById(R.id.button2);
+                    Button done = dialog.findViewById(R.id.done_id);
+
+                    add_more.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            p_name.setText("");
+                            p_value.setText("");
+                        }
+                    });
+                    save1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (p_name.getText().toString().equals("") || p_value.getText().toString().equals("")){
+                                Toast.makeText(adding_existing.this, "Enter Parameter or Value..", Toast.LENGTH_SHORT).show();
+                            }else{
+                                ref.child(m[0]).child(p_name.getText().toString()).setValue(p_value.getText().toString());
+
+                            }
+
+                        }
+                    });
+                    done.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
+
+                }
+
+            }
+        });
+
+
         final String[] p = new String[1];
         p_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -125,13 +174,8 @@ public class adding_existing extends AppCompatActivity {
             }
         });
 
-        add_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Dialog ndialog= new Dialog(adding_existing.this);
-                ndialog.setContentView(R.layout.new_parameter_dialog);
-            }
-        });
+
+
       /*  .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

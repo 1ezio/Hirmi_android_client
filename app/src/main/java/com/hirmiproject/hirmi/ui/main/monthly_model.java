@@ -4,7 +4,7 @@ public class monthly_model {
     public monthly_model() {
     }
 
-    private String drawing, status, date, inspector;
+    private String drawing, status, date, inspector, image_url;
 
     public String getDrawing() {
         return drawing;
@@ -16,6 +16,14 @@ public class monthly_model {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public void setStatus(String status) {
@@ -38,10 +46,11 @@ public class monthly_model {
         this.inspector = inspector;
     }
 
-    public monthly_model(String drawing, String status, String date, String inspector) {
+    public monthly_model(String drawing, String status, String date, String inspector,String image_url) {
         this.drawing = drawing;
         this.status = status;
         this.date = date;
         this.inspector = inspector;
+        this.image_url = image_url;
     }
 }

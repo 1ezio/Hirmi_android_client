@@ -8,6 +8,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hirmiproject.hirmi.ui.main.Fragment3;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -302,8 +306,23 @@ public class inspector_activity extends AppCompatActivity {
             private void uploadfile() {
 
                 if(mimageuri!=null){
+
+
+                    Bitmap bitImage= null;
+                    try {
+                        bitImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(mimageuri));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitImage.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+                    byte[] fileInBytes = baos.toByteArray();
+
+
+
                     final StorageReference fileref = storageReference.child(msg+"."+"jpg");
-                    fileref.putFile(mimageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    fileref.putBytes(fileInBytes).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 

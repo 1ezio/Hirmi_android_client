@@ -1,7 +1,9 @@
 package com.hirmiproject.hirmi.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,7 +69,7 @@ public class Fragment2 extends Fragment {
 
                                 objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                                         ,dataSnapshot.child("date").getValue().toString(),
-                                        dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString()));
+                                        dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString(),null));
                                 CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
                                 listView.setAdapter(customAdapter);
@@ -112,7 +115,7 @@ public class Fragment2 extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2,textView3,textView4;
+            TextView textView2,textView3,textView4,textView5;
 
         }
 
@@ -141,6 +144,9 @@ public class Fragment2 extends Fragment {
                 holder.textView1 = (TextView) convertView.findViewById(R.id.his_draw_id);
                 holder.textView2 = (TextView) convertView.findViewById(R.id.status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.date_id);
+                holder.textView5 = convertView.findViewById(R.id.image_id);
+                holder.textView5.setVisibility(View.INVISIBLE);
+
                 holder.textView4= convertView.findViewById(R.id.time_id);
                 convertView.setTag(holder);
             } else {
@@ -162,6 +168,12 @@ public class Fragment2 extends Fragment {
 
             holder.textView3.setText(objects.get(position).getDate());
 
+            holder.textView3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Toast", Toast.LENGTH_SHORT).show();
+                }
+            });
             holder.textView4.setText(objects.get(position).getTime());
 
             return convertView;

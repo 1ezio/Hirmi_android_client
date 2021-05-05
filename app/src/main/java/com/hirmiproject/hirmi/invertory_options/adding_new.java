@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hirmiproject.hirmi.AdminMainScreenActivity;
 import com.hirmiproject.hirmi.R;
 import com.hirmiproject.hirmi.inventory;
 
@@ -65,7 +66,7 @@ public class adding_new extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(adding_new.this, inventory.class));
+                startActivity(new Intent(adding_new.this, AdminMainScreenActivity.class));
             }
         });
 

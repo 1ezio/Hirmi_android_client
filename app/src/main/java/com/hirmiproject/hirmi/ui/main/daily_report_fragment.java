@@ -2,9 +2,11 @@ package com.hirmiproject.hirmi.ui.main;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.util.ULocale;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,7 @@ public class daily_report_fragment extends Fragment {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getReference("report");
+        final DatabaseReference image_ref = database.getReference("item");
         final ListView lv = view.findViewById(R.id.liv_id);
         Date c = Calendar.getInstance().getTime();
         final String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
@@ -60,14 +63,32 @@ public class daily_report_fragment extends Fragment {
 
                 snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(mnth));
                 final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
-                for (DataSnapshot s: snapshot.getChildren()){
+                for (final DataSnapshot s: snapshot.getChildren()){
                     if (s.child("date").getValue().toString().equals(formattedDate)){
-                        objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString()));
+                        image_ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot i: snapshot.getChildren()){
+                                    if (i.getKey().equals(s.child("drawing").getValue().toString())){
+                                        String url = i.child("image_url").child("murl").getValue().toString();
+                                        objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
+                                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),url));
 
-                        CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
-                        lv.setAdapter(customAdapter);
-                        customAdapter.notifyDataSetChanged();
+                                        CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
+                                        lv.setAdapter(customAdapter);
+                                        customAdapter.notifyDataSetChanged();
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
                     }
 
 
@@ -92,7 +113,7 @@ public class daily_report_fragment extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2, textView3, textView4;
+            TextView textView2, textView3, textView4,textView5;
 
         }
 
@@ -113,7 +134,7 @@ public class daily_report_fragment extends Fragment {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             CustomAdapter.ViewHolder holder = null;
             if (convertView == null) {
                 holder = new CustomAdapter.ViewHolder();
@@ -122,6 +143,8 @@ public class daily_report_fragment extends Fragment {
                 holder.textView2 = (TextView) convertView.findViewById(R.id.m_status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.m_date_time_id);
                 holder.textView4 = convertView.findViewById(R.id.m_ins_id);
+                holder.textView5 = convertView.findViewById(R.id.image_id);
+
                 convertView.setTag(holder);
             } else {
                 holder = (CustomAdapter.ViewHolder) convertView.getTag();
@@ -139,7 +162,15 @@ public class daily_report_fragment extends Fragment {
                 holder.textView2.setTextColor(Color.GRAY);
             }
 
+            holder.textView5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
+                    startActivity(browser);
+
+                }
+            });
             holder.textView3.setText(objects.get(position).getDate());
             holder.textView4.setText(objects.get(position).getInspector());
             return convertView;

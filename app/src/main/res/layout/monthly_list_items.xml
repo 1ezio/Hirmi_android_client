@@ -72,6 +72,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Loading"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/image_id"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textColor="#0000ff"
+            android:text="Show Image"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
     </LinearLayout>
 
 

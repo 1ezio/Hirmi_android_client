@@ -191,6 +191,33 @@ public class main_login extends AppCompatActivity {
                                                                                                         progress.dismiss();
 
 
+                                                                                                    }else{
+                                                                                                        FirebaseDatabase database  = FirebaseDatabase.getInstance();
+
+                                                                                                        final DatabaseReference p_reference = database.getReference("power_user") ;
+                                                                                                        p_reference.addValueEventListener(new ValueEventListener() {
+                                                                                                            @Override
+                                                                                                            public void onDataChange(@NonNull DataSnapshot p_snapshot) {
+                                                                                                                for (DataSnapshot i_snapshot1 : p_snapshot.getChildren()) {
+                                                                                                                    String key = i_snapshot1.getKey();
+                                                                                                                    key = key.replace(",", ".");
+                                                                                                                    if (key.equals(email)) {
+
+
+                                                                                                                        Intent intent = new Intent(main_login.this, inventory.class);
+                                                                                                                        startActivity(intent);
+                                                                                                                        progress.dismiss();
+
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }
+
+                                                                                                            @Override
+                                                                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                                                            }
+                                                                                                        });
+
                                                                                                     }
                                                                                                 }
                                                                                             }

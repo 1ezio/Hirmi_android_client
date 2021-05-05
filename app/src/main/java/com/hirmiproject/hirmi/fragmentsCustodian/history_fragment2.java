@@ -1,7 +1,9 @@
 package com.hirmiproject.hirmi.fragmentsCustodian;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,7 @@ public class history_fragment2 extends Fragment {
                 if (dataSnapshot.child("status").getValue().toString().equals("ACCEPTED") || dataSnapshot.child("status").getValue().toString().equals("REJECTED")){
                     objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                             , dataSnapshot.child("date").getValue().toString(),
-                            dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString()));
+                            dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString(),dataSnapshot.child("image_url").child("murl").getValue().toString()));
 
                     CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
@@ -93,7 +95,7 @@ public class history_fragment2 extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2, textView3, textView4;
+            TextView textView2, textView3, textView4,textView5;
 
         }
 
@@ -114,7 +116,7 @@ public class history_fragment2 extends Fragment {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             CustomAdapter.ViewHolder holder = null;
             if (convertView == null) {
                 holder = new CustomAdapter.ViewHolder();
@@ -123,6 +125,15 @@ public class history_fragment2 extends Fragment {
                 holder.textView2 = (TextView) convertView.findViewById(R.id.status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.date_id);
                 holder.textView4 = (TextView) convertView.findViewById(R.id.time_id);
+                holder.textView5 = convertView.findViewById(R.id.image_id);
+                holder.textView5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
+
+                            startActivity(browser);
+                    }
+                });
                 convertView.setTag(holder);
             } else {
                 holder = (CustomAdapter.ViewHolder) convertView.getTag();

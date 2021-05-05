@@ -7,10 +7,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -24,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.anstrontechnologies.corehelper.AnstronCoreHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -41,13 +45,23 @@ import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.MainActivity;
 import com.hirmiproject.hirmi.R;
 import com.hirmiproject.hirmi.upload_image_model;
+import com.iceteck.silicompressorr.FileUtils;
+import com.iceteck.silicompressorr.SiliCompressor;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+
+import id.zelory.compressor.Compressor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -110,7 +124,11 @@ public class inspector_dialog  {
                             @Override
                             public void onClick(View view) {
 
-                                uploadfile();
+                                try {
+                                    uploadfile();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
                                 Calendar c= Calendar.getInstance();
                                 int year = c.get(Calendar.YEAR);
@@ -127,6 +145,7 @@ public class inspector_dialog  {
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
                                 report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+
 
 
 
@@ -206,7 +225,11 @@ public class inspector_dialog  {
                             public void onClick(View view) {
 
 
-                                uploadfile();
+                                try {
+                                    uploadfile();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 Calendar c= Calendar.getInstance();
                                 int year = c.get(Calendar.YEAR);
                                 int mnth = c.get(Calendar.MONTH);
@@ -303,17 +326,38 @@ public class inspector_dialog  {
                 }
             }
 
-            private String getfileExtension(URI uri){
-                ContentResolver cr = activity.getContentResolver();
-                MimeTypeMap mime =MimeTypeMap.getSingleton();
-                return mime.getExtensionFromMimeType(cr.getType(mimageuri));
 
-            }
-            private void uploadfile() {
+            private void uploadfile() throws IOException {
 
                 if(mimageuri!=null){
+
+                  /*  File file = new File(SiliCompressor.with(activity).compress(FileUtils.getPath(activity,mimageuri),new File(activity.getCacheDir(),"temp")));
+                    Uri uri = Uri.fromFile(file);
+                    AnstronCoreHelper coreHelper;
+                    file.delete();
+
+
+                    try {
+
+
+                         bmp (activity.getContentResolver(),mimageuri);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                    //here you can choose quality factor in third parameter(ex. i choosen 25)
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] fileInBytes = baos.toByteArray();
+
+*/                  Bitmap bitImage=BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(mimageuri));
+                    bitImage=compressImage(bitImage);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitImage.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+                    byte[] fileInBytes = baos.toByteArray();
                     StorageReference fileref = storageReference.child(System.currentTimeMillis()+"."+"jpg");
-                    fileref.putFile(mimageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    fileref.putBytes(fileInBytes).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Handler handler = new Handler();
@@ -323,7 +367,7 @@ public class inspector_dialog  {
                                     mprogress.setProgress(0);
                                 }
                             },5000);
-                            Toast.makeText(activity, "Succes", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Success", Toast.LENGTH_SHORT).show();
                             upload_image_model model = new upload_image_model(msg,storageReference.getDownloadUrl().toString());
                             i_items.child(msg).child("image_url").setValue(model);
                         }
@@ -369,6 +413,20 @@ public class inspector_dialog  {
 
     dialog.show();
 
+    }
+    private Bitmap compressImage(Bitmap image) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//Compression quality, here 100 means no compression, the storage of compressed data to baos
+        int options = 90;
+        while (baos.toByteArray().length / 1024 > 400) {  //Loop if compressed picture is greater than 400kb, than to compression
+            baos.reset();//Reset baos is empty baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//The compression options%, storing the compressed data to the baos
+            options -= 10;//Every time reduced by 10
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//The storage of compressed data in the baos to ByteArrayInputStream
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//The ByteArrayInputStream data generation
+        return bitmap;
     }
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==1 && resultCode==RESULT_OK  && data!=null && data.getData()!=null){

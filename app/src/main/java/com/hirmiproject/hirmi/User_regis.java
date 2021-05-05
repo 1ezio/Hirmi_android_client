@@ -30,7 +30,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import java.util.Random;
 
 public class User_regis extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] workers= { "Make Choice","Initiator", "Inspector"};
+    String[] workers= { "Make Choice","Initiator", "Inspector", "Power User"};
     Button proceed;
     String cate;
     FirebaseAuth firebaseAuth  ;
@@ -179,6 +179,35 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                                 }
                             }
                         });
+
+
+                    }
+                    if (cate.equals("Power User")){
+
+                            final DatabaseReference ireference = database.getReference("power_user");
+                            String s = encodeString(reg.getText().toString());
+                            ireference.child(s).child("reg_id").setValue(s);
+                            ireference.child(s).child("name").setValue(name.getText().toString());
+                            ireference.child(s).child("phn").setValue(phn.getText().toString());
+
+
+                            Random rnd = new Random();
+
+                            int n = 100000 + rnd.nextInt(900000);
+
+                            firebaseAuth.createUserWithEmailAndPassword(reg.getText().toString(), String.valueOf(n)).addOnCompleteListener(User_regis.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(User_regis.this, "REGISTERED", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(User_regis.this, User_regis.class);
+
+                                        startActivity(intent);
+                                    } else if (task.isCanceled()) {
+                                        Toast.makeText(User_regis.this, "CANCELLED", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
 
                     }
