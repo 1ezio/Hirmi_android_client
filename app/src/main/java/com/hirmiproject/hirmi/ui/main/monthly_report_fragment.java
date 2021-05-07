@@ -18,11 +18,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,7 +64,10 @@ import static com.itextpdf.text.Annotation.FILE;
 
 public class monthly_report_fragment extends Fragment {
 
-
+    private String[] mMonth = new String[] {
+            "Jan", "Feb" , "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug" , "Sep", "Oct", "Nov", "Dec"
+    };
 
     @Nullable
     @Override
@@ -74,27 +80,68 @@ public class monthly_report_fragment extends Fragment {
         final DatabaseReference image_ref = database.getReference("item");
         final ListView lv = view.findViewById(R.id.lv_id);
 
-        Button date_picker = view.findViewById(R.id.date_id);
+        Spinner mnth_spin = view.findViewById(R.id.mnth_spin_id);
+        Spinner year_spin = view.findViewById(R.id.year_spin_id);
 
+        Button show = view.findViewById(R.id.done_id);
 
+        final ArrayList<String> years = new ArrayList<String>();
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        for (int i = thisYear; i >= 2020; i--) {
+            years.add(Integer.toString(i));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item    , years);
+        year_spin.setAdapter(adapter);
 
+        final ArrayList<String> mnths = new ArrayList<String>();
+        mnths.add("Month");
+        mnths.add("January");
+        mnths.add("February");mnths.add("March");mnths.add("April");mnths.add("May");mnths.add("June");mnths.add("July");mnths.add("August");mnths.add("September");mnths.add("October");
+        mnths.add("November");mnths.add("December");
+        ArrayAdapter<String> ad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,mnths);
+        mnth_spin.setAdapter(ad);
+        final String[] final_mnth = new String[1];
+        final String[] mnth_name = new String[1];
 
-
-
-
-
-        final DatePickerDialog.OnDateSetListener dateSetListener ;
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        mnth_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, final int year, int month, int day) {
-                month= month+1;
-                String date = month+"-"+year;
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                final int finalMonth = month;
+                final_mnth[0] = String.valueOf(i);
+                mnth_name[0] = String.valueOf(mnths.get(i));
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        final String[] final_year = new String[1];
+
+
+        year_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                final_year[0] = years.get(i);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                       snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(finalMonth));
+                        snapshot =  snapshot.child(final_year[0]).child(String.valueOf(final_mnth[0]));
                         final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
                         for (final DataSnapshot s: snapshot.getChildren()){
 
@@ -137,30 +184,15 @@ public class monthly_report_fragment extends Fragment {
 
                     }
                 });
-
-
-
-
-
-
-            }
-        };
-
-
-        //final DatePickerDialog.OnDateSetListener finalDateSetListener = dateSetListener;
-        date_picker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    Calendar cal = Calendar.getInstance();
-                    int year = cal.get(Calendar.YEAR);
-                    int mnth = cal.get(Calendar.MONTH);
-                    int day = cal.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,year,mnth,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
             }
         });
 
+
+
+
+
+
+        //final DatePickerDialog.OnDateSetListener finalDateSetListener = dateSetListener;
         return view;
     }
 

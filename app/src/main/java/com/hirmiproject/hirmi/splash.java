@@ -34,19 +34,19 @@ public class splash extends AwesomeSplash {
     public void initSplash(ConfigSplash configSplash) {
         ActionBar actionBar = getSupportActionBar();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        configSplash.setBackgroundColor(R.color.colorAccent);
+        configSplash.setBackgroundColor(R.color.darkorange);
         configSplash.setAnimCircularRevealDuration(3000);
         configSplash.setRevealFlagX(Flags.REVEAL_LEFT);
         configSplash.setRevealFlagX(Flags.REVEAL_BOTTOM);
 
 
-        configSplash.setTitleSplash("\uD835\uDE42\uD835\uDE56\uD835\uDE69\uD835\uDE5E\uD835\uDE68\uD835\uDE5D\uD835\uDE5A\uD835\uDE5A\uD835\uDE61");
+        configSplash.setTitleSplash("");
 
         configSplash.setOriginalHeight(550); //in relation to your svg (path) resource
         configSplash.setOriginalWidth(450); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(3000);
         configSplash.setPathSplashStrokeSize(3);
-        configSplash.setLogoSplash(R.drawable.taaju);
+        configSplash.setLogoSplash(R.drawable.new_ut_final);
         configSplash.setAnimLogoSplashTechnique(Techniques.BounceInUp);
         configSplash.setTitleTextSize(45f);
 

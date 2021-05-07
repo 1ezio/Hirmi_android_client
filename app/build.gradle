@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     implementation 'com.google.firebase:firebase-auth:20.0.4'
     implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.abhidiwakar:AnstronCoreHelper:1.1'
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.4'
 
