@@ -1,5 +1,4 @@
-    package com.hirmiproject.hirmi.ui.main;
-
+package com.hirmiproject.hirmi.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -58,7 +57,7 @@ public class Fragment3 extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference items = database.getReference("item");
         final DatabaseReference n = database.getReference("inspector");
-       TextView  signout = view.findViewById(R.id.sign_id);
+        TextView  signout = view.findViewById(R.id.sign_id);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +73,7 @@ public class Fragment3 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final List<String> arrayList = new ArrayList<String>();
+                final List<String> arrayList1 = new ArrayList<String>();
                 final Context context = getContext();
 
                 for (final DataSnapshot childs : snapshot.getChildren()) {
@@ -92,12 +92,14 @@ public class Fragment3 extends Fragment {
                             String name ;
                             name = dsnapshot.child(nmail).child("name").getValue().toString();
                             if (childs.child("status").getValue().toString().equals("PENDING") && childs.child("inspector_name").getValue().toString().equals(name)) {
-                                arrayList.add(drawing);
+                                String de = childs.child("basic_desc").getValue().toString();
+                                arrayList.add(drawing+ "    "+ de);
+                                arrayList1.add(drawing);
                                 // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
 
-                                MyListAdaper adapter = new MyListAdaper(    context, R.layout.inspector_drawings, arrayList);
+                                MyListAdaper adapter = new MyListAdaper(context, R.layout.inspector_drawings, arrayList);
 
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
@@ -111,7 +113,7 @@ public class Fragment3 extends Fragment {
 
                                         //dialog.showDialog(getActivity(), arrayList.get(i));
                                         Intent intent = new Intent(getActivity(), inspector_activity.class);
-                                        intent.putExtra("key",arrayList.get(i));
+                                        intent.putExtra("key",arrayList1.get(i));
                                         startActivity(intent);
                                         getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
 
@@ -189,66 +191,60 @@ public class Fragment3 extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                               if (dataSnapshot.getKey().equals(getItem(position)) && dataSnapshot.child("status").getValue().toString().equals("PENDING")) {
+                                String[] words=getItem(position).split("    ");
+                                if (dataSnapshot.getKey().equals(words[0]) && dataSnapshot.child("status").getValue().toString().equals("PENDING")) {
 
-                                   String d = dataSnapshot.child("cus_phn").getValue().toString();
-                                   String token = dataSnapshot.child("token").getValue().toString();
-                                   FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                           , "Acknowledge by Inspector",context ,getActivity());
-                                   notificationsSender.SendNotifications();
+                                    String d = dataSnapshot.child("cus_phn").getValue().toString();
+                                    String token = dataSnapshot.child("token").getValue().toString();
+                                    FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
+                                            , "Acknowledge by Inspector",context ,getActivity());
+                                    notificationsSender.SendNotifications();
 
-                                   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                       if ((ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)) {
-                                           try {
-                                               SmsManager smsManager = SmsManager.getDefault();
-                                               smsManager.sendTextMessage(d, null, "Inspection Call for " +
-                                                       " : " + getItem(position) + " " + "is received to Inspector ", null, null);
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        if ((ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)) {
+                                            try {
+                                                SmsManager smsManager = SmsManager.getDefault();
+                                                smsManager.sendTextMessage(d, null, "Inspection Call for " +
+                                                        " : " + getItem(position) + " " + "is received to Inspector ", null, null);
 
-                                           } catch (Exception e) {
-                                               Toast.makeText(getContext(), "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e) {
+                                                Toast.makeText(getContext(), "Permission not granted to Send SMS", Toast.LENGTH_SHORT).show();
 
-                                           }
-                                       }
-                                   }
+                                            }
+                                        }
+                                    }
 
 
-                                   try {
-                                       PackageManager packageManager = getActivity().getPackageManager();
-                                       Intent i = new Intent(Intent.ACTION_VIEW);
-                                       String url = "https://api.whatsapp.com/send?phone=" + "91"+d + "&text=" + URLEncoder.encode("Inspection Call for " +
-                                               " : " + getItem(position) + " " + "is received to Inspector ", "UTF-8");
-                                       i.setPackage("com.whatsapp");
-                                       i.setData(Uri.parse(url));
-                                       if (i.resolveActivity(packageManager) != null) {
-                                           startActivity(i);
+                                    try {
+                                        PackageManager packageManager = getActivity().getPackageManager();
+                                        Intent i = new Intent(Intent.ACTION_VIEW);
+                                        String url = "https://api.whatsapp.com/send?phone=" + "91"+d + "&text=" + URLEncoder.encode("Inspection Call for " +
+                                                " : " + getItem(position) + " " + "is received to Inspector ", "UTF-8");
+                                        i.setPackage("com.whatsapp");
+                                        i.setData(Uri.parse(url));
+                                        if (i.resolveActivity(packageManager) != null) {
+                                            startActivity(i);
 
-                                       } else {
-                                           Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
-                                       }
-                                   } catch (Exception e) {
-                                       Log.e("ERROR WHATSAPP", e.toString());
-                                       Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
-                                   }
+                                        } else {
+                                            Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (Exception e) {
+                                        Log.e("ERROR WHATSAPP", e.toString());
+                                        Toast.makeText(getContext(), "Whatsapp NOT Found", Toast.LENGTH_SHORT).show();
+                                    }
 
 
                                   /* if  (ifwhatsappinstalled()){
                                        Intent i =new Intent(String.valueOf(getContext()), Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
                                                " : "+ getItem(position)+ " "+ "is received to Inspector "));
-
                                         startActivity(i);
-
-
                                        //SMS INTEGRATION
-
-
-
-
                                    }else{
                                        Toast.makeText(getContext(), "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
                                    }*/
-                               }
-                               }
+                                }
                             }
+                        }
 
 
                         @Override

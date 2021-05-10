@@ -9,20 +9,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/drawing_id"
-        android:text="SOMETHING"
-        android:textColor="#000"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"/>
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/ok_id"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/add"/>
+        <TextView
+            android:id="@+id/drawing_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="SOMETHING"
+            android:textColor="#000" />
+
+        <Button
+            android:id="@+id/ok_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/add"
+
+            android:gravity="end" />
     </LinearLayout>
+
+
+
+
+
+
+
 </LinearLayout>

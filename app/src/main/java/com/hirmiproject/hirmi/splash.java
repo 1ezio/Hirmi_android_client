@@ -1,14 +1,23 @@
 package com.hirmiproject.hirmi;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,8 +37,9 @@ public class splash extends AwesomeSplash {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-    }*/
 
+    }*/
+private int request_code = 11;
     @Override
     public void initSplash(ConfigSplash configSplash) {
         ActionBar actionBar = getSupportActionBar();
@@ -46,7 +56,7 @@ public class splash extends AwesomeSplash {
         configSplash.setOriginalWidth(450); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(3000);
         configSplash.setPathSplashStrokeSize(3);
-        configSplash.setLogoSplash(R.drawable.new_ut_final);
+        configSplash.setLogoSplash(R.drawable.logo_edited);
         configSplash.setAnimLogoSplashTechnique(Techniques.BounceInUp);
         configSplash.setTitleTextSize(45f);
 
@@ -63,6 +73,23 @@ public class splash extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
+        final AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(splash.this);
+        final com.google.android.play.core.tasks.Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+        appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
+            @Override
+            public void onSuccess(AppUpdateInfo result) {
+                if (result.updateAvailability()==UpdateAvailability.UPDATE_AVAILABLE &&
+                result.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)){
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(result,AppUpdateType.FLEXIBLE,splash.this,request_code);
+                    } catch (IntentSender.SendIntentException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
 
 
         final CustomProgress progress = new CustomProgress(splash.this);
@@ -206,6 +233,17 @@ public class splash extends AwesomeSplash {
         }
 
 
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode== request_code){
+            Toast.makeText(this, "Start Download", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 }

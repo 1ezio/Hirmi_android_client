@@ -93,7 +93,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                 }
                 else {
 
-                    if (cate.equals("Custodian")) {
+                    if (cate.equals("Initiator")) {
                         final DatabaseReference creference = database.getReference("custodian");
 
                         //TYPE GENERATE PASSWORD HERE

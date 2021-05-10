@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.abhidiwakar:AnstronCoreHelper:1.1'
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.4'
+    implementation 'com.google.android.play:core:1.10.0'
 
     implementation 'com.google.firebase:firebase-storage:19.2.2'
     implementation files('libs\\achartengine-0.7.0.jar')

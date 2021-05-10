@@ -54,5 +54,12 @@ class MainActivityNew : AppCompatActivity() {
         tabsCustodian.getTabAt(0)?.setIcon(R.drawable.ic_baseline_settings_24)
     }
 
+    override fun onBackPressed() {
+
+        super.onBackPressed()
+        val intent = Intent(this,MainActivityNew::class.java)
+        startActivity(intent)
+
+    }
 
 }

@@ -70,7 +70,7 @@ public class Fragment2 extends Fragment {
                                 objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                                         ,dataSnapshot.child("date").getValue().toString(),
                                         dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString(),null));
-                                CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
+                                CustomAdapter customAdapter = new CustomAdapter(getActivity(), objects);
 
                                 listView.setAdapter(customAdapter);
                                 customAdapter.notifyDataSetChanged();
