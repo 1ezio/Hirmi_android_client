@@ -254,8 +254,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                             startActivityForResult(i,100);
 
-                                            Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
-                                            startActivity(intent);
+
 
                                             //SMS INTEGRATION
 
