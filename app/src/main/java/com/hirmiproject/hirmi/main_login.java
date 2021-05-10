@@ -99,24 +99,7 @@ public class main_login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     FirebaseDatabase database  = FirebaseDatabase.getInstance();
                                     final DatabaseReference a_reference = database.getReference("admin") ;
-                                    final DatabaseReference p_ref = database.getReference("power_user");
-                                    p_ref.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull @NotNull DataSnapshot snap) {
-                                            for (DataSnapshot snaps:snap.getChildren() ){
-                                                String e = snaps.getKey();
-                                                e= e.replace(",",".");
-                                                if (e.equals(email)){
-                                                    startActivity(new Intent(main_login.this,inventory.class));
-                                                }
-                                            }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                                        }
-                                    });
 
                                     if (task.isSuccessful()) {
 
@@ -164,6 +147,7 @@ public class main_login extends AppCompatActivity {
                                                                         Intent intent = new Intent(main_login.this, MainActivityNew.class);
                                                                         startActivity(intent);
                                                                         progress.dismiss();
+                                                                        break;
                                                                     }else{FirebaseDatabase database  = FirebaseDatabase.getInstance();
 
                                                                         final DatabaseReference i_reference = database.getReference("inspector") ;
@@ -199,37 +183,40 @@ public class main_login extends AppCompatActivity {
                                                                                         Intent intent = new Intent(main_login.this, Ispector_layout.class);
                                                                                         startActivity(intent);
                                                                                         progress.dismiss();
+                                                                                        break;
                                                                                     }else{
-                                                                                        FirebaseDatabase database  = FirebaseDatabase.getInstance();
-
-                                                                                        final DatabaseReference m_reference = database.getReference("monitor") ;
-                                                                                        m_reference.addValueEventListener(new ValueEventListener() {
+                                                                                        FirebaseDatabase database= FirebaseDatabase.getInstance();
+                                                                                        final DatabaseReference p_ref = database.getReference("power_user");
+                                                                                        p_ref.addValueEventListener(new ValueEventListener() {
                                                                                             @Override
-                                                                                            public void onDataChange(@NonNull DataSnapshot m_snapshot) {
-                                                                                                for(DataSnapshot i_snapshot1:m_snapshot.getChildren()) {
-                                                                                                    String key = i_snapshot1.getKey();
-                                                                                                    key = key.replace(",", ".");
-                                                                                                    if (key.equals(email)) {
+                                                                                            public void onDataChange(@NonNull @NotNull DataSnapshot snap) {
+                                                                                                for (DataSnapshot snaps:snap.getChildren() ){
+                                                                                                    String e = snaps.getKey();
+                                                                                                    e= e.replace(",",".");
+                                                                                                    if (e.equals(email)){
+                                                                                                        Intent intent =new Intent(main_login.this,inventory.class);
 
-
+                                                                                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                                                        startActivity(intent);
+                                                                                                        finish();
+                                                                                                        break;
+                                                                                                    }else{
                                                                                                         Intent intent = new Intent(main_login.this, report.class);
                                                                                                         startActivity(intent);
                                                                                                         progress.dismiss();
-
-
-
 
                                                                                                     }
                                                                                                 }
                                                                                             }
 
                                                                                             @Override
-                                                                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                                                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
                                                                                             }
                                                                                         });
 
-                                                                                    }
+
+                                                                                                                                                                            }
                                                                                 }
                                                                             }
 

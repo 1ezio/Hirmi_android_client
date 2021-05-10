@@ -104,26 +104,9 @@ private int request_code = 11;
 
             final DatabaseReference a_reference = database.getReference("admin") ;
 
-            final DatabaseReference p_ref = database.getReference("power_user");
-            p_ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snap) {
-                    for (DataSnapshot snaps:snap.getChildren() ){
-                        String e = snaps.getKey();
-                        e= e.replace(",",".");
-                        if (e.equals(user1)){
-                            startActivity(new Intent(splash.this,inventory.class));
-                        }
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                }
-            });
-
-            if (user1!=null){
+             if (user1!=null){
                 a_reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -133,8 +116,12 @@ private int request_code = 11;
                             key = key.replace(",", ".");
                             if (key.equals(user1)){
                                 Intent intent = new Intent(splash.this,AdminMainScreenActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 progress.dismiss();
+                                finish();
+                                break;
+
 
                             }else {
                                 FirebaseDatabase database ;
@@ -207,38 +194,37 @@ private int request_code = 11;
                                                                 Intent intent = new Intent(splash.this, Ispector_layout.class);
                                                                 startActivity(intent);
                                                                 progress.dismiss();
-                                                            }else{
-                                                                startActivity(new Intent(splash.this,report.class));
-                                                                progress.dismiss();
-                                                                /*FirebaseDatabase database ;
-                                                                database = FirebaseDatabase.getInstance();
-                                                                final DatabaseReference m_reference = database.getReference("monitor");
-                                                                final DatabaseReference p_ref= database.getReference("power_user");
-
-
-
-                                                                m_reference.addValueEventListener(new ValueEventListener() {
+                                                            }else {
+                                                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                                                final DatabaseReference p_ref = database.getReference("power_user");
+                                                                p_ref.addValueEventListener(new ValueEventListener() {
                                                                     @Override
-                                                                    public void onDataChange(@NonNull  DataSnapshot m_snapshot) {
-                                                                        for(DataSnapshot i_snapshot1:m_snapshot.getChildren()) {
-                                                                            String key = i_snapshot1.getKey();
-                                                                            key = key.replace(",", ".");
-                                                                            if (key.equals(user1)){
-
+                                                                    public void onDataChange(@NonNull @NotNull DataSnapshot snap) {
+                                                                        for (DataSnapshot snaps:snap.getChildren() ){
+                                                                            String e = snaps.getKey();
+                                                                            e= e.replace(",",".");
+                                                                            if (e.equals(user1)){
+                                                                                Intent intent = new Intent(splash.this,inventory.class);
+                                                                                startActivity(intent);
+                                                                                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                                                startActivity(intent);
+                                                                                finish();
+                                                                                break;
+                                                                            }else{
+                                                                                startActivity(new Intent(splash.this, report.class));
+                                                                                progress.dismiss();
                                                                             }
-
-                                                                            }
-
                                                                         }
-
+                                                                    }
 
                                                                     @Override
-                                                                    public void onCancelled(@NonNull  DatabaseError error) {
+                                                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
                                                                     }
-                                                                });*/
-                                                            }
+                                                                });
 
+
+                                                            }
                                                         }
                                                     }
 
@@ -268,7 +254,6 @@ private int request_code = 11;
 
                     }
                 });
-
 
 
 

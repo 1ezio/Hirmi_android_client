@@ -158,6 +158,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                         startActivityForResult(i,100);
 
+                                        accept.setClickable(false);
+                                        reject.setClickable(false);
 
 
                                         //SMS INTEGRATION
@@ -254,7 +256,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                             startActivityForResult(i,100);
 
-
+                                            accept.setClickable(false);
+                                            reject.setClickable(false);
 
                                             //SMS INTEGRATION
 
