@@ -123,6 +123,7 @@ public class inspector_activity extends AppCompatActivity {
 
 
                                 i_items.child(drawing).child("status").setValue("ACCEPTED");
+
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);
                                 i_items.child(drawing).child("date").setValue(date);
@@ -131,7 +132,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                     String d = s.child("cus_phn").getValue().toString();
                                     String token = s.child("token").getValue().toString();
-
+                                    i_items.child(drawing).child("quantity_inspected").setValue(Integer.parseInt(String.valueOf(s.child("quantity_inspected").getValue()))+Integer.parseInt(quantity.getText().toString()));
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                             ,"Inspection Call for " +
                                             " : "+ drawing+ " "+ "is ACCEPTED",getApplicationContext(),inspector_activity.this);
@@ -217,6 +218,7 @@ public class inspector_activity extends AppCompatActivity {
 
 
                                 i_items.child(drawing).child("status").setValue("REJECTED");
+
                                 String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                                 i_items.child(drawing).child("i_time").setValue(currentTime);
                                 i_items.child(drawing).child("date").setValue(date);
@@ -245,26 +247,27 @@ public class inspector_activity extends AppCompatActivity {
                                             }
 
                                         }
+                                        if (whatsappinstalled()) {
+                                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + d + "&text=" + "Inspection Call for " +
+                                                    " : " + drawing + " " + "is REJECTED "));
+
+
+                                            startActivityForResult(i,100);
+
+                                            Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
+                                            startActivity(intent);
+
+                                            //SMS INTEGRATION
+
+
+                                        } else {
+                                            Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
+
+                                        }
                                     }
 
 
-                                    if (whatsappinstalled()) {
-                                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + d + "&text=" + "Inspection Call for " +
-                                                " : " + drawing + " " + "is REJECTED "));
 
-
-                                        startActivityForResult(i,100);
-
-                                        Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
-                                        startActivity(intent);
-
-                                        //SMS INTEGRATION
-
-
-                                    } else {
-                                        Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
-
-                                    }
 
                                 }
 

@@ -151,9 +151,15 @@ public class monthly_report_fragment extends Fragment {
 
                                     for (DataSnapshot i:snapshot1.getChildren()){
                                         if (i.getKey().equals(s.child("drawing").getValue().toString())){
-                                            String url = i.child("image_url").child("murl").getValue().toString();
+
+                                            String u;
+                                            try {
+                                                u = s.child("image_url").child("murl").getValue().toString();
+                                            }catch (Exception e){
+                                                u = null;
+                                            }
                                             objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),url));
+                                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
 
                                             CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
                                             lv.setAdapter(customAdapter);
@@ -251,7 +257,7 @@ public class monthly_report_fragment extends Fragment {
 
             holder.textView2.setText(objects.get(position).getStatus());
             if (objects.get(position).getStatus().contains("ACCEPTED")) {
-                holder.textView2.setTextColor(Color.GREEN);
+                    holder.textView2.setTextColor(Color.GREEN);
             } else if (objects.get(position).getStatus().contains("REJECTED")) {
                 holder.textView2.setTextColor(Color.RED);
 
@@ -262,9 +268,14 @@ public class monthly_report_fragment extends Fragment {
             holder.textView5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
+                    if (objects.get(position).getImage_url() == null){
+                        Toast.makeText(getActivity(), "Image Does not Exist", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
-                    startActivity(browser);
+                        startActivity(browser);
+                    }
+
                 }
             });
             holder.textView3.setText(objects.get(position).getDate());

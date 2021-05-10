@@ -48,7 +48,9 @@ public class adding_new extends AppCompatActivity {
                 }
                 else{
                     ref.child(material.getText().toString()).child(parameter.getText().toString()).setValue(value.getText().toString());
-
+                    parameter.setText(null);
+                    value.setText(null);
+                    Toast.makeText(adding_new.this, "DATA UPLOADED", Toast.LENGTH_LONG).show();
                 }
 
             }

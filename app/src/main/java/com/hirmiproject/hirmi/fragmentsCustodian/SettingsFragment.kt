@@ -67,7 +67,7 @@ class SettingsFragment : Fragment() {
 
                 arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                 for (ds in dataSnapshot.children) {
-                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL")){
+                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL") or !ds.child("quantity").getValue().toString().equals("quantity_inspected")){
 
                         val drawings =ds.key
                         arrayList.add(drawings.toString())
@@ -98,6 +98,7 @@ class SettingsFragment : Fragment() {
                     var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
                     var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
                     var quantityId = dialogView.findViewById<TextView>(R.id.quantity_id)
+                    var inspected_quant = dialogView.findViewById<TextView>(R.id.inspected_quant_id)
 
                     var quantityForInsId = dialogView.findViewById<EditText>(R.id.quantity_i_id)
 
@@ -113,7 +114,8 @@ class SettingsFragment : Fragment() {
 
                     val q=d.child("quantity").getValue().toString()
                         quantityId.setText(q)
-
+                    val ins=d.child("quantity_inspected").getValue().toString()
+                    inspected_quant.setText(ins)
 
 
 

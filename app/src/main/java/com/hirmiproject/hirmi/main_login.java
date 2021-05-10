@@ -36,6 +36,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import org.jetbrains.annotations.NotNull;
+
 public class main_login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth ;
@@ -77,15 +79,6 @@ public class main_login extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
         firebaseAuth = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +99,27 @@ public class main_login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     FirebaseDatabase database  = FirebaseDatabase.getInstance();
                                     final DatabaseReference a_reference = database.getReference("admin") ;
+                                    final DatabaseReference p_ref = database.getReference("power_user");
+                                    p_ref.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull @NotNull DataSnapshot snap) {
+                                            for (DataSnapshot snaps:snap.getChildren() ){
+                                                String e = snaps.getKey();
+                                                e= e.replace(",",".");
+                                                if (e.equals(email)){
+                                                    startActivity(new Intent(main_login.this,inventory.class));
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                        }
+                                    });
 
                                     if (task.isSuccessful()) {
+
                                         a_reference.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -205,32 +217,7 @@ public class main_login extends AppCompatActivity {
                                                                                                         progress.dismiss();
 
 
-                                                                                                    }else{
-                                                                                                        FirebaseDatabase database  = FirebaseDatabase.getInstance();
 
-                                                                                                        final DatabaseReference p_reference = database.getReference("power_user") ;
-                                                                                                        p_reference.addValueEventListener(new ValueEventListener() {
-                                                                                                            @Override
-                                                                                                            public void onDataChange(@NonNull DataSnapshot p_snapshot) {
-                                                                                                                for (DataSnapshot i_snapshot1 : p_snapshot.getChildren()) {
-                                                                                                                    String key = i_snapshot1.getKey();
-                                                                                                                    key = key.replace(",", ".");
-                                                                                                                    if (key.equals(email)) {
-
-
-                                                                                                                        Intent intent = new Intent(main_login.this, inventory.class);
-                                                                                                                        startActivity(intent);
-                                                                                                                        progress.dismiss();
-
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
-
-                                                                                                            @Override
-                                                                                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                                                                                            }
-                                                                                                        });
 
                                                                                                     }
                                                                                                 }
@@ -353,4 +340,12 @@ public class main_login extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+        super.onBackPressed();
+    }
 }

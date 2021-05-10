@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -138,6 +139,8 @@ public class adding_existing extends AppCompatActivity {
                                 Toast.makeText(adding_existing.this, "Enter Parameter or Value..", Toast.LENGTH_SHORT).show();
                             }else{
                                 ref.child(m[0]).child(p_name.getText().toString()).setValue(p_value.getText().toString());
+                                p_name.setText("");
+                                p_value.setText("");
 
                             }
 
@@ -147,6 +150,7 @@ public class adding_existing extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
+                            startActivity(new Intent(adding_existing.this,adding_existing.class));
                         }
                     });
 
@@ -223,6 +227,7 @@ public class adding_existing extends AppCompatActivity {
                     Toast.makeText(adding_existing.this, "Add Some Value", Toast.LENGTH_SHORT).show();
                 }else{
                     ref.child(m[0]).child(p[0]).setValue(value.getText().toString());
+
 
                 }
             }

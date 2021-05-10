@@ -37,6 +37,30 @@
                 android:textColor="#000"
                 android:textSize="20sp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <TextView
+
+                android:id="@+id/q_ins_id"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Quantity inspected : "
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/inspected_quant_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fetching Data.."
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="20sp" />
+        </LinearLayout>
 
 
         <LinearLayout
@@ -132,8 +156,9 @@
                 android:id="@+id/quantity_i_id"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:inputType="number"
                 android:background="@drawable/round_corner"
-                android:hint="In MT"
+                android:hint=" "
                 android:paddingHorizontal="20dp"
                 android:textSize="20sp" />
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,11 +57,18 @@ public class history_fragment2 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final ArrayList<String> arrayList = new ArrayList<String>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String u;
+                    try {
+                    u = dataSnapshot.child("image_url").child("murl").getValue().toString();
+                    }catch (Exception e){
+                    u = null;
+                    }
+
 
                 if (dataSnapshot.child("status").getValue().toString().equals("ACCEPTED") || dataSnapshot.child("status").getValue().toString().equals("REJECTED")){
                     objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                             , dataSnapshot.child("date").getValue().toString(),
-                            dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString(),dataSnapshot.child("image_url").child("murl").getValue().toString()));
+                            dataSnapshot.child("time").getValue().toString(), dataSnapshot.child("status").getValue().toString(),u));
 
                     CustomAdapter customAdapter = new CustomAdapter(getContext(), objects);
 
@@ -129,9 +137,14 @@ public class history_fragment2 extends Fragment {
                 holder.textView5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
+                        if (objects.get(position).getImage_url() == null){
+                            Toast.makeText(getActivity(), "Image Does not Exist", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
                             startActivity(browser);
+                        }
+
                     }
                 });
                 convertView.setTag(holder);

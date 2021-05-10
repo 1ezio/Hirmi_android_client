@@ -16,17 +16,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.main_login;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +46,7 @@ public class daily_report_fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.daily_report_fragment,container,false);
+        final View view =  inflater.inflate(R.layout.daily_report_fragment,container,false);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getReference("report");
@@ -49,8 +54,35 @@ public class daily_report_fragment extends Fragment {
         final ListView lv = view.findViewById(R.id.liv_id);
         Date c = Calendar.getInstance().getTime();
         final String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        final DatabaseReference monitor = database.getReference("monitor");
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        final TextView sign = view.findViewById(R.id.sign_id);
+        String  mail = auth.getCurrentUser().getEmail();
+        mail = mail.replace(".",",");
+        final String finalMail = mail;
+        monitor.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (finalMail.equals(snapshot.getKey())){
+                     TextView sign = view.findViewById(R.id.sign_id);
+                    sign.setVisibility(View.VISIBLE);
 
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                Intent intent = new Intent(getActivity(), main_login.class);
+                startActivity(intent);
+            }
+        });
 
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -69,10 +101,17 @@ public class daily_report_fragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot i: snapshot.getChildren()){
+
                                     if (i.getKey().equals(s.child("drawing").getValue().toString())){
-                                        String url = i.child("image_url").child("murl").getValue().toString();
+                                        String u;
+                                        try {
+                                            u = snapshot.child("image_url").child("murl").getValue().toString();
+                                        }catch (Exception e){
+                                            u = null;
+                                        }
+
                                         objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),url));
+                                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
 
                                         CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
                                         lv.setAdapter(customAdapter);
@@ -165,9 +204,13 @@ public class daily_report_fragment extends Fragment {
             holder.textView5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
+                    if (objects.get(position).getImage_url() == null){
+                        Toast.makeText(getActivity(), "Image Does not Exist", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
-                    startActivity(browser);
+                        startActivity(browser);
+                    }
 
                 }
             });
