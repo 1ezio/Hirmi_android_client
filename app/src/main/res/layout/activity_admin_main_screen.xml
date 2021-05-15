@@ -157,6 +157,7 @@
                         android:layout_width="100dp"
                         android:id="@+id/add_new_id"
                         android:clickable="true"
+                        android:onClick="add_new_role"
                         android:layout_height="80dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
@@ -197,6 +198,7 @@
                         android:layout_width="100dp"
                         android:layout_height="80dp"
                         android:id="@+id/ad_draw_id"
+                        android:onClick="ad_drawring"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:clickable="true"
@@ -248,10 +250,11 @@
                         android:layout_alignParentRight="true"
                         android:id="@+id/monthly_id"
                         android:clickable="true"
-
+                        android:onClick="monthly_report"
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
+
                         android:padding="5dp"
                         android:src="@drawable/img_calender" />
 
@@ -289,6 +292,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="10dp"
+                        android:onClick="emp"
                         android:layout_marginBottom="10dp"
                         android:id="@+id/emp_id"
                         android:clickable="true"
@@ -342,6 +346,7 @@
                         android:layout_marginBottom="10dp"
                         android:id="@+id/inv_id"
                         android:padding="5dp"
+                        android:onClick="iknventory"
 
                         android:src="@drawable/inven" />
 

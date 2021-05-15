@@ -129,4 +129,31 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         startActivity(a);
 
     }
+
+    public void add_new_role(View view) {
+        startActivity(new Intent(AdminMainScreenActivity.this,User_regis.class));
+    }
+
+    public void ad_drawring(View view) {
+        Intent intent = new Intent(AdminMainScreenActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void monthly_report(View view) {
+        Intent intent = new Intent(AdminMainScreenActivity.this, report.class);
+        startActivity(intent);
+
+
+    }
+
+    public void emp(View view) {
+        Intent intent = new Intent(AdminMainScreenActivity.this, employee_layout.class);
+        startActivity(intent);
+
+    }
+
+    public void iknventory(View view) {
+        Intent intent = new Intent(AdminMainScreenActivity.this, inventory.class);
+        startActivity(intent);
+    }
 }
