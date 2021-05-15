@@ -54,17 +54,7 @@ public class main_login extends AppCompatActivity {
 
 
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS},
-                        0);
-            }
-        }
+
         final CustomProgress progress = new CustomProgress(main_login.this);
 
 
@@ -114,6 +104,7 @@ public class main_login extends AppCompatActivity {
                                                         Intent intent = new Intent(main_login.this,AdminMainScreenActivity.class);
                                                         startActivity(intent);
                                                         progress.dismiss();
+                                                        break;
                                                     }else{
                                                         FirebaseDatabase database  = FirebaseDatabase.getInstance();
                                                         final DatabaseReference c_reference = database.getReference("custodian") ;

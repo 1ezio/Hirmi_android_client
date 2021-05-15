@@ -99,7 +99,7 @@ public class Fragment3 extends Fragment {
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
 
-                                MyListAdaper adapter = new MyListAdaper(context, R.layout.inspector_drawings, arrayList);
+                                MyListAdaper adapter = new MyListAdaper(getContext(), R.layout.inspector_drawings, arrayList);
 
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
@@ -115,7 +115,7 @@ public class Fragment3 extends Fragment {
                                         Intent intent = new Intent(getActivity(), inspector_activity.class);
                                         intent.putExtra("key",arrayList1.get(i));
                                         startActivity(intent);
-                                        getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
+                                       // getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
 
                                     }
                                 });
@@ -200,7 +200,7 @@ public class Fragment3 extends Fragment {
                                             , "Acknowledge by Inspector",context ,getActivity());
                                     notificationsSender.SendNotifications();
 
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                  /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                         if ((ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)) {
                                             try {
                                                 SmsManager smsManager = SmsManager.getDefault();
@@ -212,7 +212,7 @@ public class Fragment3 extends Fragment {
 
                                             }
                                         }
-                                    }
+                                    }*/
 
 
                                     try {

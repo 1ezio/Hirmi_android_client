@@ -26,18 +26,18 @@
             android:textColor="#000"
             android:textSize="20sp" />
 
+
         <EditText
             android:id="@+id/draw_id"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20sp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/round_corner"
             android:hint="Type.."
-            android:layout_marginTop="50dp"
             android:paddingHorizontal="20dp"
             android:textSize="20sp" />
-
 
         <Spinner
             android:id="@+id/spinner_id"
@@ -73,6 +73,7 @@
             android:layout_marginTop="47dp"
             android:layout_marginEnd="110dp"
             android:layout_marginRight="62dp"
+            android:inputType="number"
             android:layout_toEndOf="@+id/q_x_id"
             android:background="@drawable/round_corner"
             android:hint="Type.."

@@ -1,4 +1,4 @@
-package com.hirmiproject.hirmi;
+    package com.hirmiproject.hirmi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -81,6 +81,7 @@ public class inspector_activity extends AppCompatActivity {
 
         final DatabaseReference report_ref = database.getReference("report");
         i_items.addValueEventListener(new ValueEventListener() {
+            int q = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (final DataSnapshot s : datasnapshot.getChildren()) {
@@ -89,6 +90,7 @@ public class inspector_activity extends AppCompatActivity {
                         drawing_no.setText(drawing);
                         inspector_name.setText(s.child("inspector_name").getValue().toString());
                         quantity.setText(s.child("quantity_for_inspection").getValue().toString());
+                        q = Integer.parseInt(s.child("quantity_for_inspection").getValue().toString());
                         attach.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -132,13 +134,13 @@ public class inspector_activity extends AppCompatActivity {
 
                                     String d = s.child("cus_phn").getValue().toString();
                                     String token = s.child("token").getValue().toString();
-                                    i_items.child(drawing).child("quantity_inspected").setValue(Integer.parseInt(String.valueOf(s.child("quantity_inspected").getValue()))+Integer.parseInt(quantity.getText().toString()));
+                                        i_items.child(drawing).child("quantity_inspected").setValue(Integer.parseInt(String.valueOf(s.child("quantity_inspected").getValue()))+Integer.parseInt(s.child("quantity_for_inspection").getValue().toString()));
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                             ,"Inspection Call for " +
                                             " : "+ drawing+ " "+ "is ACCEPTED",getApplicationContext(),inspector_activity.this);
                                     notificationsSender.SendNotifications();
 
-                                    if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+                                 /*   if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
 
                                         try {
                                             SmsManager smsManager = SmsManager.getDefault();
@@ -150,7 +152,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                         }
 
-                                    }
+                                    }*/
                                     if  (whatsappinstalled()){
                                         Intent i =new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
                                                 " : "+ drawing+ " "+ "is ACCEPTED "));
@@ -158,8 +160,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                         startActivityForResult(i,100);
 
-                                        accept.setClickable(false);
-                                        reject.setClickable(false);
+                                        accept.setVisibility(View.INVISIBLE);
+                                        reject.setVisibility(View.INVISIBLE);
 
 
                                         //SMS INTEGRATION
@@ -236,7 +238,7 @@ public class inspector_activity extends AppCompatActivity {
                                         notificationsSender.SendNotifications();
 
                                         i_items.child(drawing).child("remark").setValue(remarks.getText().toString());
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                                             try {
                                                 SmsManager smsManager = SmsManager.getDefault();
@@ -248,7 +250,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                             }
 
-                                        }
+                                        }*/
                                         if (whatsappinstalled()) {
                                             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + d + "&text=" + "Inspection Call for " +
                                                     " : " + drawing + " " + "is REJECTED "));
@@ -256,8 +258,9 @@ public class inspector_activity extends AppCompatActivity {
 
                                             startActivityForResult(i,100);
 
-                                            accept.setClickable(false);
-                                            reject.setClickable(false);
+
+                                            accept.setVisibility(View.INVISIBLE);
+                                            reject.setVisibility(View.INVISIBLE);
 
                                             //SMS INTEGRATION
 

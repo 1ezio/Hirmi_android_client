@@ -216,7 +216,7 @@ class SettingsFragment : Fragment() {
                             token_id.addListenerForSingleValueEvent(id)
 
 
-                            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                           /* if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                                 if ((ContextCompat.checkSelfPermission(activity!!, android.Manifest.permission.SEND_SMS)==PackageManager.PERMISSION_GRANTED)){
                                     try {val smsManager = SmsManager.getDefault()
                                         smsManager.sendTextMessage(num, null, "Inspection Call for " +
@@ -228,7 +228,7 @@ class SettingsFragment : Fragment() {
 
                                     }
                                 }
-                            }
+                            }*/
                             if  (ifwhatsappinstalled()){
                                 val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + num + "&text=" + "Inspection Call for " +
                                         " : " + element + " " + "is made"))

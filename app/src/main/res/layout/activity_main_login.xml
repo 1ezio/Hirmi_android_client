@@ -23,7 +23,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="𝙂𝙖𝙩𝙞𝙨𝙝𝙚𝙚𝙡"
+            android:text="Gatisheel"
+
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
 
@@ -92,8 +93,9 @@
         android:layout_height="60dp"
         android:background="@drawable/button_design"
         android:id="@+id/login_id"
-        android:text="𝑳𝒐𝒈𝒊𝒏"
-        android:textSize="20sp"
+        android:text="Login"
+        android:textStyle="italic"
+        android:textSize="15sp"
 
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
@@ -107,7 +109,8 @@
         android:layout_marginStart="41dp"
         android:layout_marginLeft="20dp"
         android:gravity="bottom"
-        android:text="   𝑳𝒐𝒈𝒊𝒏"
+        android:text="   Login"
+        android:textStyle="italic"
         android:textColor="@color/colorAccent"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
