@@ -68,7 +68,7 @@ public class adding_new extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(adding_new.this, AdminMainScreenActivity.class));
+                startActivity(new Intent(adding_new.this, inventory.class));
             }
         });
 

@@ -93,16 +93,16 @@ private int request_code = 11;
         });
 
 
-
+        final Boolean[] Flag = {false};
         final CustomProgress progress = new CustomProgress(splash.this);
         progress.show();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user!=null){
             final String user1 = user.getEmail().toString();
-            FirebaseDatabase database ;
-            database = FirebaseDatabase.getInstance();
+            final FirebaseDatabase[] database = new FirebaseDatabase[1];
+            database[0] = FirebaseDatabase.getInstance();
 
-            final DatabaseReference a_reference = database.getReference("admin") ;
+            final DatabaseReference a_reference = database[0].getReference("admin") ;
 
 
 
@@ -116,14 +116,17 @@ private int request_code = 11;
                             key = key.replace(",", ".");
                             if (key.equals(user1)){
                                 Intent intent = new Intent(splash.this,AdminMainScreenActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 progress.dismiss();
+                                Flag[0] = true;
                                 finish();
                                 break;
 
 
-                            }else {
+                            }
+                            else {
+
                                 FirebaseDatabase database ;
                                 database = FirebaseDatabase.getInstance();
                                 final DatabaseReference c_reference = database.getReference("custodian") ;
@@ -157,6 +160,7 @@ private int request_code = 11;
                                                 Intent intent = new Intent(splash.this, MainActivityNew.class);
                                                 startActivity(intent);
                                                 progress.dismiss();
+
 
                                             }else{
                                                 FirebaseDatabase database ;
@@ -211,8 +215,14 @@ private int request_code = 11;
                                                                                 finish();
                                                                                 break;
                                                                             }else{
-                                                                                startActivity(new Intent(splash.this, report.class));
-                                                                                progress.dismiss();
+                                                                                if (Flag[0]){
+                                                                                    break;
+                                                                                }else {
+                                                                                    startActivity(new Intent(splash.this, report.class));
+                                                                                    progress.dismiss();
+                                                                                 }
+
+
                                                                             }
                                                                         }
                                                                     }

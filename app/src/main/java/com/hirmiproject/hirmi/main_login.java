@@ -67,6 +67,7 @@ public class main_login extends AppCompatActivity {
         email_text.addTextChangedListener(loginTextWatcher);
         pass_text.addTextChangedListener(loginTextWatcher);
 
+        final Boolean[] flag = {false};
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -103,7 +104,10 @@ public class main_login extends AppCompatActivity {
                                                     if (key.equals(email)){
                                                         Intent intent = new Intent(main_login.this,AdminMainScreenActivity.class);
                                                         startActivity(intent);
+                                                        flag[0] = true;
                                                         progress.dismiss();
+
+                                                        finish();
                                                         break;
                                                     }else{
                                                         FirebaseDatabase database  = FirebaseDatabase.getInstance();
@@ -189,12 +193,17 @@ public class main_login extends AppCompatActivity {
 
                                                                                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                                                         startActivity(intent);
-                                                                                                        finish();
+
                                                                                                         break;
                                                                                                     }else{
-                                                                                                        Intent intent = new Intent(main_login.this, report.class);
-                                                                                                        startActivity(intent);
-                                                                                                        progress.dismiss();
+                                                                                                        if (flag[0]){
+                                                                                                            break;
+                                                                                                        }else{
+                                                                                                            Intent intent = new Intent(main_login.this, report.class);
+                                                                                                            startActivity(intent);
+                                                                                                            progress.dismiss();
+                                                                                                        }
+
 
                                                                                                     }
                                                                                                 }
