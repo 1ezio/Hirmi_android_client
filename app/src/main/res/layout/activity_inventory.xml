@@ -13,8 +13,10 @@
         android:layout_gravity="end"
         android:gravity="end"
         android:layout_height="wrap_content">
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
+            android:src="@drawable/logout"
+
             android:layout_gravity="end"
             android:gravity="end"
             android:text="Sign Out"
@@ -45,7 +47,23 @@
         android:textColor="@color/white"
         android:layout_height="wrap_content"/>
 </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_gravity="end"
+    android:orientation="horizontal"
 
+    android:gravity="end"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/report_id"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/button_design"
+        android:text="view report"
+        android:textColor="@color/white"
+        />
+</LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

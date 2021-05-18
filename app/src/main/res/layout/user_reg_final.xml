@@ -23,11 +23,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="𝙂𝙖𝙩𝙞𝙨𝙝𝙚𝙚𝙡"
+            android:text="GATISHEEL"
+
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
 
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="40dp"
            />
@@ -113,7 +114,8 @@
         android:id="@+id/r_id"
         android:layout_height="60dp"
         android:background="@drawable/button_design"
-        android:text="𝙍𝙚𝙜𝙞𝙨𝙩𝙚𝙧"
+        android:text="REGISTER"
+        android:textStyle="italic"
         android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/panel"
@@ -124,10 +126,11 @@
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
+        android:textStyle="italic"
         android:layout_height="58dp"
         android:layout_marginStart="30dp"
         android:gravity="bottom"
-        android:text="𝑹𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒕𝒊𝒐𝒏"
+        android:text="REGISTRATION"
         android:textColor="@color/colorAccent"
 
         android:textSize="22sp"

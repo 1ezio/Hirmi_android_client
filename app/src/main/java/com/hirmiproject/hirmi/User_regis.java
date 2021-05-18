@@ -30,7 +30,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import java.util.Random;
 
 public class User_regis extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    String[] workers= { "Make Choice","Initiator", "Inspector", "Power User"};
+    String[] workers= { "Make Choice","Initiator", "Inspector", "Power User","Monitor"};
     Button proceed;
     String cate;
     FirebaseAuth firebaseAuth  ;
@@ -83,6 +83,7 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
             @Override
             public void onClick(View view) {
 
+
                 if (TextUtils.isEmpty(reg.getText().toString())){
                     Toast.makeText(User_regis.this, "Enter E-mail", Toast.LENGTH_SHORT).show();
                 }if (TextUtils.isEmpty(name.getText().toString())){
@@ -91,7 +92,11 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
                 if (TextUtils.isEmpty(phn.getText().toString()) && (phn.getText().toString().length()<10 || phn.getText().toString().length()>10)){
                     Toast.makeText(User_regis.this, "Enter Valid Phone Number", Toast.LENGTH_SHORT).show();
                 }
+                if (cate.equals("Make Choice")){
+                    Toast.makeText(User_regis.this, "Choose Role", Toast.LENGTH_SHORT).show();
+                }
                 else {
+
 
                     if (cate.equals("Initiator")) {
                         final DatabaseReference creference = database.getReference("custodian");
@@ -154,7 +159,8 @@ public class User_regis extends AppCompatActivity implements AdapterView.OnItemS
 
                     }
 
-                    if (cate.equals("Make Choice")) {
+
+                    if (cate.equals("Monitor")) {
                         final DatabaseReference ireference = database.getReference("monitor");
                         String s = encodeString(reg.getText().toString());
                         ireference.child(s).child("reg_id").setValue(s);
