@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class inventory extends AppCompatActivity {
 
         final ListView listView = findViewById(R.id.list_id);
 
-        TextView sign= findViewById(R.id.sign_id);
+        ImageView sign= findViewById(R.id.sign_id);
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

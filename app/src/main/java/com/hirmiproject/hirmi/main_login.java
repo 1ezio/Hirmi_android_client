@@ -172,11 +172,9 @@ public class main_login extends AppCompatActivity {
                                                                                                     }
                                                                                                 });
 
-
-
-
                                                                                         Intent intent = new Intent(main_login.this, Ispector_layout.class);
                                                                                         startActivity(intent);
+                                                                                        flag[0]=true;
                                                                                         progress.dismiss();
                                                                                         break;
                                                                                     }else{
@@ -192,7 +190,9 @@ public class main_login extends AppCompatActivity {
                                                                                                         Intent intent =new Intent(main_login.this,inventory.class);
 
                                                                                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                                                        finish();
                                                                                                         startActivity(intent);
+                                                                                                        flag[0] = true;
 
                                                                                                         break;
                                                                                                     }else{

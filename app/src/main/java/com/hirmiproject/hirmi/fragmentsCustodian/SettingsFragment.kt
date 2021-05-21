@@ -51,7 +51,7 @@ class SettingsFragment : Fragment() {
         val database:FirebaseDatabase = getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items:DatabaseReference = database.getReference("item")
         val mauth: FirebaseAuth
-        val signout = view.findViewById<TextView>(R.id.signout_id)
+        val signout = view.findViewById<ImageView>(R.id.signout_id)
         signout.setOnClickListener {
 
             FirebaseAuth.getInstance().signOut()

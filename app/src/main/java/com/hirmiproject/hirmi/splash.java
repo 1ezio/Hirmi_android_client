@@ -160,6 +160,7 @@ private int request_code = 11;
                                                 Intent intent = new Intent(splash.this, MainActivityNew.class);
                                                 startActivity(intent);
                                                 progress.dismiss();
+                                                break;
 
 
                                             }else{
@@ -198,6 +199,8 @@ private int request_code = 11;
                                                                 Intent intent = new Intent(splash.this, Ispector_layout.class);
                                                                 startActivity(intent);
                                                                 progress.dismiss();
+                                                                Flag[0] = true;
+                                                                break;
                                                             }else {
                                                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                                                 final DatabaseReference p_ref = database.getReference("power_user");
@@ -213,14 +216,13 @@ private int request_code = 11;
                                                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                                                                 startActivity(intent);
                                                                                 finish();
+                                                                                Flag[0] = true;
                                                                                 break;
-                                                                            }else{
-                                                                                if (Flag[0]){
-                                                                                    break;
-                                                                                }else {
-                                                                                    startActivity(new Intent(splash.this, report.class));
-                                                                                    progress.dismiss();
-                                                                                 }
+                                                                            }else if (Flag[0]) {
+                                                                                break;
+                                                                            }else {
+                                                                                startActivity(new Intent(splash.this, report.class));
+                                                                                progress.dismiss();
 
 
                                                                             }

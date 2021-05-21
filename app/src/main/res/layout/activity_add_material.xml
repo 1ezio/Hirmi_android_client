@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context=".invertory_options.add_material">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/calen_id"
+                    android:src="@drawable/calender"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:layout_marginTop="18dp"
+                    android:id="@+id/c"
+                    android:layout_marginLeft="10dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/material_spin_id"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"/>
+                <TextView
+                    android:layout_marginTop="18dp"
+                    android:id="@+id/new_material_id"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Material ?"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/group_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Group"/>
+
+                <EditText
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:id="@+id/uom_id"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="UOM"/>
+
+                <EditText
+                    android:id="@+id/today_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="40dp"
+                    android:hint="Today" />
+
+                <EditText
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/stock_id"
+                    android:layout_height="wrap_content"
+                    android:hint="Stock"/>
+                <EditText
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:id="@+id/monthly_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Monthly Target"/>
+                <EditText
+                    android:layout_marginRight="40dp"
+                    android:id="@+id/asking_rate_id"
+                    android:layout_marginLeft="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Asking Rate"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="submit"
+                    android:id="@+id/submit_id"
+                    android:background="@drawable/button_design"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"/>
+
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

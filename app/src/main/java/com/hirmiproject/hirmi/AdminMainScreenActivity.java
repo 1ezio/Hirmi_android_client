@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +26,7 @@ public class AdminMainScreenActivity extends AppCompatActivity {
     CardView employee, inven;
     TextView admin_name;
     FirebaseDatabase database;
-    TextView signout ;
+    ImageView signout ;
     FirebaseAuth mauth ;
 
     @Override

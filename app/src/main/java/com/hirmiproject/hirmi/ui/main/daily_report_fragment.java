@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +57,7 @@ public class daily_report_fragment extends Fragment {
         final String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         final DatabaseReference monitor = database.getReference("monitor");
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        final TextView sign = view.findViewById(R.id.sign_id);
+        final ImageView sign = view.findViewById(R.id.sign_id);
         String  mail = auth.getCurrentUser().getEmail();
         mail = mail.replace(".",",");
         final String finalMail = mail;

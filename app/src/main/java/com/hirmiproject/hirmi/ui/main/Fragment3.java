@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +58,7 @@ public class Fragment3 extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
         final DatabaseReference items = database.getReference("item");
         final DatabaseReference n = database.getReference("inspector");
-        TextView  signout = view.findViewById(R.id.sign_id);
+        ImageView signout = view.findViewById(R.id.sign_id);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

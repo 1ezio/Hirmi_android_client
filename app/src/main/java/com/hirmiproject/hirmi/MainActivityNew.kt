@@ -41,7 +41,7 @@ class MainActivityNew : AppCompatActivity() {
 
     private fun setUpTabs(){
         val adapter = ViewPageAdapterCustodian(supportFragmentManager)
-        adapter.addFragment(SettingsFragment(), "Settings")
+        adapter.addFragment(SettingsFragment(), "Drawing No.")
         adapter.addFragment(history_fragment2(), "History")
         
 
