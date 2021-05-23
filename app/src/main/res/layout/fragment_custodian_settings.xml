@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     android:id="@+id/f_id"
     tools:context=".fragmentsCustodian.SettingsFragment">
 <LinearLayout
@@ -18,6 +19,11 @@
 
      <ListView
          android:id="@+id/listview"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+         android:dividerHeight="3dp"
+         android:divider="@color/colorAccent"
+
          android:layout_width="match_parent"
          android:layout_height="match_parent"/>
 

@@ -14,7 +14,7 @@ import com.hirmiproject.hirmi.ui.main.monthly_report_fragment;
 public class SectionPagerAdapter_forEmployee extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{ R.string.tab_employee_initiator,R.string.tab_employee_inspector};
+    private static final int[] TAB_TITLES = new int[]{ R.string.tab_employee_initiator,R.string.tab_employee_inspector,R.string.tab_employee_monitor,R.string.tab_employee_powerUser};
     private final Context mContext;
 
     public SectionPagerAdapter_forEmployee (Context context, FragmentManager fm) {
@@ -32,6 +32,12 @@ public class SectionPagerAdapter_forEmployee extends FragmentPagerAdapter {
             case 1:
                 fragment = new employee_inspector();
                 break;
+            case 2:
+                fragment = new employee_monitor();
+                break;
+            case 3:
+                fragment = new employee_poweruser();
+                break;
         }
         return fragment;
     }
@@ -45,7 +51,7 @@ public class SectionPagerAdapter_forEmployee extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 4;
     }
 }
 

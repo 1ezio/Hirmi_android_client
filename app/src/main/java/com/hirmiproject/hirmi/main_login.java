@@ -98,7 +98,7 @@ public class main_login extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                                                for(DataSnapshot snapshot1:snapshot.getChildren()){ // {key = email, value = {name = xyz , phn= xyz))
                                                     String key = snapshot1.getKey();
                                                     key = key.replace(",", ".");
                                                     if (key.equals(email)){
@@ -131,7 +131,7 @@ public class main_login extends AppCompatActivity {
 
                                                                                         // Get new Instance ID token
                                                                                         String token = task.getResult().getToken();
-                                                                                        String e = email.replace(".",",");
+                                                                                        String e = email.replace(".",", ");
                                                                                         c_reference.child(e).child("c_token").setValue(token);
                                                                                     }
                                                                                 });

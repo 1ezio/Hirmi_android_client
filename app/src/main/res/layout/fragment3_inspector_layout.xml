@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/gradient"
     android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="wrap_content"
@@ -24,9 +25,13 @@
 </LinearLayout>
 
     <ListView
-    android:id="@+id/list_id"
-    android:layout_width="wrap_content"
-    android:layout_marginTop="20dp"
+        android:id="@+id/list_id"        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:dividerHeight="3dp"
+        android:divider="@color/colorAccent"
+
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
     android:layout_height="wrap_content"
     android:layout_marginBottom="50dp"/>
 

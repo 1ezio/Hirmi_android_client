@@ -34,7 +34,7 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main_screen);
         database = FirebaseDatabase.getInstance();
-        FirebaseUser user1=FirebaseAuth.getInstance().getCurrentUser();
+
         mauth = FirebaseAuth.getInstance();
         admin_name = findViewById(R.id.admin_name);
         String user = mauth.getCurrentUser().getEmail();

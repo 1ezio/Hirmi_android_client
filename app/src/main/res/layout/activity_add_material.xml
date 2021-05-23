@@ -42,7 +42,7 @@
                 <Spinner
                     android:layout_marginLeft="10dp"
                     android:id="@+id/material_spin_id"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"/>
                 <TextView
                     android:layout_marginTop="18dp"
@@ -62,14 +62,29 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
-                <EditText
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/group_id"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Group"/>
+                    >
+                    <Spinner
+                        android:layout_marginRight="40dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/group_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:hint="Group"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/add_grp_id"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        android:text="Add group ?"
+                        android:layout_marginTop="18dp"
+                       />
+                </LinearLayout>
+
 
                 <EditText
                     android:layout_marginRight="40dp"

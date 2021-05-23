@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:text="Material : "
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:id="@+id/material_id"
+            android:text="Data Not Available"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:text="Group : "
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/group_id"
+            android:textColor="@color/black"
+            android:text="Not Available"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:text="UOM : "
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/uom_id"
+            android:text="Not Available"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/today_id"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Not Available"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MTD "/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/mtd_id"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Not Available"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="YTD "/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ytd_id"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Not Available"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:text="Stock : "
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:text="Not Available"
+        android:id="@+id/stock_id"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:text="Monthly Target : "
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/target_id"
+        android:layout_width="wrap_content"
+        android:text="Not Available"
+        android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content"
+        android:text="Asking Rate :"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/asking_rate_id"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content"
+        android:text="Not Available"/>
+</LinearLayout>
+</LinearLayout>

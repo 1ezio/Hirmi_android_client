@@ -48,6 +48,11 @@
         android:layout_width="match_parent"
         android:background="@drawable/gradient"
         android:id="@+id/lv_id"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:dividerHeight="3dp"
+        android:divider="@color/colorAccent"
+
         android:layout_height="match_parent"/>
 
 

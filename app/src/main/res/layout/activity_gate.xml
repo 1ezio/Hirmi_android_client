@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/gradient"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".gate_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/cate_id"
+            android:layout_width="78dp"
+            android:layout_margin="10dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Category"
+            android:id="@+id/add_cate_id"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginTop="18dp"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Issued : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:id="@+id/total_issue_id"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Entry : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+android:id="@+id/entry_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+    </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:text="Total Gate Pass : "/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/total_value_id"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_corner"
+        android:layout_height="wrap_content"
+        android:hint="Type"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:text="Gate Entry : "/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/entry_value_id"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_corner"
+        android:layout_height="wrap_content"
+        android:hint="Type"/>
+    <Button
+        android:layout_margin="20dp"
+        android:background="@drawable/button_design"
+        android:text="Save"
+        android:id="@+id/save_id"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

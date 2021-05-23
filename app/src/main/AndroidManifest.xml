@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".invertory_options.add_material"></activity>
+        <activity android:name=".gate_activity"></activity>
+        <activity android:name=".invertory_options.add_material" />
         <activity android:name=".invertory_options.adding_existing" />
         <activity android:name=".invertory_options.adding_new" />
         <activity android:name=".inventory" />

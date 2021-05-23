@@ -12,5 +12,7 @@
     <string name="tab_daily_report">DAILY REPORT</string>
     <string name="title_activity_employee_layout">employee_layout</string>
     <string name="tab_employee_inspector">INSPECTOR</string>
+    <string name="tab_employee_powerUser">Power User</string>
+    <string name="tab_employee_monitor">Monitor</string>
     <string name="tab_employee_initiator">INITIATOR</string>
 </resources>
