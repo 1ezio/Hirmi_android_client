@@ -142,6 +142,7 @@ public class main_login extends AppCompatActivity {
                                                                         Intent intent = new Intent(main_login.this, MainActivityNew.class);
                                                                         startActivity(intent);
                                                                         progress.dismiss();
+                                                                        flag[0]=true;
                                                                         break;
                                                                     }else{FirebaseDatabase database  = FirebaseDatabase.getInstance();
 

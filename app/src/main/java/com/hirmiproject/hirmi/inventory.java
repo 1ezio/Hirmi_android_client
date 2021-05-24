@@ -31,6 +31,7 @@ import com.hirmiproject.hirmi.invertory_options.adding_new;
 import com.hirmiproject.hirmi.ui.main.emp_model;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,13 @@ public class inventory extends AppCompatActivity {
         });
 
 
-
+        TextView textView = findViewById(R.id.gate_entry_id);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(inventory.this,gate_activity.class));
+            }
+        });
 
 
         final ListView listView = findViewById(R.id.list_id);

@@ -14,7 +14,8 @@
 
         <Spinner
             android:id="@+id/cate_id"
-            android:layout_width="78dp"
+
+            android:layout_width="wrap_content"
             android:layout_margin="10dp"
             android:layout_height="50dp"/>
         <TextView
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_margin="10dp"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,6 +55,7 @@
 
         <TextView
             android:layout_margin="10dp"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +66,58 @@
             android:textSize="15sp"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
-android:id="@+id/entry_id"
+        android:id="@+id/entry_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M/s Goel : "
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Gate Pass : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:id="@+id/ms_goel_id"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gate Entry : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:id="@+id/ms_gate_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" Data "/>
@@ -71,6 +125,107 @@ android:id="@+id/entry_id"
     </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="M/s HAPBCO : "
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Gate Pass : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:id="@+id/hap_total_id"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gate Entry : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:id="@+id/hap_gate_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others : "
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Gate Pass : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:id="@+id/other_id"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gate Entry : "/>
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:id="@+id/other_gate_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Data "/>
+
+    </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
@@ -78,6 +233,8 @@ android:id="@+id/entry_id"
         android:layout_width="wrap_content"
         android:layout_margin="10dp"
         android:textSize="15sp"
+        android:id="@+id/t_id"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:text="Total Gate Pass : "/>
 
@@ -85,7 +242,9 @@ android:id="@+id/entry_id"
         android:layout_width="match_parent"
         android:layout_marginLeft="30dp"
         android:id="@+id/total_value_id"
+        android:visibility="invisible"
         android:layout_marginRight="30dp"
+        android:inputType="number"
         android:layout_marginTop="5dp"
         android:background="@drawable/round_corner"
         android:layout_height="wrap_content"
@@ -98,12 +257,16 @@ android:id="@+id/entry_id"
         android:layout_width="wrap_content"
         android:layout_margin="10dp"
         android:textSize="15sp"
+        android:id="@+id/g_id"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:text="Gate Entry : "/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_marginLeft="30dp"
+        android:visibility="invisible"
+        android:inputType="number"
         android:layout_marginRight="30dp"
         android:id="@+id/entry_value_id"
         android:layout_marginTop="5dp"
@@ -116,6 +279,7 @@ android:id="@+id/entry_id"
         android:text="Save"
         android:id="@+id/save_id"
         android:textColor="@color/white"
+        android:visibility="invisible"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

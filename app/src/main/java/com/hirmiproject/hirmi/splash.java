@@ -160,6 +160,7 @@ private int request_code = 11;
                                                 Intent intent = new Intent(splash.this, MainActivityNew.class);
                                                 startActivity(intent);
                                                 progress.dismiss();
+                                                Flag[0]=true;
                                                 break;
 
 

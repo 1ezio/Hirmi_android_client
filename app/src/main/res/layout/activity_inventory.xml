@@ -45,22 +45,45 @@
 </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_gravity="end"
     android:orientation="horizontal"
-
-    android:gravity="end"
     android:layout_height="wrap_content">
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:id="@+id/report_id"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/button_design"
-        android:text="view report"
-        android:textColor="@color/white"
-        />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View Gate Entry"
+            android:textStyle="bold"
+            android:layout_margin="20dp"
+                android:id="@+id/gate_entry_id"
+            android:textColor="@color/colorAccent"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+
+        android:gravity="end"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/report_id"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/button_design"
+            android:text="view report"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
 </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

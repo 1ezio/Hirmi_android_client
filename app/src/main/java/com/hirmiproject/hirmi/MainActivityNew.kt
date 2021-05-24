@@ -2,6 +2,8 @@ package com.hirmiproject.hirmi
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -54,12 +56,23 @@ class MainActivityNew : AppCompatActivity() {
         tabsCustodian.getTabAt(0)?.setIcon(R.drawable.ic_baseline_settings_24)
     }
 
+    var doubleBackToExitPressedOnce = false
+
     override fun onBackPressed() {
-
-        super.onBackPressed()
-        val intent = Intent(this,MainActivityNew::class.java)
-        startActivity(intent)
-
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            if (doubleBackToExitPressedOnce) {
+                val a = Intent(Intent.ACTION_MAIN)
+                a.addCategory(Intent.CATEGORY_HOME)
+                a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(a)
+            }
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Refreshed ! Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
+
 
 }

@@ -30,9 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.gate_activity;
 import com.hirmiproject.hirmi.main_login;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,6 +63,13 @@ public class daily_report_fragment extends Fragment {
         String  mail = auth.getCurrentUser().getEmail();
         mail = mail.replace(".",",");
         final String finalMail = mail;
+        TextView textView = view.findViewById(R.id.gate_entry_id);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), gate_activity.class));
+            }
+        });
         monitor.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
