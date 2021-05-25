@@ -1,31 +1,23 @@
 package com.hirmiproject.hirmi.fragmentsCustodian
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.google.firebase.iid.FirebaseInstanceId
-import com.hirmiproject.hirmi.FcmNotificationsSender
-import com.hirmiproject.hirmi.MainActivityNew
+import com.hirmiproject.hirmi.*
 import com.hirmiproject.hirmi.R
-import com.hirmiproject.hirmi.main_login
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -47,7 +39,8 @@ class SettingsFragment : Fragment() {
         val view:View = inflater.inflate(R.layout.fragment_custodian_settings, container, false)
         val lv = view.findViewById<ListView>(R.id.listview)
         val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-
+        val view_d = view.findViewById<TextView>(R.id.view_id);
+        view_d.setOnClickListener { startActivity(Intent(context, added_drawing::class.java)) }
         val database:FirebaseDatabase = getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items:DatabaseReference = database.getReference("item")
         val mauth: FirebaseAuth
@@ -63,14 +56,15 @@ class SettingsFragment : Fragment() {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val arrayList = ArrayList<String>()
-
+                val arrayList2 = ArrayList<String>()
 
                 arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                 for (ds in dataSnapshot.children) {
                     if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL") or !ds.child("quantity").getValue().toString().equals("quantity_inspected")){
 
                         val drawings =ds.key
-                        arrayList.add(drawings.toString())
+                        arrayList.add(drawings.toString() + " "+ ds.child("d").getValue().toString())
+                        arrayList2.add(drawings.toString() )
                         arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter
                         arrayAdapter.notifyDataSetChanged()
@@ -90,7 +84,7 @@ class SettingsFragment : Fragment() {
                 }*/
 
                 lv.setOnItemClickListener { parent, view, position, id ->
-                    val element = arrayAdapter.getItem(position) // The item that was clicked
+                    val element = arrayList2[position] // The item that was clicked
                     val dialogView = inflater.inflate(R.layout.custodian_dialog_box, null)
                     val dialog = AlertDialog.Builder(activity as Context).setView(dialogView)
 
@@ -158,6 +152,7 @@ class SettingsFragment : Fragment() {
                         val currentTime: String = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
                         items.child(element as String).child("time").setValue(currentTime)
 
+                        items.child(element as String ).child("status").setValue("PENDING")
                         items.child(element as String).child("timestamp").setValue(ServerValue.TIMESTAMP)
 
 

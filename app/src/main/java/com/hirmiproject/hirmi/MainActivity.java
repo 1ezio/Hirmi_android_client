@@ -17,12 +17,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -40,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private Animation tobottom;
     private FloatingActionButton add_btn ;
 
-    private EditText draw, quantity;
+    private EditText desc,draw, quantity;
     Button proceed;
 
     private boolean clicked = false;
@@ -53,14 +61,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TextView view_d = findViewById(R.id.view_id);
+
+
         //EditTExt Declarations
         draw = findViewById(R.id.draw_id);
+
         quantity = findViewById(R.id.q_id);
 
         //applying validation
         draw.addTextChangedListener(loginTextWatcher);
         quantity.addTextChangedListener(loginTextWatcher);
 
+        desc = findViewById(R.id.desc_id);
         final Spinner spinner = findViewById(R.id.spinner_id);
         FirebaseDatabase data = FirebaseDatabase.getInstance();
         DatabaseReference r = data.getReference("inspector");
@@ -109,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        final CustomProgress progress= new CustomProgress(MainActivity.this);
+                        progress.show();
                         FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
                         DatabaseReference work = database.getReference("item");
                         for (DataSnapshot ds: snapshot.getChildren()) {
@@ -116,18 +131,38 @@ public class MainActivity extends AppCompatActivity {
                             String currentTime  =new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
                             if (n.equals(ds.child("name").getValue().toString())){
 
+                                if (desc.getText().toString().equals(null)){
+                                    work.child(draw.getText().toString()).child("d").setValue("N/A");
+
+                                }else{
+                                    work.child(draw.getText().toString()).child("d").setValue(desc.getText().toString());
+                                }
+                                 FirebaseAuth user = FirebaseAuth.getInstance();
+                                 String mail = user.getCurrentUser().getEmail();
                                 work.child(draw.getText().toString()).child("drawing_no").setValue(draw.getText().toString());
                                 work.child(draw.getText().toString()).child("quantity").setValue(quantity.getText().toString());
                                 work.child(draw.getText().toString()).child("inspector_name").setValue(n);
                                 work.child(draw.getText().toString()).child("time").setValue(currentTime);
                                 work.child(draw.getText().toString()).child("quantity_inspected").setValue(0);
-
+                                work.child(draw.getText().toString()).child("admin_email").setValue(mail);
                                 work.child(draw.getText().toString()).child("date").setValue(formattedDate);
+                                work.child(draw.getText().toString()).child("date_added").setValue(formattedDate);
+                                work.child(draw.getText().toString()).child("time_added").setValue(currentTime);
                                 work.child(draw.getText().toString()).child("status").setValue("TO BE CALL");
                                 work.child(draw.getText().toString()).child("phone").setValue(ds.child("phn").getValue().toString());
-                                work.child(draw.getText().toString()).child("i_token").setValue(ds.child("i_token").getValue().toString());
-                                Toast.makeText(MainActivity.this, "Data Uploaded", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                                work.child(draw.getText().toString()).child("i_token").setValue(ds.child("i_token").getValue().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                        if ((task.isSuccessful())){
+                                            progress.dismiss();
+                                            Toast.makeText(MainActivity.this, "Data Uploaded", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                                progress.dismiss();
 
                             }
 

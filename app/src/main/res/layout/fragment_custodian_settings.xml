@@ -29,6 +29,16 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_id"
+        android:text="View Report"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        />
     <ImageView
         android:src="@drawable/logout"
         android:layout_width="wrap_content"

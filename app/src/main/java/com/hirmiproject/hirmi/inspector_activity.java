@@ -154,6 +154,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                     }*/
                                     if  (whatsappinstalled()){
+                                        Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
+                                        startActivity(intent);
                                         Intent i =new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
                                                 " : "+ drawing+ " "+ "is ACCEPTED "));
 
@@ -252,6 +254,8 @@ public class inspector_activity extends AppCompatActivity {
 
                                         }*/
                                         if (whatsappinstalled()) {
+                                            Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
+                                            startActivity(intent);
                                             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + d + "&text=" + "Inspection Call for " +
                                                     " : " + drawing + " " + "is REJECTED "));
 

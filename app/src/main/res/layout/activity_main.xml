@@ -8,6 +8,20 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:id="@+id/view_id"
+            android:text="View Drawings"
+            android:visibility="invisible"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -19,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:id="@+id/some"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="58dp"
@@ -39,15 +54,40 @@
             android:paddingHorizontal="20dp"
             android:textSize="20sp" />
 
+
         <Spinner
             android:id="@+id/spinner_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/draw_id"
+            android:layout_width="368dp"
+            android:layout_height="47dp"
+            android:layout_below="@+id/desc"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="54dp"
             android:layout_marginRight="20dp"
             android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/some"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="66dp"
+            android:text="Description : "
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/draw_id"
+            android:id="@+id/desc_id"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toEndOf="@+id/desc"
+            android:background="@drawable/round_corner" />
 
         <TextView
             android:layout_width="wrap_content"

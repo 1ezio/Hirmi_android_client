@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -93,10 +96,23 @@ private int request_code = 11;
         });
 
 
+
+
+
         final Boolean[] Flag = {false};
         final CustomProgress progress = new CustomProgress(splash.this);
         progress.show();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (!isNetworkAvailable()){
+            Toast.makeText(this, "NO INTERNET CONNECTION", Toast.LENGTH_LONG).show();
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+        }
+        else{
+
+        }
         if (user!=null){
             final String user1 = user.getEmail().toString();
             final FirebaseDatabase[] database = new FirebaseDatabase[1];
@@ -290,6 +306,12 @@ private int request_code = 11;
 
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

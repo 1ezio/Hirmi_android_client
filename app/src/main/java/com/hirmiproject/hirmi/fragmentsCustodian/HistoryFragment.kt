@@ -33,8 +33,7 @@ class HistoryFragment : Fragment() {
 
         val database: FirebaseDatabase = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/")
         val items: DatabaseReference = database.getReference("item")
-        val arrayList = ArrayList<String>()
-        var arrayAdapter: ArrayAdapter<*>
+
 
 
         //DATE
@@ -46,6 +45,8 @@ class HistoryFragment : Fragment() {
 
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val arrayList = ArrayList<String>()
+                var arrayAdapter: ArrayAdapter<*>
                 for (ds in dataSnapshot.children) {
                     var drawings =ds.child("date").toString()
                     var status = ds.child("status").toString()
@@ -55,7 +56,7 @@ class HistoryFragment : Fragment() {
                         arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                         lv.adapter = arrayAdapter
 
-
+                        arrayAdapter.notifyDataSetChanged()
                     }
 
 

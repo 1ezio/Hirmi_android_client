@@ -39,8 +39,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.hirmiproject.hirmi.FcmNotificationsSender;
 import com.hirmiproject.hirmi.Ispector_layout;
 import com.hirmiproject.hirmi.R;
+import com.hirmiproject.hirmi.added_drawing;
 import com.hirmiproject.hirmi.inspector_activity;
 import com.hirmiproject.hirmi.main_login;
+
+import org.w3c.dom.Text;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -68,6 +71,14 @@ public class Fragment3 extends Fragment {
             }
         });
 
+        TextView view_d = view.findViewById(R.id.view_id);
+        view_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), added_drawing.class));
+            }
+        });
+
         items.addValueEventListener(new ValueEventListener() {
 
 
@@ -90,11 +101,11 @@ public class Fragment3 extends Fragment {
                             String mail = user.getEmail().toString();
                             String nmail = mail.replace(".",",");
                             String drawing = childs.getKey();
-                            String name ;
+                            String name;
                             name = dsnapshot.child(nmail).child("name").getValue().toString();
                             if (childs.child("status").getValue().toString().equals("PENDING") && childs.child("inspector_name").getValue().toString().equals(name)) {
-                                String de = childs.child("basic_desc").getValue().toString();
-                                arrayList.add(drawing+ "    "+ de);
+                                String de = childs.child("d").getValue().toString();
+                                arrayList.add(drawing+ "  "+ de);
                                 arrayList1.add(drawing);
                                 // MyListAdapter adapter= new MyListAdapter(getContext(), drawing, "Approve");
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
@@ -106,17 +117,16 @@ public class Fragment3 extends Fragment {
                                 adapter.notifyDataSetChanged();
 
 
-
                                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                         //inspector_dialog dialog = new inspector_dialog();
-
                                         //dialog.showDialog(getActivity(), arrayList.get(i));
                                         Intent intent = new Intent(getActivity(), inspector_activity.class);
                                         intent.putExtra("key",arrayList1.get(i));
+
                                         startActivity(intent);
-                                       // getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
+                                        getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
 
                                     }
                                 });
@@ -185,21 +195,29 @@ public class Fragment3 extends Fragment {
                     finalMainViewholder.button.setVisibility(View.INVISIBLE);
 
                     //Toast.makeText(getContext(), "Acknowledge Sent", Toast.LENGTH_LONG).show();
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance("https://hirmi-393b4-default-rtdb.firebaseio.com/");
+                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference items = database.getReference("item");
                     final Context context = null;
                     items.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                String[] words=getItem(position).split("    ");
-                                if (dataSnapshot.getKey().equals(words[0]) && dataSnapshot.child("status").getValue().toString().equals("PENDING")) {
 
+
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                String[] words=getItem(position).split("  ");
+                                //String  []words = getItem(position);
+                                String sn  = dataSnapshot.getKey();
+                                Boolean Flag = false;
+
+                                if (Objects.requireNonNull(sn).equals(words[0]) && !Flag) {
+
+                                   // Toast.makeText(context, "True", Toast.LENGTH_SHORT).show();
                                     String d = dataSnapshot.child("cus_phn").getValue().toString();
                                     String token = dataSnapshot.child("token").getValue().toString();
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                            , "Acknowledge by Inspector",context ,getActivity());
+                                            , "Acknowledge by Inspector",getContext() ,getActivity());
                                     notificationsSender.SendNotifications();
+                                    Flag = true;
 
                                   /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                         if ((ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)) {
