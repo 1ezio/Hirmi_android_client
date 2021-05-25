@@ -131,7 +131,7 @@ public class main_login extends AppCompatActivity {
 
                                                                                         // Get new Instance ID token
                                                                                         String token = task.getResult().getToken();
-                                                                                        String e = email.replace(".",", ");
+                                                                                        String e = email.replace(".",",");
                                                                                         c_reference.child(e).child("c_token").setValue(token);
                                                                                     }
                                                                                 });
