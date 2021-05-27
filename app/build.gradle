@@ -14,8 +14,8 @@ android {
         applicationId "com.hirmiproject.hirmi"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 9
-        versionName "7.0"
+        versionCode 10
+        versionName "7.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

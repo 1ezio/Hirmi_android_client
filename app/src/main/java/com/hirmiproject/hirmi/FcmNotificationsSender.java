@@ -30,11 +30,11 @@ public class FcmNotificationsSender  {
     private final String postUrl = "https://fcm.googleapis.com/fcm/send";
     private final String fcmServerKey ="AAAAuxuXzJk:APA91bEZdYjNBz0AAvsrwe1mWsW2UJDIgBNgBoWvSOUBkqkkTBqYJiOq8RWc-tvxeODU3wBeRD1C-c4Hp9p1Fz0J9aFr3a7EuxQWwXeKp-ZJKoyZUQrkgvyQDr41KbuehphA8Q9Ceuw6";
 
-    public FcmNotificationsSender(String userFcmToken, String title, String body, Context mContext, Activity mActivity) {
+    public FcmNotificationsSender(String userFcmToken, String title, String body,  Activity mActivity) {
         this.userFcmToken = userFcmToken;
         this.title = title;
         this.body = body;
-        this.mContext = mContext;
+
         this.mActivity = mActivity;
 
 
@@ -42,7 +42,14 @@ public class FcmNotificationsSender  {
 
     public void SendNotifications() {
 
-        requestQueue = Volley.newRequestQueue(mActivity);
+
+        try{
+            requestQueue = Volley.newRequestQueue(mActivity);
+        }catch (Exception e){
+
+
+        }
+
         JSONObject mainObj = new JSONObject();
         try {
             mainObj.put("to", userFcmToken);
@@ -82,7 +89,12 @@ public class FcmNotificationsSender  {
 
                 }
             };
-            requestQueue.add(request);
+
+            try{
+                requestQueue.add(request);
+            }catch (Exception e){
+
+            }
 
 
         } catch (JSONException e) {

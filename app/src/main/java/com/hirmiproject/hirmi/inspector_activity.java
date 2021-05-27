@@ -48,7 +48,7 @@ public class inspector_activity extends AppCompatActivity {
 
     public static Uri mimageuri;
 
-    private TextView drawing_no, inspector_name, quantity;
+    private TextView drawing_no, inspector_name, quantity,cate;
     private Button accept, reject;
     final int PICK_IMAGE_REQUEST = 1;
 
@@ -62,6 +62,7 @@ public class inspector_activity extends AppCompatActivity {
         quantity = findViewById(R.id.quantity_i_id);
         accept = findViewById(R.id.accept_id);
         reject = findViewById(R.id.reject_id);
+        cate = findViewById(R.id.cate_id);
 
         Intent i = getIntent();
         final String msg = i.getStringExtra("key");
@@ -91,6 +92,7 @@ public class inspector_activity extends AppCompatActivity {
                         inspector_name.setText(s.child("inspector_name").getValue().toString());
                         quantity.setText(s.child("quantity_for_inspection").getValue().toString());
                         q = Integer.parseInt(s.child("quantity_for_inspection").getValue().toString());
+                        cate.setText(s.child("category").getValue().toString());
                         attach.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -116,12 +118,15 @@ public class inspector_activity extends AppCompatActivity {
                                 String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
 
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("ACCEPTED");
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+                                if (s.child("category").getValue().toString().equals("Welding")){
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("ACCEPTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
+
+                                }
 
 
                                 i_items.child(drawing).child("status").setValue("ACCEPTED");
@@ -134,10 +139,18 @@ public class inspector_activity extends AppCompatActivity {
 
                                     String d = s.child("cus_phn").getValue().toString();
                                     String token = s.child("token").getValue().toString();
+
+                                    if (s.child("category").getValue().toString().equals("Welding")){
+                                        i_items.child(drawing).child("welding_quantity").setValue(Integer.parseInt(String.valueOf(s.child("quantity_inspected").getValue()))+Integer.parseInt(s.child("quantity_for_inspection").getValue().toString()));
+
+                                    }else{
                                         i_items.child(drawing).child("quantity_inspected").setValue(Integer.parseInt(String.valueOf(s.child("quantity_inspected").getValue()))+Integer.parseInt(s.child("quantity_for_inspection").getValue().toString()));
-                                    FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
+
+                                    }
+
+                                        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                             ,"Inspection Call for " +
-                                            " : "+ drawing+ " "+ "is ACCEPTED",getApplicationContext(),inspector_activity.this);
+                                            " : "+ drawing+ " "+" for "+s.child("category").getValue().toString() + " is ACCEPTED",inspector_activity.this);
                                     notificationsSender.SendNotifications();
 
                                  /*   if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
@@ -153,9 +166,10 @@ public class inspector_activity extends AppCompatActivity {
                                         }
 
                                     }*/
+
                                     if  (whatsappinstalled()){
-                                        Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
-                                        startActivity(intent);
+
+                                        startActivity(new Intent (inspector_activity.this,Ispector_layout.class));
                                         Intent i =new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+"91"+d+"&text="+"Inspection Call for " +
                                                 " : "+ drawing+ " "+ "is ACCEPTED "));
 
@@ -216,12 +230,15 @@ public class inspector_activity extends AppCompatActivity {
                                 String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
 
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("REJECTED");
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+                                if (s.child("category").getValue().toString().equals("Welding")){
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("REJECTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
+
+                                }
 
                                 i_items.child(drawing).child("status").setValue("REJECTED");
 
@@ -236,7 +253,7 @@ public class inspector_activity extends AppCompatActivity {
                                         String token = s.child("token").getValue().toString();
                                         Context context1 = null;
                                         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                                , "Drawing no. : " + drawing + " is REJECTED", getApplicationContext(), inspector_activity.this);
+                                                , "Drawing no. : " + drawing + " is REJECTED", inspector_activity.this);
                                         notificationsSender.SendNotifications();
 
                                         i_items.child(drawing).child("remark").setValue(remarks.getText().toString());

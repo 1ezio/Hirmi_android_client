@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                                 work.child(draw.getText().toString()).child("quantity_inspected").setValue(0);
                                 work.child(draw.getText().toString()).child("admin_email").setValue(mail);
                                 work.child(draw.getText().toString()).child("date").setValue(formattedDate);
+                                work.child(draw.getText().toString()).child("welding_quantity").setValue(0);
                                 work.child(draw.getText().toString()).child("date_added").setValue(formattedDate);
                                 work.child(draw.getText().toString()).child("time_added").setValue(currentTime);
                                 work.child(draw.getText().toString()).child("status").setValue("TO BE CALL");

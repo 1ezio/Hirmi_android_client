@@ -60,7 +60,7 @@ class SettingsFragment : Fragment() {
 
                 arrayAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, arrayList) }!!
                 for (ds in dataSnapshot.children) {
-                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL") or !ds.child("quantity").getValue().toString().equals("quantity_inspected")){
+                    if (ds.child("status").getValue().toString().equals("REJECTED") or ds.child("status").getValue().toString().equals("TO BE CALL") or !ds.child("quantity").getValue().toString().equals("welding_quantity")){
 
                         val drawings =ds.key
                         arrayList.add(drawings.toString() + " "+ ds.child("d").getValue().toString())
@@ -88,6 +88,31 @@ class SettingsFragment : Fragment() {
                     val dialogView = inflater.inflate(R.layout.custodian_dialog_box, null)
                     val dialog = AlertDialog.Builder(activity as Context).setView(dialogView)
 
+                    val category = arrayOf("Select Category", "Fitment", "Welding")
+                    val spinner  = dialogView.findViewById<Spinner>(R.id.cate_spin_id);
+
+                    val aa =context?.let { ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, category) }!!
+                    // Set layout to use when the list of choices appear
+                  //  aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    // Set Adapter to Spinner
+                    spinner!!.setAdapter(aa)
+
+                    var category_choosed : String = "Select Category"
+                    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                            category_choosed= category[position]
+                            Toast.makeText(context,category_choosed,Toast.LENGTH_SHORT).show()
+
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                            // Code to perform some action when nothing is selected
+                        }
+
+                    }
+
+
+
                     var inspectorId = dialogView.findViewById<TextView>(R.id.inspector_id)
                     var drawingId = dialogView.findViewById<TextView>(R.id.drawing_id)
                     var descriptionId = dialogView.findViewById<EditText>(R.id.description_id)
@@ -98,7 +123,7 @@ class SettingsFragment : Fragment() {
 
 
                     var descContainer : String
-                    var inspectionQuatity : String
+                    var inspectionQuatity : Int
                     var inspectionStringQuatity : String
                     var d = dataSnapshot.child(element.toString())
                         val name=d.child("inspector_name").getValue().toString()
@@ -133,6 +158,7 @@ class SettingsFragment : Fragment() {
 
 
 
+
                                     }
                                 }
 
@@ -155,10 +181,53 @@ class SettingsFragment : Fragment() {
                         items.child(element as String ).child("status").setValue("PENDING")
                         items.child(element as String).child("timestamp").setValue(ServerValue.TIMESTAMP)
 
+                            try {
 
-                        try{
-                            inspectionQuatity = quantityForInsId.text.toString()
-                            items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
+                                var quantity_inspected : Int=0
+                                val listener1 = object :ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        //Toast.makeText(context,snapshot,Toast.LENGTH_SHORT).show()
+                                        if (snapshot.key.equals(element)){
+                                            quantity_inspected = snapshot.child("quantity_inspected").value.toString().toInt()
+                                            if (category_choosed.equals("Select Category")){
+                                                Toast.makeText(context,"Select Category",Toast.LENGTH_SHORT).show()
+
+                                                items.child(element as String).child("category").setValue("Fitment")
+                                            }
+                                            else{
+
+                                                items.child(element as String).child("category").setValue(category_choosed)
+                                            }
+
+                                            inspectionQuatity = quantityForInsId.text.toString().toInt()
+                                            if (category_choosed.equals("Welding")){
+                                                if (quantity_inspected>=inspectionQuatity){
+
+                                                    items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
+                                                    items.child(element as String).child("category").setValue("Welding")
+                                                }else{
+                                                    items.child(element as String).child("category").setValue("Fitment")
+
+                                                    Toast.makeText(context,"Quantity is Greater than FitMent Quantity ",Toast.LENGTH_LONG).show()
+                                                    Toast.makeText(context, "Inspection Call Done For Quantity : $quantity_inspected",Toast.LENGTH_LONG).show()
+                                                }
+                                            }
+                                            else{
+                                                items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
+                                            }
+
+
+
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+
+                                    }
+
+                                }
+                                items.addValueEventListener(listener1)
+
 
                             FirebaseInstanceId.getInstance().instanceId
                                     .addOnCompleteListener(OnCompleteListener { task ->
@@ -195,7 +264,7 @@ class SettingsFragment : Fragment() {
                                             val i_tokenn = s.child("i_token").getValue().toString()
 
                                             val notificationsSender = FcmNotificationsSender(i_tokenn, "Inspection Call", "Inspection Call for " +
-                                                    " : " + element + " " + "is made", context, activity)
+                                                    " : " + element + " " + "is made",  activity)
                                             notificationsSender.SendNotifications()
                                         }
                                     }

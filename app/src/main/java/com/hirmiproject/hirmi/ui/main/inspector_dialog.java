@@ -161,7 +161,7 @@ public class inspector_dialog  {
                                     Context context1 = null;
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,"Acknowledge"
                                             ,"Inspection Call for " +
-                                            " : "+ drawing+ " "+ "is ACCEPTED",context1,activity);
+                                            " : "+ drawing+ " "+ "is ACCEPTED",activity);
                                     notificationsSender.SendNotifications();
 
                                     if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
@@ -258,7 +258,7 @@ public class inspector_dialog  {
                                         String token = s.child("token").getValue().toString();
                                         Context context1 = null;
                                         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                                , "Drawing no. : " + drawing + " is REJECTED", context1, activity);
+                                                , "Drawing no. : " + drawing + " is REJECTED", activity);
                                         notificationsSender.SendNotifications();
 
                                         i_items.child(drawing).child("remark").setValue(remarks.getText().toString());

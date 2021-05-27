@@ -214,8 +214,9 @@ public class Fragment3 extends Fragment {
                                    // Toast.makeText(context, "True", Toast.LENGTH_SHORT).show();
                                     String d = dataSnapshot.child("cus_phn").getValue().toString();
                                     String token = dataSnapshot.child("token").getValue().toString();
+
                                     FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token, "Acknowledge"
-                                            , "Acknowledge by Inspector",getContext() ,getActivity());
+                                            , "Acknowledge by Inspector", getActivity());
                                     notificationsSender.SendNotifications();
                                     Flag = true;
 

@@ -332,7 +332,7 @@ public class main_login extends AppCompatActivity {
     public void onBackPressed() {
         Intent a = new Intent(Intent.ACTION_MAIN);
         a.addCategory(Intent.CATEGORY_HOME);
-        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(a);
         super.onBackPressed();
     }
