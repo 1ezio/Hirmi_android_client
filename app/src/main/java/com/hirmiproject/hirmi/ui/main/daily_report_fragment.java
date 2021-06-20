@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +58,18 @@ public class daily_report_fragment extends Fragment {
         final DatabaseReference ref = database.getReference("report");
         final DatabaseReference image_ref = database.getReference("item");
         final ListView lv = view.findViewById(R.id.liv_id);
+        final Spinner spin= view.findViewById(R.id.category_id);
+        final String[] spin_choices = { "Make Choice", "Fitment", "Welding"};
+        final ArrayAdapter ad
+                = new ArrayAdapter(
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                spin_choices);
+        ad.setDropDownViewResource(
+                android.R.layout
+                        .simple_spinner_dropdown_item);
+        spin.setAdapter(ad);
+
         Date c = Calendar.getInstance().getTime();
         final String formattedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         final DatabaseReference monitor = database.getReference("monitor");
@@ -62,6 +77,14 @@ public class daily_report_fragment extends Fragment {
         final ImageView sign = view.findViewById(R.id.sign_id);
         String  mail = auth.getCurrentUser().getEmail();
         mail = mail.replace(".",",");
+        final TextView total_draw = view.findViewById(R.id.total_draw_id);
+        final TextView total_quant= view.findViewById(R.id.total_quant_id);
+        final TextView acc= view.findViewById(R.id.acc_id);
+        final Button show_rep = view.findViewById(R.id.show_rep_id);
+        final TextView rej= view.findViewById(R.id.reject_id);
+        final TextView pending= view.findViewById(R.id.pending_id);
+
+
         final String finalMail = mail;
         TextView textView = view.findViewById(R.id.gate_entry_id);
         textView.setOnClickListener(new View.OnClickListener() {
@@ -93,63 +116,135 @@ public class daily_report_fragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
-        ref.addValueEventListener(new ValueEventListener() {
+        final int[] count = {0};
+        final int[] quant = {0};
+        final int[] quant1 = {0};
+        final int[] quant2 = {0};
+        final int[] quant3 = {0};
+        image_ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Calendar cal = Calendar.getInstance();
-                int mnth = cal.get(Calendar.MONTH);
-                mnth+=1;
-                 int year= cal.get(Calendar.YEAR);
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot2) {
+                for (final DataSnapshot t : snapshot2.getChildren()){
+                    count[0] = count[0] +1;
+                    quant1[0] = quant1[0] + Integer.parseInt(t.child("quantity").getValue().toString());
+                    if (t.child("status").getValue().toString().equals("TO BE CALL")||t.child("status").equals("PENDING")){
+                        quant[0] =quant[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
 
-                snapshot =  snapshot.child(String.valueOf(year)).child(String.valueOf(mnth));
-                final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
-                for (final DataSnapshot s: snapshot.getChildren()){
-                    if (s.child("date").getValue().toString().equals(formattedDate)){
-                        image_ref.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot i: snapshot.getChildren()){
+                    }
+                    else if (t.child("status").getValue().toString().equals("ACCEPTED")){
+                        quant2[0] =quant2[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
 
-                                    if (i.getKey().equals(s.child("drawing").getValue().toString())){
-                                        String u;
-                                        try {
-                                            u = snapshot.child("image_url").child("murl").getValue().toString();
-                                        }catch (Exception e){
-                                            u = null;
-                                        }
-
-                                        objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                                ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
-
-                                        CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
-                                        lv.setAdapter(customAdapter);
-                                        customAdapter.notifyDataSetChanged();
-
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
+                    }
+                     else if (t.child("status").getValue().toString().equals("REJECTED")){
+                        quant3[0] =quant3[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
 
                     }
 
 
                 }
+                total_draw.setText(String.valueOf(count[0]));
+                total_quant.setText(String.valueOf((quant1[0])));
+                acc.setText(String.valueOf((quant2[0])));
+                rej.setText(String.valueOf((quant3[0])));
+                pending.setText(String.valueOf((quant[0])));
+
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
             }
         });
+
+        Calendar cal = Calendar.getInstance();
+        final int mnth = cal.get(Calendar.MONTH)+1;
+
+        final int year= cal.get(Calendar.YEAR);
+        final String[] cat = {""};
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cat[0] =spin_choices[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        show_rep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cat[0].equals("Make Choice")){
+                    Toast.makeText(getContext(), "Choose Category", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    ref.child(String.valueOf(year)).child(String.valueOf(mnth)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                            snapshot =  snapshot.child(cat[0]);
+                            final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
+                            for (final DataSnapshot s: snapshot.getChildren()){
+                                if (s.child("date").getValue().toString().equals(formattedDate)){
+                                    image_ref.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                            for (DataSnapshot i: snapshot1.getChildren()){
+
+                                                if (i.getKey().equals(s.child("drawing").getValue().toString())){
+                                                    String u;
+                                                    try {
+                                                        u =i.child("image_url").child("murl").getValue().toString();
+                                                    }catch (Exception e){
+                                                        u = null;
+                                                    }
+
+                                                    objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
+                                                            ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
+
+                                                    CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
+                                                    lv.setAdapter(customAdapter);
+                                                    customAdapter.notifyDataSetChanged();
+
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+
+                                }
+
+
+                            }
+
+
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+
+                        }
+                    });
+
+
+                }
+
+            }
+        });
+
 
 
 

@@ -131,6 +131,7 @@
                             android:id="@+id/view_id"
                             android:textColor="@color/white"
                             android:layout_marginRight="10dp"
+                            android:visibility="invisible"
                             android:textStyle="bold"
                             android:layout_marginLeft="10dp"
                             android:layout_marginBottom="5dp"
@@ -339,12 +340,57 @@
                 android:layout_width="165dp"
                 android:layout_height="match_parent"
                 android:elevation="12dp"
+
+                android:padding="12dp"
+                app:cardCornerRadius="12dp"
+                android:id="@+id/drawing_list_id">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:onClick="drawing_list"
+                        android:padding="12dp"
+                        android:text="Drawings"
+                        android:textColor="#5f5f5f"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/draw_img_id"
+                        android:layout_width="100dp"
+
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:onClick="img_drawing_lis"
+                        android:padding="5dp"
+
+                        android:src="@drawable/draw_list" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="165dp"
+                android:layout_height="match_parent"
+                android:elevation="12dp"
+                android:layout_marginStart="12dp"
                 android:padding="12dp"
                 app:cardCornerRadius="12dp"
                 android:id="@+id/inventory_id">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+
                     android:layout_height="match_parent">
 
                     <TextView
@@ -359,17 +405,17 @@
                         android:textStyle="bold" />
 
                     <ImageView
+                        android:id="@+id/inv_id"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
                         android:layout_alignParentRight="true"
-                        android:clickable="true"
 
                         android:layout_alignParentBottom="true"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
-                        android:id="@+id/inv_id"
-                        android:padding="5dp"
+                        android:clickable="true"
                         android:onClick="iknventory"
+                        android:padding="5dp"
 
                         android:src="@drawable/inven" />
 

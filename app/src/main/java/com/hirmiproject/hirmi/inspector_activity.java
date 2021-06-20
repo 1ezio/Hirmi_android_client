@@ -119,11 +119,20 @@ public class inspector_activity extends AppCompatActivity {
 
 
                                 if (s.child("category").getValue().toString().equals("Welding")){
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("ACCEPTED");
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("status").setValue("ACCEPTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+
+
+                                }
+                                else if (s.child("category").getValue().toString().equals("Fitment")){
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("status").setValue("ACCEPTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
 
                                 }
@@ -152,7 +161,10 @@ public class inspector_activity extends AppCompatActivity {
                                             ,"Inspection Call for " +
                                             " : "+ drawing+ " "+" for "+s.child("category").getValue().toString() + " is ACCEPTED",inspector_activity.this);
                                     notificationsSender.SendNotifications();
+                                    startActivity(new Intent(inspector_activity.this,Ispector_layout.class));
 
+                                    accept.setVisibility(View.INVISIBLE);
+                                    reject.setVisibility(View.INVISIBLE);
                                  /*   if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
 
                                         try {
@@ -165,7 +177,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                         }
 
-                                    }*/
+                                    }
 
                                     if  (whatsappinstalled()){
 
@@ -176,8 +188,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                         startActivityForResult(i,100);
 
-                                        accept.setVisibility(View.INVISIBLE);
-                                        reject.setVisibility(View.INVISIBLE);
+
 
 
                                         //SMS INTEGRATION
@@ -186,7 +197,7 @@ public class inspector_activity extends AppCompatActivity {
                                     }else{
                                         Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
                                     }
-
+    */
                                 }
 
 
@@ -231,11 +242,20 @@ public class inspector_activity extends AppCompatActivity {
 
 
                                 if (s.child("category").getValue().toString().equals("Welding")){
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("status").setValue("REJECTED");
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("date").setValue(date);
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
-                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("status").setValue("REJECTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Welding").child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
+
+
+                                }
+                                else if (s.child("category").getValue().toString().equals("Fitment")){
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("status").setValue("REJECTED");
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("inspector").setValue(s.child("inspector_name").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("date").setValue(date);
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("quantity").setValue(s.child("quantity_for_inspection").getValue().toString());
+                                    report_ref.child(String.valueOf(year)).child(String.valueOf(mnth)).child("Fitment").child(stamp).child("drawing").setValue(s.child("drawing_no").getValue().toString());
 
 
                                 }
@@ -257,6 +277,10 @@ public class inspector_activity extends AppCompatActivity {
                                         notificationsSender.SendNotifications();
 
                                         i_items.child(drawing).child("remark").setValue(remarks.getText().toString());
+                                        accept.setVisibility(View.INVISIBLE);
+                                        reject.setVisibility(View.INVISIBLE);
+                                        startActivity(new Intent(inspector_activity.this,Ispector_layout.class));
+
                                      /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                                             try {
@@ -269,7 +293,7 @@ public class inspector_activity extends AppCompatActivity {
 
                                             }
 
-                                        }*/
+                                        }
                                         if (whatsappinstalled()) {
                                             Intent intent = new Intent(inspector_activity.this,Ispector_layout.class);
                                             startActivity(intent);
@@ -280,8 +304,6 @@ public class inspector_activity extends AppCompatActivity {
                                             startActivityForResult(i,100);
 
 
-                                            accept.setVisibility(View.INVISIBLE);
-                                            reject.setVisibility(View.INVISIBLE);
 
                                             //SMS INTEGRATION
 
@@ -290,6 +312,8 @@ public class inspector_activity extends AppCompatActivity {
                                             Toast.makeText(inspector_activity.this, "Whatsapp Not Found", Toast.LENGTH_SHORT).show();
 
                                         }
+
+                                      */
                                     }
 
 

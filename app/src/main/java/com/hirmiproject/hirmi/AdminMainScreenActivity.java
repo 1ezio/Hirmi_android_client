@@ -39,7 +39,6 @@ public class AdminMainScreenActivity extends AppCompatActivity {
         view_d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AdminMainScreenActivity.this,added_drawing.class));
             }
         });
         mauth = FirebaseAuth.getInstance();
@@ -163,5 +162,15 @@ public class AdminMainScreenActivity extends AppCompatActivity {
     public void iknventory(View view) {
         Intent intent = new Intent(AdminMainScreenActivity.this, inventory.class);
         startActivity(intent);
+    }
+
+    public void drawing_list(View view) {
+        startActivity(new Intent(AdminMainScreenActivity.this,added_drawing.class));
+
+    }
+
+    public void img_drawing_lis(View view) {
+        startActivity(new Intent(AdminMainScreenActivity.this,added_drawing.class));
+
     }
 }

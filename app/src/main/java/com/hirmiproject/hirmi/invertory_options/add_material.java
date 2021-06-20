@@ -61,8 +61,8 @@ public class add_material extends AppCompatActivity {
         asking_rate = findViewById(R.id.asking_rate_id);
         submit = findViewById(R.id.submit_id);
 
-        calen = findViewById(R.id.calen_id);
         date = findViewById(R.id.c);
+        calen = findViewById(R.id.calen_id);
         calen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

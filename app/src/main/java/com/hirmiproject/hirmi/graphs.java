@@ -44,6 +44,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class graphs extends Fragment {
 
@@ -139,7 +140,7 @@ public class graphs extends Fragment {
                 final Map<String, Integer> map2 = new HashMap<String, Integer>();
 
 
-                ref.child(String.valueOf(final_year[0])).child(String.valueOf(final_mnth[0])).addValueEventListener(new ValueEventListener() {
+                ref.child(String.valueOf(final_year[0])).child(String.valueOf(final_mnth[0])).child("Welding").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -182,19 +183,29 @@ public class graphs extends Fragment {
                             }
                         }
 
+                        TreeMap<String, Integer> sorted1 = new TreeMap<>();
+                        sorted1.putAll(map);
+
+                        TreeMap<String, Integer> sorted2 = new TreeMap<>();
+                        sorted2.putAll(map2);
+
 
                         DataModel dm = new DataModel();
                         Map<String, Integer> map3 = new HashMap<String, Integer>(map);
                         int p_count =0;
                         int n_count = 0;
-                        map3.putAll(map2);
-                        for (Map.Entry<String, Integer> entry:map3.entrySet()){
-                            for(Map.Entry<String, Integer>entery1:map.entrySet()){
+                        map3.putAll(sorted2);
+
+                        Map<String, Integer> treeMap = new TreeMap<String, Integer>(map3);
+
+
+                        for (Map.Entry<String, Integer> entry:treeMap.entrySet()){
+                            for(Map.Entry<String, Integer>entery1:sorted1.entrySet()){
                                 if (entery1.getKey().equals(entry.getKey())){
                                     p_count = entery1.getValue();
                                 }
                             }
-                            for(Map.Entry<String, Integer>entery2:map2.entrySet()){
+                            for(TreeMap.Entry<String, Integer>entery2:sorted2.entrySet()){
                                 if (entery2.getKey().equals(entry.getKey())){
                                     n_count = entery2.getValue();
                                 }

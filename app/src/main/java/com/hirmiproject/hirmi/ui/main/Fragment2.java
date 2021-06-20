@@ -65,11 +65,18 @@ public class Fragment2 extends Fragment {
                         final ArrayList<model_history_inspector> objects = new ArrayList<model_history_inspector>();
                         for(DataSnapshot dataSnapshot: snapshot.getChildren()){
 
+                            String u;
+                            try {
+                                u = dataSnapshot.child("image_url").child("murl").getValue().toString();
+                            }catch (Exception e){
+                                u = null;
+                            }
+
                             if(name.equals(dataSnapshot.child("inspector_name").getValue().toString()) && !dataSnapshot.child("status").getValue().toString().equals("TO BE CALL") ){
 
                                 objects.add(new model_history_inspector(dataSnapshot.child("drawing_no").getValue().toString()
                                         ,dataSnapshot.child("date").getValue().toString(),
-                                        dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString(),null));
+                                        dataSnapshot.child("time").getValue().toString(),dataSnapshot.child("status").getValue().toString(),u));
                                 CustomAdapter customAdapter = new CustomAdapter(getActivity(), objects);
 
                                 listView.setAdapter(customAdapter);
@@ -136,7 +143,7 @@ public class Fragment2 extends Fragment {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             if(convertView == null) {
                 holder = new ViewHolder();
@@ -145,8 +152,19 @@ public class Fragment2 extends Fragment {
                 holder.textView2 = (TextView) convertView.findViewById(R.id.status_id);
                 holder.textView3 = (TextView) convertView.findViewById(R.id.date_id);
                 holder.textView5 = convertView.findViewById(R.id.image_id);
-                holder.textView5.setVisibility(View.INVISIBLE);
+                holder.textView5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (objects.get(position).getImage_url() == null){
+                            Toast.makeText(getActivity(), "Image Does not Exist", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent browser= new Intent(Intent.ACTION_VIEW, Uri.parse(objects.get(position).getImage_url()));
 
+                            startActivity(browser);
+                        }
+
+                    }
+                });
                 holder.textView4= convertView.findViewById(R.id.time_id);
                 convertView.setTag(holder);
             } else {

@@ -199,7 +199,7 @@ class SettingsFragment : Fragment() {
                                                 items.child(element as String).child("category").setValue(category_choosed)
                                             }
 
-                                            inspectionQuatity = quantityForInsId.text.toString().toInt()
+                                                inspectionQuatity = quantityForInsId.text.toString().toInt()
                                             if (category_choosed.equals("Welding")){
                                                 if (quantity_inspected>=inspectionQuatity){
 
@@ -213,6 +213,7 @@ class SettingsFragment : Fragment() {
                                                 }
                                             }
                                             else{
+
                                                 items.child(element as String).child("quantity_for_inspection").setValue(inspectionQuatity)
                                             }
 
@@ -226,7 +227,7 @@ class SettingsFragment : Fragment() {
                                     }
 
                                 }
-                                items.addValueEventListener(listener1)
+                                items.child(element).addValueEventListener(listener1)
 
 
                             FirebaseInstanceId.getInstance().instanceId
@@ -292,7 +293,7 @@ class SettingsFragment : Fragment() {
 
                                     }
                                 }
-                            }*/
+                            }
                             if  (ifwhatsappinstalled()){
                                 val i = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=" + "91" + num + "&text=" + "Inspection Call for " +
                                         " : " + element + " " + "is made"))
@@ -304,7 +305,7 @@ class SettingsFragment : Fragment() {
 
                             }else{
                                 Toast.makeText(context, "Whatsapp Not Found", Toast.LENGTH_SHORT).show()
-                            }
+                            }*/
 
                         }catch (e: Exception){
                             Toast.makeText(activity as Context, "Enter Inspection Quantity", Toast.LENGTH_LONG).show()

@@ -111,8 +111,8 @@ public class Fragment3 extends Fragment {
                                 ListView lv = (ListView) view.findViewById(R.id.list_id);
                                 //arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1,arrayList);
 
-                                MyListAdaper adapter = new MyListAdaper(getContext(), R.layout.inspector_drawings, arrayList);
-
+                              //  MyListAdaper adapter = new MyListAdaper(getContext(), R.layout.inspector_drawings, arrayList);
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1,arrayList);
                                 lv.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
 
@@ -126,7 +126,7 @@ public class Fragment3 extends Fragment {
                                         intent.putExtra("key",arrayList1.get(i));
 
                                         startActivity(intent);
-                                        getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
+                                       // getActivity().getSupportFragmentManager().beginTransaction().remove(Fragment3.this).commit();
 
                                     }
                                 });

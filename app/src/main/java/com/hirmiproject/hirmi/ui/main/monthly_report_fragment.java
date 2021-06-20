@@ -82,7 +82,17 @@ public class monthly_report_fragment extends Fragment {
 
         Spinner mnth_spin = view.findViewById(R.id.mnth_spin_id);
         Spinner year_spin = view.findViewById(R.id.year_spin_id);
-
+        Spinner cate = view.findViewById(R.id.spin_id);
+        final String[] spin_choices = { "Make Choice", "Fitment", "Welding"};
+        final ArrayAdapter aa
+                = new ArrayAdapter(
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                spin_choices);
+        aa.setDropDownViewResource(
+                android.R.layout
+                        .simple_spinner_dropdown_item);
+        cate.setAdapter(aa);
         Button show = view.findViewById(R.id.done_id);
 
         final ArrayList<String> years = new ArrayList<String>();
@@ -134,6 +144,23 @@ public class monthly_report_fragment extends Fragment {
             }
         });
 
+        final String[] choice = new String[1];
+
+
+        cate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                choice[0] = spin_choices[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
         show.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +168,7 @@ public class monthly_report_fragment extends Fragment {
                 ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot =  snapshot.child(final_year[0]).child(String.valueOf(final_mnth[0]));
+                        snapshot =  snapshot.child(final_year[0]).child(String.valueOf(final_mnth[0])).child(choice[0]);
                         final ArrayList<monthly_model> objects = new ArrayList<monthly_model>();
                         for (final DataSnapshot s: snapshot.getChildren()){
 
