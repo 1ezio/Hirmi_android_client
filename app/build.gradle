@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.4'
     implementation 'com.google.android.play:core:1.10.0'
 
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-storage:19.2.2'
     implementation files('libs\\achartengine-0.7.0.jar')
     testImplementation 'junit:junit:4.12'

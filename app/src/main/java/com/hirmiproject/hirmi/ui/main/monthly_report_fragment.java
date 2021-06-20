@@ -14,6 +14,8 @@ import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +35,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.motion.widget.MotionScene;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +53,8 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -75,9 +83,74 @@ public class monthly_report_fragment extends Fragment {
 
         View  view  = inflater.inflate(R.layout.monthly_report_fragment, container, false);
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final LinearLayout linearLayout = view.findViewById(R.id.expandable_id);
+        ImageView image = view.findViewById(R.id.arrow_id);
+        final CardView card = view.findViewById(R.id.card_id);
+        final TextView total_draw = view.findViewById(R.id.total_draw_id);
+        final TextView total_quant= view.findViewById(R.id.total_quant_id);
+        final TextView acc= view.findViewById(R.id.acc_id);
+        final TextView rej= view.findViewById(R.id.reject_id);
+        final TextView pending= view.findViewById(R.id.pending_id);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getReference("report");
         final DatabaseReference image_ref = database.getReference("item");
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (linearLayout.getVisibility()==View.GONE){
+                    TransitionManager.beginDelayedTransition(card,new AutoTransition());
+                    linearLayout.setVisibility(View.VISIBLE);
+                    final int[] count = {0};
+                    final int[] quant = {0};
+                    final int[] quant1 = {0};
+                    final int[] quant2 = {0};
+                    final int[] quant3 = {0};
+                    image_ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot2) {
+                            for (final DataSnapshot t : snapshot2.getChildren()){
+                                count[0] = count[0] +1;
+                                quant1[0] = quant1[0] + Integer.parseInt(t.child("quantity").getValue().toString());
+                                if (t.child("status").getValue().toString().equals("TO BE CALL")||t.child("status").equals("PENDING")){
+                                    quant[0] =quant[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
+
+                                }
+                                else if (t.child("status").getValue().toString().equals("ACCEPTED")){
+                                    quant2[0] =quant2[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
+
+                                }
+                                else if (t.child("status").getValue().toString().equals("REJECTED")){
+                                    quant3[0] =quant3[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
+
+                                }
+
+
+                            }
+                            total_draw.setText(String.valueOf(count[0]));
+                            total_quant.setText(String.valueOf((quant1[0])));
+                            acc.setText(String.valueOf((quant2[0])));
+                            rej.setText(String.valueOf((quant3[0])));
+                            pending.setText(String.valueOf((quant[0])));
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }else{
+                    TransitionManager.beginDelayedTransition(card,new AutoTransition());
+                    linearLayout.setVisibility(View.GONE);
+
+                }
+            }
+        });
+
         final ListView lv = view.findViewById(R.id.lv_id);
 
         Spinner mnth_spin = view.findViewById(R.id.mnth_spin_id);
@@ -178,15 +251,16 @@ public class monthly_report_fragment extends Fragment {
 
                                     for (DataSnapshot i:snapshot1.getChildren()){
                                         if (i.getKey().equals(s.child("drawing").getValue().toString())){
-
-                                            String u;
+                                            String u,d=null;
+                                            d = i.child("d").getValue().toString();
                                             try {
-                                                u = s.child("image_url").child("murl").getValue().toString();
+                                                u = i.child("image_url").child("murl").getValue().toString();
+
                                             }catch (Exception e){
                                                 u = null;
                                             }
                                             objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
+                                                    ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u,d));
 
                                             CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
                                             lv.setAdapter(customAdapter);
@@ -244,7 +318,7 @@ public class monthly_report_fragment extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2, textView3, textView4,textView5;
+            TextView textView2, textView3, textView4,textView5,textView6;
 
         }
 
@@ -275,6 +349,8 @@ public class monthly_report_fragment extends Fragment {
                 holder.textView3 = (TextView) convertView.findViewById(R.id.m_date_time_id);
                 holder.textView4 = convertView.findViewById(R.id.m_ins_id);
                 holder.textView5 = convertView.findViewById(R.id.image_id);
+                holder.textView6 = convertView.findViewById(R.id.d_id);
+
                 convertView.setTag(holder);
             } else {
                 holder = (CustomAdapter.ViewHolder) convertView.getTag();
@@ -308,6 +384,7 @@ public class monthly_report_fragment extends Fragment {
             holder.textView3.setText(objects.get(position).getDate());
 
             holder.textView4.setText(objects.get(position).getInspector());
+            holder.textView6.setText(objects.get(position).getD());
             return convertView;
 
         }

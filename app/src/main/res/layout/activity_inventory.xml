@@ -70,16 +70,17 @@
         android:gravity="end"
         android:layout_height="wrap_content">
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:id="@+id/report_id"
-            android:visibility="invisible"
+            android:onClick="drawings"
+            android:visibility="visible"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/button_design"
-            android:text="view report"
-            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Drawings"
+            android:textColor="@color/colorAccent"
             />
     </LinearLayout>
 

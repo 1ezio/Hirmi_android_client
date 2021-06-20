@@ -77,12 +77,7 @@ public class daily_report_fragment extends Fragment {
         final ImageView sign = view.findViewById(R.id.sign_id);
         String  mail = auth.getCurrentUser().getEmail();
         mail = mail.replace(".",",");
-        final TextView total_draw = view.findViewById(R.id.total_draw_id);
-        final TextView total_quant= view.findViewById(R.id.total_quant_id);
-        final TextView acc= view.findViewById(R.id.acc_id);
         final Button show_rep = view.findViewById(R.id.show_rep_id);
-        final TextView rej= view.findViewById(R.id.reject_id);
-        final TextView pending= view.findViewById(R.id.pending_id);
 
 
         final String finalMail = mail;
@@ -114,46 +109,6 @@ public class daily_report_fragment extends Fragment {
                 auth.signOut();
                 Intent intent = new Intent(getActivity(), main_login.class);
                 startActivity(intent);
-            }
-        });
-        final int[] count = {0};
-        final int[] quant = {0};
-        final int[] quant1 = {0};
-        final int[] quant2 = {0};
-        final int[] quant3 = {0};
-        image_ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot2) {
-                for (final DataSnapshot t : snapshot2.getChildren()){
-                    count[0] = count[0] +1;
-                    quant1[0] = quant1[0] + Integer.parseInt(t.child("quantity").getValue().toString());
-                    if (t.child("status").getValue().toString().equals("TO BE CALL")||t.child("status").equals("PENDING")){
-                        quant[0] =quant[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
-
-                    }
-                    else if (t.child("status").getValue().toString().equals("ACCEPTED")){
-                        quant2[0] =quant2[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
-
-                    }
-                     else if (t.child("status").getValue().toString().equals("REJECTED")){
-                        quant3[0] =quant3[0]+ Integer.parseInt(t.child("quantity").getValue().toString());
-
-                    }
-
-
-                }
-                total_draw.setText(String.valueOf(count[0]));
-                total_quant.setText(String.valueOf((quant1[0])));
-                acc.setText(String.valueOf((quant2[0])));
-                rej.setText(String.valueOf((quant3[0])));
-                pending.setText(String.valueOf((quant[0])));
-
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
             }
         });
 
@@ -196,15 +151,17 @@ public class daily_report_fragment extends Fragment {
                                             for (DataSnapshot i: snapshot1.getChildren()){
 
                                                 if (i.getKey().equals(s.child("drawing").getValue().toString())){
-                                                    String u;
+                                                    String u,d = null;
+                                                    d = i.child("d").getValue().toString();
                                                     try {
                                                         u =i.child("image_url").child("murl").getValue().toString();
+
                                                     }catch (Exception e){
                                                         u = null;
                                                     }
 
                                                     objects.add(new monthly_model(s.child("drawing").getValue().toString(),s.child("quantity").getValue().toString()+" "+ s.child("status").getValue().toString()
-                                                            ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u));
+                                                            ,s.child("date").getValue().toString(),s.child("inspector").getValue().toString(),u,d));
 
                                                     CustomAdapter customAdapter = new CustomAdapter(getContext(),objects);
                                                     lv.setAdapter(customAdapter);
@@ -257,7 +214,7 @@ public class daily_report_fragment extends Fragment {
 
         private class ViewHolder {
             TextView textView1;
-            TextView textView2, textView3, textView4,textView5;
+            TextView textView2,textView6, textView3, textView4,textView5;
 
         }
 
@@ -288,6 +245,7 @@ public class daily_report_fragment extends Fragment {
                 holder.textView3 = (TextView) convertView.findViewById(R.id.m_date_time_id);
                 holder.textView4 = convertView.findViewById(R.id.m_ins_id);
                 holder.textView5 = convertView.findViewById(R.id.image_id);
+                holder.textView6 = convertView.findViewById(R.id.d_id);
 
                 convertView.setTag(holder);
             } else {
@@ -321,6 +279,7 @@ public class daily_report_fragment extends Fragment {
             });
             holder.textView3.setText(objects.get(position).getDate());
             holder.textView4.setText(objects.get(position).getInspector());
+            holder.textView6.setText(objects.get(position).getD());
             return convertView;
 
         }

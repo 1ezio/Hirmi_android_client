@@ -1,10 +1,16 @@
 package com.hirmiproject.hirmi.ui.main;
 
 public class monthly_model {
+
+
     public monthly_model() {
     }
 
-    private String drawing, status, date, inspector, image_url;
+    private String drawing, status, date, inspector, image_url,d;
+
+    public monthly_model(String d) {
+        this.d = d;
+    }
 
     public String getDrawing() {
         return drawing;
@@ -16,6 +22,14 @@ public class monthly_model {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getD() {
+        return d;
+    }
+
+    public void setD(String d) {
+        this.d = d;
     }
 
     public String getImage_url() {
@@ -46,11 +60,12 @@ public class monthly_model {
         this.inspector = inspector;
     }
 
-    public monthly_model(String drawing, String status, String date, String inspector,String image_url) {
+    public monthly_model(String drawing, String status, String date, String inspector, String image_url, String d) {
         this.drawing = drawing;
         this.status = status;
         this.date = date;
         this.inspector = inspector;
         this.image_url = image_url;
+        this.d = d;
     }
 }

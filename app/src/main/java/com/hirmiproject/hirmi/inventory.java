@@ -43,7 +43,7 @@ public class inventory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        final Button report  = findViewById(R.id.report_id);
+        final TextView report  = findViewById(R.id.report_id);
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,12 +119,20 @@ public class inventory extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(inventory.this, add_material.class));
+                startActivity(new Intent(inventory.this, added_drawing.class));
 
             }
         });
 
 
+
+    }
+
+    public void drawings(View view) {
+        Intent intent = new Intent(inventory.this,report.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finish();
+        startActivity(intent);
 
     }
 
@@ -211,8 +219,8 @@ public class inventory extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent a = new Intent(Intent.ACTION_MAIN);
+        a.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         a.addCategory(Intent.CATEGORY_HOME);
-        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
         super.onBackPressed();
     }
